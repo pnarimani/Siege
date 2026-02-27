@@ -1,16 +1,19 @@
 {
-    "name": "Siege",
-    "rootNamespace": "Siege",
-    "references": [
-        "Siege.Gameplay"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Siege",
+  "rootNamespace": "Siege",
+  "references": [
+    "Siege.Gameplay",
+    "Unity.Addressables",
+    "Unity.ResourceManager",
+    "AutofacUnity"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

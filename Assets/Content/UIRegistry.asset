@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142fdfb1f070426ea93b56134a02b6d9, type: 3}
+  m_Name: UIRegistry
+  m_EditorClassIdentifier: Siege.Gameplay::Siege.Gameplay.UI.AddressableUIRegistry
+  _rootPrefab: {fileID: 252000215160886146, guid: 0edfbd5332a1a49fbaf880f16651727e, type: 3}
+  _entries:
+  - Type: Siege.MainMenu.MainMenuView
+    Address: Content/Prefabs/UI/MainMenu.prefab

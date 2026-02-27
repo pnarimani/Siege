@@ -1,0 +1,10 @@
+{
+  "name": "Siege.Editor",
+  "references": [
+    "Siege",
+    "Siege.Gameplay",
+    "Unity.Addressables",
+    "Unity.Addressables.Editor",
+    "Unity.ResourceManager"
+  ]
+}

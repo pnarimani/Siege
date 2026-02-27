@@ -15,8 +15,18 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 314282b6ec7744be39fac2069ddbbb3f
   m_SerializeEntries:
+  - m_GUID: 252d3c363ba754417a9ef0e10db1eed3
+    m_Address: UIRegistry
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a0326c922ecd4a60826344768483298
+    m_Address: MainMenu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 99c9720ab356a0642a771bea13969a05
-    m_Address: Assets/Scenes/Game.unity
+    m_Address: Game
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

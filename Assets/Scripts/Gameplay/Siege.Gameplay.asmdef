@@ -1,3 +1,12 @@
 {
-	"name": "Siege.Gameplay"
+  "name": "Siege.Gameplay",
+  "rootNamespace": "Siege",
+  "references": [
+    "Unity.Localization",
+    "Unity.Addressables",
+    "Unity.ResourceManager",
+    "FastSpring",
+    "Unity.TextMeshPro",
+    "AutofacUnity"
+  ]
 }

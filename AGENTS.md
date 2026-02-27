@@ -28,3 +28,16 @@ Success must feel like endurance, not triumph.
 - Prefer composition to inheritance.
 - Always ask: "Is there a more elegant way to solve this problem?"
 - Create folders by feature (Laws, Missions, Simulation, Events, etc.). Avoid folder names like "Models".
+
+### Minimizing Serialized Fields
+
+For inner-prefab and inner-scene dependencies, avoid serialized fields.
+Instead, name the target GameObject with a name starting with `#` and find it at runtime with `FindRecursive<T>`.
+```csharp
+        Button _start;
+        
+        void Awake()
+        {
+            _start = this.FindRecursive<Button>("#Start");
+        }
+```

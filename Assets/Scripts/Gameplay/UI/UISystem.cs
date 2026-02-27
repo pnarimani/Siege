@@ -9,26 +9,15 @@ namespace Siege.Gameplay.UI
     public class UISystem : IDisposable
     {
         readonly AddressableUIRegistry _registry;
-        readonly Transform _root;
-
+        Transform _root;
+        
         static UISystem _instance;
 
         public UISystem(AddressableUIRegistry registry)
         {
             _instance = this;
             _registry = registry;
-            var rootPrefab = _registry.GetRootPrefab();
-            _root = Object.Instantiate(rootPrefab).transform;
-            Object.DontDestroyOnLoad(_root.gameObject);
-
-            CreateLayer(UILayer.World);
-            CreateLayer(UILayer.Screen);
-            CreateLayer(UILayer.Window);
-            CreateLayer(UILayer.Popup);
-            CreateLayer(UILayer.Dragging);
-            CreateLayer(UILayer.Overlay);
-            CreateLayer(UILayer.Tooltip);
-
+            EnsureRoot();
             _registry.PreloadAllPrefabs().Forget();
         }
 
@@ -84,7 +73,8 @@ namespace Siege.Gameplay.UI
         public static Transform GetLayer(UILayer layer)
         {
             Debug.Assert(_instance != null, "UISystem instance is not set. Make sure to install UISystem in your project.");
-            Debug.Assert(_instance._root != null, "UISystem root transform is null. Make sure the root prefab has a valid transform.");
+            
+            _instance.EnsureRoot();
             
             return layer switch
             {
@@ -109,11 +99,22 @@ namespace Siege.Gameplay.UI
             transform.offsetMax = Vector2.zero;
             transform.sizeDelta = Vector2.zero;
             transform.localScale = Vector3.one;
+        }
 
-            transform.gameObject.AddComponent<Canvas>();
-
-            if (uiLayer > UILayer.Screen)
-                transform.gameObject.AddComponent<GraphicRaycaster>();
+        void EnsureRoot()
+        {
+            if (_root)
+                return;
+            
+            _root = new GameObject("UI Root").transform;
+            
+            CreateLayer(UILayer.World);
+            CreateLayer(UILayer.Screen);
+            CreateLayer(UILayer.Window);
+            CreateLayer(UILayer.Popup);
+            CreateLayer(UILayer.Dragging);
+            CreateLayer(UILayer.Overlay);
+            CreateLayer(UILayer.Tooltip);
         }
 
         public void Dispose()

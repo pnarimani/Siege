@@ -9,12 +9,9 @@ namespace Siege.Gameplay.UI
     [CreateAssetMenu(menuName = "Siege/AddressableUIRegistry", fileName = "UIRegistry", order = 0)]
     public class AddressableUIRegistry : ScriptableObject, ISerializationCallbackReceiver
     {
-        [SerializeField] GameObject _rootPrefab;
         [SerializeField] List<Entry> _entries = new();
 
         readonly Dictionary<string, string> _addressByType = new();
-
-        public GameObject GetRootPrefab() => _rootPrefab;
 
         public async Task PreloadAllPrefabs()
         {

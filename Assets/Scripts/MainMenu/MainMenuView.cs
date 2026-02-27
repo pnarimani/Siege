@@ -1,8 +1,10 @@
 using System;
 using Gameplay;
+using Siege.Gameplay.UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace Siege.MainMenu
 {
@@ -10,8 +12,7 @@ namespace Siege.MainMenu
     {
         void Awake()
         {
-            var start = this.FindRecursive<Button>("#Start");
-            start.onClick.AddListener(OnStartClicked);
+            this.FindElement<SiegeButton>("start").Clicked += OnStartClicked;
         }
 
         void OnStartClicked()

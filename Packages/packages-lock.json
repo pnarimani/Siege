@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.pnarimani.autofac-unity": {
+      "version": "git@github.com:pnarimani/AutofacUnity.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "068b1b0c62e6bf6aa73f7f69f07904aee4e9060f"
+    },
+    "com.pnarimani.fast-spring": {
+      "version": "git@github.com:pnarimani/FastSpring.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6bcc9d14128f31c7dbacb2fa81001b7335ded80f"
+    },
     "com.singularitygroup.hotreload": {
       "version": "file:com.singularitygroup.hotreload",
       "depth": 0,
@@ -119,6 +133,15 @@
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
+    },
+    "com.unity.mcp": {
+      "version": "git@github.com:pnarimani/unity-mcp.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.2.2"
+      },
+      "hash": "6668d86b3142b644ba2fba90ef71f38493f198e0"
     },
     "com.unity.multiplayer.center": {
       "version": "1.0.1",

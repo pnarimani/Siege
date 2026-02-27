@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -10,6 +11,7 @@ namespace Siege
 
         void Start()
         {
+            Debug.Log("Loading");
             Addressables.LoadSceneAsync(_addressableSceneName);
         }
     }

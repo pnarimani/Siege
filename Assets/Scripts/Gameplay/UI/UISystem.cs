@@ -15,10 +15,11 @@ namespace Siege.Gameplay.UI
 
         public UISystem(AddressableUIRegistry registry)
         {
+            _instance = this;
             _registry = registry;
             var rootPrefab = _registry.GetRootPrefab();
-            var instance = Object.Instantiate(rootPrefab);
-            _root = instance.transform;
+            _root = Object.Instantiate(rootPrefab).transform;
+            Object.DontDestroyOnLoad(_root.gameObject);
 
             CreateLayer(UILayer.World);
             CreateLayer(UILayer.Screen);
@@ -29,11 +30,6 @@ namespace Siege.Gameplay.UI
             CreateLayer(UILayer.Tooltip);
 
             _registry.PreloadAllPrefabs().Forget();
-        }
-
-        public static void SetInstance(UISystem uiSystem)
-        {
-            _instance = uiSystem;
         }
 
         public static T Open<T>(UILayer layer)
@@ -48,6 +44,7 @@ namespace Siege.Gameplay.UI
             }
 
             var parent = GetLayer(layer);
+            Debug.Assert(parent != null, "UISystem: Invalid UILayer " + layer);
             var instance = Object.Instantiate(prefab, parent);
             return instance.GetComponent<T>();
         }
@@ -84,17 +81,23 @@ namespace Siege.Gameplay.UI
             return default;
         }
 
-        public static Transform GetLayer(UILayer layer) => layer switch
+        public static Transform GetLayer(UILayer layer)
         {
-            UILayer.World => _instance._root.GetChild(0),
-            UILayer.Screen => _instance._root.GetChild(1),
-            UILayer.Window => _instance._root.GetChild(2),
-            UILayer.Popup => _instance._root.GetChild(3),
-            UILayer.Dragging => _instance._root.GetChild(4),
-            UILayer.Overlay => _instance._root.GetChild(5),
-            UILayer.Tooltip => _instance._root.GetChild(6),
-            _ => null,
-        };
+            Debug.Assert(_instance != null, "UISystem instance is not set. Make sure to install UISystem in your project.");
+            Debug.Assert(_instance._root != null, "UISystem root transform is null. Make sure the root prefab has a valid transform.");
+            
+            return layer switch
+            {
+                UILayer.World => _instance._root.GetChild(0),
+                UILayer.Screen => _instance._root.GetChild(1),
+                UILayer.Window => _instance._root.GetChild(2),
+                UILayer.Popup => _instance._root.GetChild(3),
+                UILayer.Dragging => _instance._root.GetChild(4),
+                UILayer.Overlay => _instance._root.GetChild(5),
+                UILayer.Tooltip => _instance._root.GetChild(6),
+                _ => null,
+            };
+        }
 
         void CreateLayer(UILayer uiLayer)
         {

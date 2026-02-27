@@ -7,6 +7,7 @@ namespace Siege.MainMenu
     {
         void Start()
         {
+            Debug.Log("Opening Main Menu");
             UISystem.Open<MainMenuView>(UILayer.Window);
         }
     }

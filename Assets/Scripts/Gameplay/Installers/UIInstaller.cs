@@ -17,8 +17,7 @@ namespace Gameplay.Installers
                 .SingleInstance();
             builder.RegisterType<UISystem>()
                 .SingleInstance()
-                .AutoActivate()
-                .OnActivated(x => UISystem.SetInstance(x.Instance));
+                .AutoActivate();
         }
     }
 }

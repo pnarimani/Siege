@@ -7,11 +7,9 @@ namespace Siege.Gameplay.UI
     public partial class SiegeButton : VisualElement
     {
         readonly TextElement _text;
-        readonly VisualElement _bg;
-        readonly VisualElement _shadow;
 
         [CreateProperty]
-        public virtual string Text
+        public string Text
         {
             get => _text.text;
             set => _text.text  = value;
@@ -19,18 +17,18 @@ namespace Siege.Gameplay.UI
         
         public SiegeButton()
         {
-            _text = new TextElement { pickingMode = PickingMode.Ignore };
-            _bg = new VisualElement { pickingMode = PickingMode.Ignore };
-            _shadow = new VisualElement { pickingMode = PickingMode.Ignore };
+            _text = new TextElement {  pickingMode = PickingMode.Ignore };
+            var bg = new VisualElement { pickingMode = PickingMode.Ignore };
+            var shadow = new VisualElement { pickingMode = PickingMode.Ignore };
 
-            AddToClassList("siege-button");
+            AddToClassList("button");
             AddToClassList("hover-punch");
-            _bg.AddToClassList("siege-button-bg");
-            _shadow.AddToClassList("siege-button-shadow");
-            _text.AddToClassList("siege-button-text");
+            bg.AddToClassList("button__bg");
+            shadow.AddToClassList("button__shadow");
+            _text.AddToClassList("button__text");
 
-            Add(_shadow);
-            Add(_bg);
+            Add(shadow);
+            Add(bg);
             Add(_text);
         }
     }

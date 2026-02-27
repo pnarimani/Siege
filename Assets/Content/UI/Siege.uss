@@ -1,7 +1,7 @@
 :root {
 }
 
-.siege-button-bg {
+.button__bg {
     background-color: white;
     border-radius: 10px;
     flex-grow: 1;
@@ -12,7 +12,7 @@
     right: 0;
 }
 
-.siege-button {
+.button {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,7 +21,7 @@
     min-width: 70px;
 }
 
-.siege-button-shadow {
+.button__shadow {
     flex-grow: 1;
     background-color: rgba(38, 38, 38, 0.75);
     position: absolute;
@@ -32,10 +32,27 @@
     border-radius: 10px;
 }
 
-.siege-button-text {
+.button__text {
     -unity-font-definition: url("project://database/Assets/Content/Fonts/DINEngschriftStd.otf?fileID=12800000&guid=05c628696cf7aa74ebcbf037dbe804d2&type=3#DINEngschriftStd");
     font-size: 15px;
     align-content: center;
     justify-content: center;
     margin-top: 3px;
+}
+
+.resource-widget {
+}
+
+.resource-widget__icon {
+}
+
+.resource_widget_text {
+}
+
+.main-menu {
+    flex-grow: 1;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-color: rgb(38, 67, 55);
 }

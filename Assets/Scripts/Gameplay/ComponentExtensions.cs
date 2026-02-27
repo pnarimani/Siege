@@ -21,5 +21,10 @@ namespace Gameplay
             }
             return null;
         }
+        
+        public static Transform FindRecursive(this Component parent, string name)
+        {
+            return FindRecursive<Transform>(parent, name);
+        }
     }
 }

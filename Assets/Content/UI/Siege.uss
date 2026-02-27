@@ -1,0 +1,41 @@
+:root {
+}
+
+.siege-button-bg {
+    background-color: white;
+    border-radius: 10px;
+    flex-grow: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.siege-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px 5px 10px;
+    min-width: 70px;
+}
+
+.siege-button-shadow {
+    flex-grow: 1;
+    background-color: rgba(38, 38, 38, 0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: -15%;
+    right: 0;
+    border-radius: 10px;
+}
+
+.siege-button-text {
+    -unity-font-definition: url("project://database/Assets/Content/Fonts/DINEngschriftStd.otf?fileID=12800000&guid=05c628696cf7aa74ebcbf037dbe804d2&type=3#DINEngschriftStd");
+    font-size: 15px;
+    align-content: center;
+    justify-content: center;
+    margin-top: 3px;
+}

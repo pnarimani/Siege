@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Content/UI/Siege.uss?fileID=7433441132597879392&amp;guid=2f14999a55ec4402ab6db8d64423fd87&amp;type=3#Siege"/>
+    <ui:VisualElement style="flex-grow: 1; justify-content: center; align-content: center; align-items: center;">
+        <Siege.Gameplay.UI.SiegeButton>
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="Text" table="GUID:4d033c6acfe3747eeae039f45bc0f2cd" entry="Id(7888429056)"/>
+            </Bindings>
+        </Siege.Gameplay.UI.SiegeButton>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Content/UI/Siege.uss?fileID=7433441132597879392&amp;guid=2f14999a55ec4402ab6db8d64423fd87&amp;type=3#Siege"/>
     <Style src="project://database/Assets/Content/UI/GameplayHUD.uss?fileID=7433441132597879392&amp;guid=1d6d313ffa7d66b418c52451100923c0&amp;type=3#GameplayHUD"/>
-    <ui:VisualElement class="gameplay-hud">
+    <ui:VisualElement class="gameplay-hud" picking-mode="Ignore">
         <ui:VisualElement class="gameplay-hud-top" >
             <Siege.Gameplay.UI.ResourceWidget name="Food" icon="project://database/Assets/Content/Sprites/Res/bread.png?fileID=21300000&amp;guid=42351608d58751a4db9603e65687614c&amp;type=3#bread"/>
             <Siege.Gameplay.UI.ResourceWidget name="Water" icon="project://database/Assets/Content/Sprites/Res/water.png?fileID=21300000&amp;guid=0085582bc0a22f248879065fb2c9b414&amp;type=3#water" text=""/>

@@ -14,6 +14,13 @@
       "dependencies": {},
       "hash": "6bcc9d14128f31c7dbacb2fa81001b7335ded80f"
     },
+    "com.pnarimani.recent-assets": {
+      "version": "https://github.com/pnarimani/RecentAssets.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "7da3c37ec1cfaa09bdcfad7b2d1fba9075602bfa"
+    },
     "com.singularitygroup.hotreload": {
       "version": "file:com.singularitygroup.hotreload",
       "depth": 0,

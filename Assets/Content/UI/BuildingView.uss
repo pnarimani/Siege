@@ -1,0 +1,21 @@
+:root {
+
+}
+
+.building-button--activated .button__bg {
+    background-color: rgb(23, 135, 0);
+    transition-duration: 500ms;
+}
+
+.building-button--activated > .button__text {
+    color: white;
+}
+
+.building-button--disabled > .button__text {
+    color: white;
+}
+
+.building-button--disabled .button__bg {
+    background-color: rgb(149, 0, 0);
+    transition-duration: 500ms;
+}

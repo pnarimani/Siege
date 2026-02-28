@@ -8,6 +8,7 @@ namespace Siege.Gameplay
         void Start()
         {
             UISystem.Open<GameplayHUD>(UILayer.Screen);
+            UISystem.Open<BuildingView>(UILayer.Window);
         }
     }
 }

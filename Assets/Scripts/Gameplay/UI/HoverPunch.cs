@@ -90,7 +90,7 @@ namespace Siege.Gameplay.UI
             element.RegisterCallback<ClickEvent>(_ =>
             {
                 scaleSpring.Velocity = 10;
-                rotationSpring.Velocity = 120f * (Random.value > 0.5f ? 1 : -1);
+                rotationSpring.Velocity = 80f * (Random.value > 0.5f ? 1 : -1);
             });
 
             element.RegisterCallback<DetachFromPanelEvent>(_ =>

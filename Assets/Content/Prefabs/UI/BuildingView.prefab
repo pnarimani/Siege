@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5825711725610758117}
   - component: {fileID: 5094045555954357608}
-  - component: {fileID: 54031191280457376}
-  - component: {fileID: 2471262633703369215}
+  - component: {fileID: -7889155477792259922}
+  - component: {fileID: 3619945532966751011}
   m_Layer: 0
-  m_Name: GameplayHUD
+  m_Name: BuildingView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
   m_PanelSettings: {fileID: 11400000, guid: 06665e894dc7a4d389bec989b88a5ddc, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 4487a88f7f7190c49bd1f8b268daae8d, type: 3}
+  sourceAsset: {fileID: 9197481963319205126, guid: befbbc3283f6de348add29e8c62fe596, type: 3}
   m_SortingOrder: 0
   m_Position: 0
   m_WorldSpaceSizeMode: 1
@@ -57,7 +57,7 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
---- !u!114 &54031191280457376
+--- !u!114 &-7889155477792259922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,10 +66,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 8722889915741275347}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1beb62ea24704b11a0f1a012ccd3a38c, type: 3}
+  m_Script: {fileID: 11500000, guid: c8bd4f8e477b478e824277f1b502cd50, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Siege.Gameplay::Siege.Gameplay.GameplayHUD
---- !u!114 &2471262633703369215
+  m_EditorClassIdentifier: Siege.Gameplay::Siege.Gameplay.UI.BuildingView
+  _enabledString:
+    m_TableReference:
+      m_TableCollectionName: GUID:4d033c6acfe3747eeae039f45bc0f2cd
+    m_TableEntryReference:
+      m_KeyId: 157173770969088
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _disabledString:
+    m_TableReference:
+      m_TableCollectionName: GUID:4d033c6acfe3747eeae039f45bc0f2cd
+    m_TableEntryReference:
+      m_KeyId: 157194025263104
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &3619945532966751011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

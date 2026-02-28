@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
-namespace Game.UI
+namespace Siege.Gameplay.UI
 {
     public class ButtonFeedbacks : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {

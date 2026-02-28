@@ -1,10 +1,7 @@
-using System;
-using Gameplay;
-using Siege.Gameplay.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Siege
+namespace Siege.Gameplay.UI
 {
     public class IconProgressBar : MonoBehaviour
     {

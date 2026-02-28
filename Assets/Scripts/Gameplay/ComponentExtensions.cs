@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Gameplay
+namespace Siege.Gameplay
 {
     public static class ComponentExtensions
     {

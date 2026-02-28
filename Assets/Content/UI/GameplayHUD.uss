@@ -1,0 +1,23 @@
+:root {
+
+}
+
+.gameplay-hud {
+    flex-grow: 1;
+}
+
+.gameplay-hud-top {
+    height: 30px;
+    background-color: #1e1e1e;
+    flex-direction: row;
+}
+
+.gameplay-hud-bottom {
+    height: 40px;
+    background-color: #191919;
+}
+
+.gameplay-hud-mid {
+    flex-grow: 1;
+    flex-direction: row;
+}

@@ -11,6 +11,7 @@ namespace Siege.Gameplay.UI
         Clickable _clickable;
 
         [CreateProperty]
+        [UxmlAttribute]
         public string Text
         {
             get => _text.text;
@@ -59,6 +60,7 @@ namespace Siege.Gameplay.UI
             bg.AddToClassList("button__bg");
             shadow.AddToClassList("button__shadow");
             _text.AddToClassList("button__text");
+            _text.AddToClassList("text");
 
             Add(shadow);
             Add(bg);

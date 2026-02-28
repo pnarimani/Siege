@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Siege.Gameplay.UI;
 using UnityEngine.AddressableAssets;
 
-namespace Gameplay.Installers
+namespace Siege.Gameplay.Installers
 {
     [UsedImplicitly]
     public class UIInstaller : IProjectInstaller

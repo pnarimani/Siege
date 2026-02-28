@@ -1,6 +1,10 @@
 :root {
 }
 
+.text {
+    -unity-font-definition: url("project://database/Assets/Content/Fonts/DINEngschriftStd.otf?fileID=12800000&guid=05c628696cf7aa74ebcbf037dbe804d2&type=3#DINEngschriftStd");
+}
+
 .button__bg {
     background-color: white;
     border-radius: 10px;
@@ -33,7 +37,6 @@
 }
 
 .button__text {
-    -unity-font-definition: url("project://database/Assets/Content/Fonts/DINEngschriftStd.otf?fileID=12800000&guid=05c628696cf7aa74ebcbf037dbe804d2&type=3#DINEngschriftStd");
     font-size: 15px;
     align-content: center;
     justify-content: center;
@@ -41,12 +44,22 @@
 }
 
 .resource-widget {
+    width: 70px;
+    height: 20px;
+    background-color: rgb(130, 130, 130);
+    margin: 4px;
+    border-radius: 10px;
+    flex-direction: row;
+    align-items: center;
 }
 
 .resource-widget__icon {
+    width: 20px;
+    height: 20px;
 }
 
 .resource_widget_text {
+    flex-grow: 1;
 }
 
 .main-menu {

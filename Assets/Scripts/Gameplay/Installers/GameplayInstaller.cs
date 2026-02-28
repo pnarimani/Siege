@@ -1,9 +1,8 @@
 using Autofac;
 using AutofacUnity;
 using JetBrains.Annotations;
-using Siege.Gameplay;
 
-namespace Gameplay.Installers
+namespace Siege.Gameplay.Installers
 {
     [UsedImplicitly]
     public class GameplayInstaller  : IGameplayInstaller

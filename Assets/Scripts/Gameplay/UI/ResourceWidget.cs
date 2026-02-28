@@ -7,23 +7,37 @@ namespace Siege.Gameplay.UI
     [UxmlElement]
     public partial class ResourceWidget : VisualElement
     {
-        readonly Image _icon;
-        readonly TextElement _text;
+        private readonly Image _icon;
+        private readonly TextElement _text;
 
-        [CreateProperty]
+        // Backing fields (what UXML/UI Builder edits conceptually)
+        private Sprite _iconValue;
+        private string _textValue;
+
+        [UxmlAttribute(name: "icon"), CreateProperty]
         public Sprite Icon
         {
-            get => _icon.sprite;
-            set => _icon.sprite = value;
+            get => _iconValue;
+            set
+            {
+                if (_iconValue == value) return;
+                _iconValue = value;
+                ApplyIcon();
+            }
         }
 
-        [CreateProperty]
+        [UxmlAttribute(name: "text"), CreateProperty]
         public string Text
         {
-            get => _text.text;
-            set => _text.text = value;
+            get => _textValue;
+            set
+            {
+                if (_textValue == value) return;
+                _textValue = value;
+                ApplyText();
+            }
         }
-        
+
         public ResourceWidget()
         {
             _icon = new Image { pickingMode = PickingMode.Ignore };
@@ -35,6 +49,24 @@ namespace Siege.Gameplay.UI
 
             Add(_icon);
             Add(_text);
+
+            // Important: apply whatever values were deserialized/edited
+            ApplyIcon();
+            ApplyText();
+        }
+
+        private void ApplyIcon()
+        {
+            if (_icon == null) return;                 // defensive for UI Builder edge cases
+            _icon.sprite = _iconValue;
+            _icon.MarkDirtyRepaint();
+        }
+
+        private void ApplyText()
+        {
+            if (_text == null) return;                 // defensive for UI Builder edge cases
+            _text.text = _textValue ?? string.Empty;
+            _text.MarkDirtyRepaint();
         }
     }
 }

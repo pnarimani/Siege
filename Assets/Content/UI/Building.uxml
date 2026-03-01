@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Content/UI/Siege.uss?fileID=7433441132597879392&amp;guid=2f14999a55ec4402ab6db8d64423fd87&amp;type=3#Siege"/>
     <Style src="project://database/Assets/Content/UI/BuildingView.uss?fileID=7433441132597879392&amp;guid=d749fd167ff24d04e8a6610922726914&amp;type=3#BuildingView"/>
-    <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; flex-direction: row-reverse;">
+    <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; flex-direction: row-reverse; margin-top: 30px; margin-bottom: 50px;">
         <Siege.Gameplay.UI.SpringElement style="background-color: rgb(105, 105, 105); height: 450px; width: 251px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
             <ui:Label text="Label" name="Title" class="text" style="-unity-font-style: normal; font-size: 26px; -unity-text-align: upper-center;"/>
             <Siege.Gameplay.UI.SiegeButton text="Enabled" name="BuildingToggle"/>

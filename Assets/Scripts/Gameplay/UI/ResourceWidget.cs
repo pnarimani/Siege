@@ -52,6 +52,9 @@ namespace Siege.Gameplay.UI
             _quantityText = new TextElement { pickingMode = PickingMode.Ignore };
             _labelText = new TextElement { pickingMode = PickingMode.Ignore };
 
+            _labelText.AddToClassList("text");
+            _quantityText.AddToClassList("text");
+
             AddToClassList("resource-widget");
             _icon.AddToClassList("resource-widget__icon");
             _quantityText.AddToClassList("resource-widget__text");

@@ -44,13 +44,14 @@
 }
 
 .resource-widget {
-    width: 70px;
     height: 20px;
-    background-color: rgb(130, 130, 130);
+    flex-grow: 0;
+    background-color: rgb(135, 233, 176);
     margin: 4px;
     border-radius: 10px;
     flex-direction: row;
     align-items: center;
+    padding: 2px 5px 0 5px;
 }
 
 .resource-widget__icon {
@@ -58,8 +59,10 @@
     height: 20px;
 }
 
-.resource_widget_text {
+.resource-widget__text {
     flex-grow: 1;
+    justify-content: space-around;
+    -unity-text-align: middle-right;
 }
 
 .main-menu {

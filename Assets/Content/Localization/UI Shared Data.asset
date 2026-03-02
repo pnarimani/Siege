@@ -27,6 +27,26 @@ MonoBehaviour:
     m_Key: inactive
     m_Metadata:
       m_Items: []
+  - m_Id: 200000000000000
+    m_Key: food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 200000000000001
+    m_Key: water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 200000000000002
+    m_Key: fuel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 200000000000003
+    m_Key: materials
+    m_Metadata:
+      m_Items: []
+  - m_Id: 200000000000004
+    m_Key: medicine
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

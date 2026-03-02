@@ -30,6 +30,26 @@ MonoBehaviour:
     m_Localized: Inactive
     m_Metadata:
       m_Items: []
+  - m_Id: 200000000000000
+    m_Localized: Food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 200000000000001
+    m_Localized: Water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 200000000000002
+    m_Localized: Fuel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 200000000000003
+    m_Localized: Materials
+    m_Metadata:
+      m_Items: []
+  - m_Id: 200000000000004
+    m_Localized: Medicine
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

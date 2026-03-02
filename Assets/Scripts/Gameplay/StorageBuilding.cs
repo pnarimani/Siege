@@ -1,10 +1,12 @@
 
 using System.Collections.Generic;
+using Siege.Gameplay.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Siege.Gameplay
 {
-    public class ResourceBuilding : MonoBehaviour
+    public class StorageBuilding : MonoBehaviour, IPointerClickHandler
     {
         private readonly List<ResourceQuantity> _resources = new();
 
@@ -23,6 +25,11 @@ namespace Siege.Gameplay
                 rq.Quantity += quantity;
                 _resources[index] = rq;
             }
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            UISystem.Open<StorageBuildingView>(UILayer.Window).Show(this);
         }
     }
 }

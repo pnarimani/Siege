@@ -3,6 +3,7 @@ using System.Diagnostics;
 using FastSpring;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Debug = UnityEngine.Debug;
 
 namespace Siege.Gameplay.UI
 {
@@ -12,7 +13,7 @@ namespace Siege.Gameplay.UI
     {
         [UxmlAttribute] public bool Enabled = true;
         [UxmlAttribute] public float Frequency = 15f;
-        [UxmlAttribute] public float DampingRatio = 0.7f;
+        [UxmlAttribute] public float DampingRatio = 0.8f;
         [UxmlAttribute] public float Interpolation = 20;
     }
 
@@ -27,9 +28,11 @@ namespace Siege.Gameplay.UI
 
         [UxmlObjectReference(name = "scale")] public SpringDefinition ScaleSpring { get; set; } = new();
 
-        readonly Spring<Vector3> _position = new();
-        readonly Spring<Vector3> _scale = new();
-        readonly Spring<float> _rotation = new();
+        public Spring<Vector3> Position { get; } = new();
+
+        public Spring<float> Rotation { get; } = new();
+
+        public Spring<Vector3> Scale { get; } = new();
 
         public SpringElement()
         {
@@ -39,15 +42,15 @@ namespace Siege.Gameplay.UI
 
         void OnAttach(AttachToPanelEvent evt)
         {
-            _position.UpdateDefinition(PositionSpring.Frequency, PositionSpring.DampingRatio);
-            _position.Interpolation = PositionSpring.Interpolation;
+            Position.UpdateDefinition(PositionSpring.Frequency, PositionSpring.DampingRatio);
+            Position.Interpolation = PositionSpring.Interpolation;
 
-            _rotation.UpdateDefinition(RotationSpring.Frequency, RotationSpring.DampingRatio);
-            _rotation.Interpolation = RotationSpring.Interpolation;
+            Rotation.UpdateDefinition(RotationSpring.Frequency, RotationSpring.DampingRatio);
+            Rotation.Interpolation = RotationSpring.Interpolation;
 
-            _scale.UpdateDefinition(ScaleSpring.Frequency, ScaleSpring.DampingRatio);
-            _scale.Interpolation = ScaleSpring.Interpolation;
-            _scale.MoveInstantly(new Vector3(1, 1, 1));
+            Scale.UpdateDefinition(ScaleSpring.Frequency, ScaleSpring.DampingRatio);
+            Scale.Interpolation = ScaleSpring.Interpolation;
+            Scale.MoveInstantly(new Vector3(1, 1, 1));
 
             schedule.Execute(UpdateSprings).Every(0);
 
@@ -59,35 +62,35 @@ namespace Siege.Gameplay.UI
             FixedUpdateRunner.Remove(FixedUpdate);
         }
 
-        void UpdateSprings()
+        public void UpdateSprings()
         {
             if (PositionSpring.Enabled)
             {
-                _position.Interpolate();
-                style.translate = _position.InterpolatedCurrent;
+                Position.Interpolate();
+                style.translate = Position.InterpolatedCurrent;
             }
 
             if (RotationSpring.Enabled)
             {
-                _rotation.Interpolate();
-                style.rotate = new StyleRotate(Angle.Degrees(_rotation.InterpolatedCurrent));
+                Rotation.Interpolate();
+                style.rotate = new StyleRotate(Angle.Degrees(Rotation.InterpolatedCurrent));
             }
 
             if (ScaleSpring.Enabled)
             {
-                _scale.Interpolate();
-                style.scale = _scale.InterpolatedCurrent;
+                Scale.Interpolate();
+                style.scale = Scale.InterpolatedCurrent;
             }
         }
 
         void FixedUpdate()
         {
             if (PositionSpring.Enabled)
-                _position.Update();
+                Position.Update();
             if (RotationSpring.Enabled)
-                _rotation.Update();
+                Rotation.Update();
             if (ScaleSpring.Enabled)
-                _scale.Update();
+                Scale.Update();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Siege.Gameplay
         public static Transform FindRecursive(this Component parent, string name) =>
             parent.FindRecursive<Transform>(name);
 
-        public static T FindElement<T>(this Component parent, string name) where T : VisualElement
+        public static T FindElement<T>(this Component parent, string name = null) where T : VisualElement
         {
             var document = parent.GetComponent<UIDocument>();
             return document != null ? document.rootVisualElement.Q<T>(name) : null;

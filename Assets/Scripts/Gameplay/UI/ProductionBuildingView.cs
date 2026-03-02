@@ -3,7 +3,7 @@ using UnityEngine.Localization;
 
 namespace Siege.Gameplay.UI
 {
-    public class BuildingView : MonoBehaviour
+    public class ProductionBuildingView : MonoBehaviour
     {
         [SerializeField] LocalizedString _enabledString, _disabledString;
 

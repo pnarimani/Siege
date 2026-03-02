@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unity Localization"
+  short_description: "Unity Localization workflows for tables and Smart Strings."
+  default_prompt: "Use $unity-localization to implement or modify Unity Localization with Component Localizers for static content and Smart Strings for dynamic content."

@@ -21,3 +21,40 @@
     flex-grow: 1;
     flex-direction: row;
 }
+.gameplay-hud-top .progress-bar {
+    flex-grow: 1;
+    margin: 4px 3px;
+}
+
+/* Morale — green, good when high */
+.progress-bar--morale .progress-bar__fill {
+    background-color: rgb(70, 200, 100);
+}
+.progress-bar--morale .progress-bar__increase {
+    background-color: rgba(120, 240, 140, 0.6);
+}
+.progress-bar--morale .progress-bar__decrease {
+    background-color: rgba(70, 200, 100, 0.3);
+}
+
+/* Unrest — red, bad when high */
+.progress-bar--unrest .progress-bar__fill {
+    background-color: rgb(210, 65, 50);
+}
+.progress-bar--unrest .progress-bar__increase {
+    background-color: rgba(255, 120, 80, 0.65);
+}
+.progress-bar--unrest .progress-bar__decrease {
+    background-color: rgba(210, 65, 50, 0.3);
+}
+
+/* Sickness — amber, bad when high */
+.progress-bar--sickness .progress-bar__fill {
+    background-color: rgb(215, 170, 40);
+}
+.progress-bar--sickness .progress-bar__increase {
+    background-color: rgba(255, 210, 80, 0.65);
+}
+.progress-bar--sickness .progress-bar__decrease {
+    background-color: rgba(215, 170, 40, 0.3);
+}

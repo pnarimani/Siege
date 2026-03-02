@@ -1533,9 +1533,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1832694607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f772acec1e18c3245993d5e4b5763e04, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c8cef7bb81116342b444d928080c459, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Siege.Gameplay::Siege.Gameplay.StorageBuilding
+  m_EditorClassIdentifier: Siege.Gameplay::Siege.Gameplay.Building
+  IsEnabled: 0
+  Id: 14
+  ActiveRecipeIndex: 0
 --- !u!114 &1832694609
 MonoBehaviour:
   m_ObjectHideFlags: 0

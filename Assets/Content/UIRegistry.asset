@@ -15,8 +15,6 @@ MonoBehaviour:
   _entries:
   - Type: Siege.Gameplay.UI.BuildingView
     Address: Content/Prefabs/UI/BuildingView.prefab
-  - Type: Siege.Gameplay.UI.StorageBuildingView
-    Address: Content/Prefabs/UI/BuildingView.prefab
   - Type: Siege.Gameplay.UI.ButtonFeedbacks
     Address: Content/Prefabs/UI/Button.prefab
   - Type: Siege.Gameplay.UI.LocalizeTextComponent

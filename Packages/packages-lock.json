@@ -148,7 +148,7 @@
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.2.2"
       },
-      "hash": "6668d86b3142b644ba2fba90ef71f38493f198e0"
+      "hash": "01b3394d26a16b25244d3b6392fc06b644d2d9a2"
     },
     "com.unity.multiplayer.center": {
       "version": "1.0.1",

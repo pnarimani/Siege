@@ -3,7 +3,7 @@
     "unity": {
       "type": "stdio",
       "command": "node",
-      "args": ["./Library/PackageCache/com.unity.mcp@6668d86b3142/mcp-server~/dist/index.js"]
+      "args": ["./Library/PackageCache/com.unity.mcp@01b3394d26a1/mcp-server~/dist/index.js"]
     }
   }
 }

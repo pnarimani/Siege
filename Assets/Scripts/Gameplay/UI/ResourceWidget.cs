@@ -8,65 +8,58 @@ namespace Siege.Gameplay.UI
     public partial class ResourceWidget : VisualElement
     {
         private readonly Image _icon;
-        private readonly TextElement _text;
-
-        // Backing fields (what UXML/UI Builder edits conceptually)
-        private Sprite _iconValue;
-        private string _textValue;
+        private readonly TextElement _quantityText, _labelText;
 
         [UxmlAttribute(name: "icon"), CreateProperty]
         public Sprite Icon
         {
-            get => _iconValue;
+            get => _icon.sprite;
             set
             {
-                if (_iconValue == value) return;
-                _iconValue = value;
-                ApplyIcon();
+                if (_icon.sprite == value) return;
+                _icon.sprite = value;
+                _icon.MarkDirtyRepaint();
             }
         }
 
         [UxmlAttribute(name: "text"), CreateProperty]
         public string Text
         {
-            get => _textValue;
+            get => _quantityText.text;
             set
             {
-                if (_textValue == value) return;
-                _textValue = value;
-                ApplyText();
+                if (_quantityText.text == value) return;
+                _quantityText.text = value;
+                _quantityText.MarkDirtyRepaint();
+            }
+        }
+
+        [UxmlAttribute(name: "label"), CreateProperty]
+        public string Label
+        {
+            get => _labelText.text;
+            set
+            {
+                if (_labelText.text == value) return;
+                _labelText.text = value;
+                _labelText.MarkDirtyRepaint();
             }
         }
 
         public ResourceWidget()
         {
             _icon = new Image { pickingMode = PickingMode.Ignore };
-            _text = new TextElement { pickingMode = PickingMode.Ignore };
+            _quantityText = new TextElement { pickingMode = PickingMode.Ignore };
+            _labelText = new TextElement { pickingMode = PickingMode.Ignore };
 
             AddToClassList("resource-widget");
             _icon.AddToClassList("resource-widget__icon");
-            _text.AddToClassList("resource-widget__text");
+            _quantityText.AddToClassList("resource-widget__text");
+            _labelText.AddToClassList("resource-widget__label");
 
             Add(_icon);
-            Add(_text);
-
-            // Important: apply whatever values were deserialized/edited
-            ApplyIcon();
-            ApplyText();
-        }
-
-        private void ApplyIcon()
-        {
-            if (_icon == null) return;                 // defensive for UI Builder edge cases
-            _icon.sprite = _iconValue;
-            _icon.MarkDirtyRepaint();
-        }
-
-        private void ApplyText()
-        {
-            if (_text == null) return;                 // defensive for UI Builder edge cases
-            _text.text = _textValue ?? string.Empty;
-            _text.MarkDirtyRepaint();
+            Add(_labelText);
+            Add(_quantityText);
         }
     }
 }

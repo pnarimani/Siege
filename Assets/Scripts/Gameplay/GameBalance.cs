@@ -4,6 +4,7 @@ namespace Siege.Gameplay
 {
     public class GameBalance
     {
+        public int DayDurationSeconds { get; } = 120;
         public int TargetSurvivalDay { get; } = 40;
 
         public int StartingHealthyWorkers { get; } = 60;
@@ -26,6 +27,8 @@ namespace Siege.Gameplay
 
         public int RevoltThreshold { get; } = 88;
         public int FoodWaterLossThresholdDays { get; } = 3;
+
+        public int ResourceBuildingCapacity { get; } = 100;
 
         public int OvercrowdingThreshold { get; } = 5;
         public int OvercrowdingUnrestPerStack { get; } = 2;
@@ -398,8 +401,8 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "crop_cultivation",
-                    Input = new[] { new ResourceQuantity(ResourceKind.Fuel, 1) },
-                    Output = new[] { new ResourceQuantity(ResourceKind.Food, 3) },
+                    Input = new[] { new ResourceQuantity(ResourceType.Fuel, 1) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Food, 3) },
                 },
             },
         };
@@ -414,7 +417,7 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "herbal_medicine",
-                    Output = new[] { new ResourceQuantity(ResourceKind.Medicine, 1) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Medicine, 1) },
                 },
             },
         };
@@ -429,8 +432,8 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "water_extraction",
-                    Input = new[] { new ResourceQuantity(ResourceKind.Fuel, 1) },
-                    Output = new[] { new ResourceQuantity(ResourceKind.Water, 3) },
+                    Input = new[] { new ResourceQuantity(ResourceType.Fuel, 1) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Water, 3) },
                 },
             },
         };
@@ -445,7 +448,7 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "fuel_refinement",
-                    Output = new[] { new ResourceQuantity(ResourceKind.Fuel, 2) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Fuel, 2) },
                 },
             },
         };
@@ -460,8 +463,8 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "field_meal_preparation",
-                    Input = new[] { new ResourceQuantity(ResourceKind.Fuel, 1) },
-                    Output = new[] { new ResourceQuantity(ResourceKind.Food, 2) },
+                    Input = new[] { new ResourceQuantity(ResourceType.Fuel, 1) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Food, 2) },
                 },
             },
         };
@@ -476,8 +479,8 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "crafting",
-                    Input = new[] { new ResourceQuantity(ResourceKind.Fuel, 1) },
-                    Output = new[] { new ResourceQuantity(ResourceKind.Materials, 2) },
+                    Input = new[] { new ResourceQuantity(ResourceType.Fuel, 1) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Materials, 2) },
                 },
             },
         };
@@ -492,8 +495,8 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "metalwork",
-                    Input = new[] { new ResourceQuantity(ResourceKind.Materials, 3) },
-                    Output = new[] { new ResourceQuantity(ResourceKind.Integrity, 1) },
+                    Input = new[] { new ResourceQuantity(ResourceType.Materials, 3) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Integrity, 1) },
                 },
             },
         };
@@ -508,7 +511,7 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "water_collection",
-                    Output = new[] { new ResourceQuantity(ResourceKind.Water, 1.5) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Water, 1.5) },
                 },
             },
         };
@@ -523,8 +526,8 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "medical_treatment",
-                    Input = new[] { new ResourceQuantity(ResourceKind.Medicine, 1) },
-                    Output = new[] { new ResourceQuantity(ResourceKind.Care, 1) },
+                    Input = new[] { new ResourceQuantity(ResourceType.Medicine, 1) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Care, 1) },
                 },
             },
         };
@@ -539,8 +542,8 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "structural_repairs",
-                    Input = new[] { new ResourceQuantity(ResourceKind.Materials, 2) },
-                    Output = new[] { new ResourceQuantity(ResourceKind.Integrity, 1) },
+                    Input = new[] { new ResourceQuantity(ResourceType.Materials, 2) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Integrity, 1) },
                 },
             },
         };
@@ -555,8 +558,8 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "food_preservation",
-                    Input = new[] { new ResourceQuantity(ResourceKind.Food, 1) },
-                    Output = new[] { new ResourceQuantity(ResourceKind.Food, 1.5) },
+                    Input = new[] { new ResourceQuantity(ResourceType.Food, 1) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Food, 1.5) },
                 },
             },
         };
@@ -571,8 +574,8 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "siege_repairs",
-                    Input = new[] { new ResourceQuantity(ResourceKind.Materials, 4) },
-                    Output = new[] { new ResourceQuantity(ResourceKind.Integrity, 1.5) },
+                    Input = new[] { new ResourceQuantity(ResourceType.Materials, 4) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Integrity, 1.5) },
                 },
             },
         };
@@ -587,8 +590,8 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "resource_distribution",
-                    Input = new[] { new ResourceQuantity(ResourceKind.Food, 1) },
-                    Output = new[] { new ResourceQuantity(ResourceKind.Water, 1.3) },
+                    Input = new[] { new ResourceQuantity(ResourceType.Food, 1) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Water, 1.3) },
                 },
             },
         };
@@ -604,8 +607,8 @@ namespace Siege.Gameplay
                 new()
                 {
                     Id = "trade_exchange",
-                    Input = new[] { new ResourceQuantity(ResourceKind.Materials, 2) },
-                    Output = new[] { new ResourceQuantity(ResourceKind.Food, 2) },
+                    Input = new[] { new ResourceQuantity(ResourceType.Materials, 2) },
+                    Output = new[] { new ResourceQuantity(ResourceType.Food, 2) },
                 },
             },
         };

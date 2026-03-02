@@ -44,15 +44,4 @@ namespace Siege.Gameplay
         public ResourceQuantity[] Input;
         public ResourceQuantity[] Output;
     }
-
-    public enum ResourceKind
-    {
-        Food,
-        Water,
-        Fuel,
-        Medicine,
-        Materials,
-        Integrity,
-        Care,
-    }
 }

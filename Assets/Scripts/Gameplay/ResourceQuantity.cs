@@ -5,10 +5,10 @@ namespace Siege.Gameplay
     [Serializable]
     public struct ResourceQuantity
     {
-        public ResourceKind Resource;
+        public ResourceType Resource;
         public double Quantity;
 
-        public ResourceQuantity(ResourceKind resource, double quantity)
+        public ResourceQuantity(ResourceType resource, double quantity)
         {
             Resource = resource;
             Quantity = quantity;

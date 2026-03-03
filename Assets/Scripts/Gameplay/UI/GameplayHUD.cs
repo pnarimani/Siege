@@ -1,5 +1,5 @@
-using System.Linq;
 using AutofacUnity;
+using Siege.Gameplay.Simulation;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UIElements;
@@ -19,6 +19,9 @@ namespace Siege.Gameplay.UI
 
         ResourceWidget _food, _water, _fuel, _materials, _meds;
         ProgressBar _morale, _unrest, _sickness;
+
+        GameState _state;
+        GameClock _clock;
 
         void Awake()
         {
@@ -46,28 +49,33 @@ namespace Siege.Gameplay.UI
             SetupTooltip(_sickness, _sicknessTitle, _sicknessDesc);
         }
 
+        void Start()
+        {
+            _state = Resolver.Resolve<GameState>();
+            _clock = Resolver.Resolve<GameClock>();
+        }
+
         void Update()
         {
+            if (_state == null) return;
             UpdateResources();
             UpdateStatusBars();
         }
 
         void UpdateResources()
         {
-            if (_food != null) _food.Text = SumResource(ResourceType.Food).ToString();
-            if (_water != null) _water.Text = SumResource(ResourceType.Water).ToString();
-            if (_fuel != null) _fuel.Text = SumResource(ResourceType.Fuel).ToString();
-            if (_materials != null) _materials.Text = SumResource(ResourceType.Materials).ToString();
-            if (_meds != null) _meds.Text = SumResource(ResourceType.Medicine).ToString();
+            if (_food != null) _food.Text = ((int)_state.Food).ToString();
+            if (_water != null) _water.Text = ((int)_state.Water).ToString();
+            if (_fuel != null) _fuel.Text = ((int)_state.Fuel).ToString();
+            if (_materials != null) _materials.Text = ((int)_state.Materials).ToString();
+            if (_meds != null) _meds.Text = ((int)_state.Medicine).ToString();
         }
 
         void UpdateStatusBars()
         {
-        }
-
-        int SumResource(ResourceType type)
-        {
-            return 0;
+            _morale?.Set01((float)(_state.Morale / 100.0));
+            _unrest?.Set01((float)(_state.Unrest / 100.0));
+            _sickness?.Set01((float)(_state.Sickness / 100.0));
         }
 
         static void SetupTooltip(VisualElement el, LocalizedString title, LocalizedString desc)

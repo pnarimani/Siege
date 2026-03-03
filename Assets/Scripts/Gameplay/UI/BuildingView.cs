@@ -26,6 +26,7 @@ namespace Siege.Gameplay.UI
 
         bool _isActivated = true;
         GameBalance _gameBalance;
+        Building _building;
 
         void Awake()
         {
@@ -39,20 +40,21 @@ namespace Siege.Gameplay.UI
 
         public async void Show(Building building)
         {
+            _building = building;
             if (building.Id == BuildingId.Storage)
                 ShowStorage(building);
             else
-                ShowProduction();
+                ShowProduction(building);
 
             await Awaitable.NextFrameAsync();
             _root.AddToClassList("building-panel--in");
         }
 
-        void ShowProduction()
+        void ShowProduction(Building building)
         {
             this.FindElement<VisualElement>("StorageBuilding").style.display = DisplayStyle.None;
             this.FindElement<VisualElement>("ProductionBuilding").style.display = DisplayStyle.Flex;
-            SetToggled(true);
+            SetToggled(building.IsActive);
         }
 
         void ShowStorage(Building building)
@@ -70,7 +72,12 @@ namespace Siege.Gameplay.UI
 
         void OnButtonClicked()
         {
-            SetToggled(!_isActivated);
+            if (_building != null && _building.Id != BuildingId.Storage)
+            {
+                _building.IsActive = !_building.IsActive;
+                WorkerAllocation.Reallocate();
+            }
+            SetToggled(_building != null ? _building.IsActive : !_isActivated);
         }
 
         void SetToggled(bool isActivated)

@@ -31,6 +31,7 @@ namespace Siege.Gameplay
         public bool IsActive;
         public BuildingId Id;
         public int ActiveRecipeIndex;
+        public int AllocatedWorkers { get; set; }
 
         readonly List<ResourceQuantity> _resources = new();
         public IReadOnlyList<ResourceQuantity> Resources => _resources;

@@ -18,6 +18,7 @@ namespace Siege.Gameplay.UI
             {
                 if (_icon.sprite == value) return;
                 _icon.sprite = value;
+                _icon.style.display = value != null ? DisplayStyle.Flex : DisplayStyle.None;
                 _icon.MarkDirtyRepaint();
             }
         }
@@ -60,6 +61,8 @@ namespace Siege.Gameplay.UI
             Add(_icon);
             Add(_labelText);
             Add(_quantityText);
+            
+            _icon.style.display = DisplayStyle.None;
         }
     }
 }

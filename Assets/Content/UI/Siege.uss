@@ -70,6 +70,14 @@
     -unity-text-align: middle-right;
 }
 
+.resource-widget__label {
+    color: rgb(200, 215, 225);
+    font-size: 12px;
+    justify-content: space-around;
+    -unity-text-align: middle-left;
+    margin: 0 4px;
+}
+
 .main-menu {
     flex-grow: 1;
     justify-content: center;

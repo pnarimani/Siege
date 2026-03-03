@@ -7,9 +7,7 @@ namespace Siege.Gameplay
     {
         void Start()
         {
-            gameObject.AddComponent<ProductionSystem>();
             UISystem.Open<GameplayHUD>(UILayer.Screen);
-            WorkerAllocation.Reallocate();
         }
     }
 }

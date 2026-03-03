@@ -19,11 +19,9 @@ namespace Siege.Gameplay.UI
 
         ResourceWidget _food, _water, _fuel, _materials, _meds;
         ProgressBar _morale, _unrest, _sickness;
-        GameState _gameState;
 
         void Awake()
         {
-            _gameState = Resolver.Resolve<GameState>();
             _food = this.FindElement<ResourceWidget>("Food");
             _water = this.FindElement<ResourceWidget>("Water");
             _fuel = this.FindElement<ResourceWidget>("Fuel");
@@ -65,16 +63,12 @@ namespace Siege.Gameplay.UI
 
         void UpdateStatusBars()
         {
-            if (_gameState == null) return;
-            _morale?.Update01(_gameState.Morale / 100f);
-            _unrest?.Update01(_gameState.Unrest / 100f);
-            _sickness?.Update01(_gameState.Sickness / 100f);
         }
 
-        int SumResource(ResourceType type) =>
-            (int)Building.All
-                .Where(b => b != null)
-                .Sum(b => b.Resources.FirstOrDefault(r => r.Resource == type).Quantity);
+        int SumResource(ResourceType type)
+        {
+            return 0;
+        }
 
         static void SetupTooltip(VisualElement el, LocalizedString title, LocalizedString desc)
         {

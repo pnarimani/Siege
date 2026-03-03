@@ -9,10 +9,6 @@ namespace Siege.Gameplay.Installers
     {
         public void Configure(ContainerBuilder builder)
         {
-            builder.RegisterType<FlagsState>().SingleInstance();
-            builder.RegisterType<GameBalance>().SingleInstance();
-            builder.RegisterType<ResourceManagement>().SingleInstance();
-            builder.RegisterType<GameState>().SingleInstance().AutoActivate();
         }
     }
 }

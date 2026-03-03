@@ -3,6 +3,7 @@ using AutofacUnity;
 using JetBrains.Annotations;
 using Siege.Gameplay.Buildings;
 using Siege.Gameplay.Defense;
+using Siege.Gameplay.Laws;
 using Siege.Gameplay.Political;
 using Siege.Gameplay.Population;
 using Siege.Gameplay.Resources;
@@ -46,6 +47,10 @@ namespace Siege.Gameplay.Installers
             builder.RegisterType<PopulationSystem>().As<ISimulationSystem>().SingleInstance();
             builder.RegisterType<SicknessSystem>().As<ISimulationSystem>().SingleInstance();
             builder.RegisterType<OvercrowdingSystem>().As<ISimulationSystem>().SingleInstance();
+
+            // Laws
+            builder.RegisterType<LawManager>().SingleInstance();
+            builder.RegisterType<LawEffectSystem>().As<ISimulationSystem>().SingleInstance();
         }
     }
 }

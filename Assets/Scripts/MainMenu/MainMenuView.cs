@@ -1,10 +1,7 @@
-using System;
 using Siege.Gameplay;
 using Siege.Gameplay.UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 namespace Siege.MainMenu
 {

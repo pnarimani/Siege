@@ -1,6 +1,6 @@
 ﻿using System;
+using AutofacUnity;
 using UnityEngine;
-using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 namespace Siege.Gameplay.UI
@@ -9,12 +9,11 @@ namespace Siege.Gameplay.UI
     {
         readonly AddressableUIRegistry _registry;
         Transform _root;
-        
-        static UISystem _instance;
+
+        static UISystem Self => Resolver.Resolve<UISystem>();
 
         public UISystem(AddressableUIRegistry registry)
         {
-            _instance = this;
             _registry = registry;
             EnsureRoot();
             _registry.PreloadAllPrefabs().Forget();
@@ -22,9 +21,10 @@ namespace Siege.Gameplay.UI
 
         public static T Open<T>(UILayer layer)
         {
-            Debug.Assert(_instance != null, "UISystem instance is not set. Make sure to install UISystem in your project.");
+            var self = Self;
+            Debug.Assert(self != null, "UISystem is not installed.");
             
-            var prefab = _instance._registry.GetPrefab<T>();
+            var prefab = self._registry.GetPrefab<T>();
             if (prefab == null)
             {
                 Debug.LogError("UISystem: No prefab registered for type " + typeof(T).Name);
@@ -33,13 +33,14 @@ namespace Siege.Gameplay.UI
 
             var parent = GetLayer(layer);
             Debug.Assert(parent != null, "UISystem: Invalid UILayer " + layer);
-            var instance = Object.Instantiate(prefab, parent);
-            return instance.GetComponent<T>();
+            var go = Object.Instantiate(prefab, parent);
+            return go.GetComponent<T>();
         }
 
         public static T GetOrOpen<T>(UILayer layer)
         {
-            var prefab = _instance._registry.GetPrefab<T>();
+            var self = Self;
+            var prefab = self._registry.GetPrefab<T>();
             if (prefab == null)
             {
                 Debug.LogError("UISystem: No prefab registered for type " + typeof(T).Name);
@@ -59,11 +60,12 @@ namespace Siege.Gameplay.UI
 
         public static T GetExisting<T>(Func<T, bool> predicate = null)
         {
-            var instances = _instance._root.GetComponentsInChildren<T>(true);
-            foreach (var instance in instances)
+            var self = Self;
+            var instances = self._root.GetComponentsInChildren<T>(true);
+            foreach (var inst in instances)
             {
-                if (predicate == null || predicate(instance))
-                    return instance;
+                if (predicate == null || predicate(inst))
+                    return inst;
             }
 
             return default;
@@ -71,33 +73,27 @@ namespace Siege.Gameplay.UI
 
         public static Transform GetLayer(UILayer layer)
         {
-            Debug.Assert(_instance != null, "UISystem instance is not set. Make sure to install UISystem in your project.");
+            var self = Self;
+            Debug.Assert(self != null, "UISystem is not installed.");
             
-            _instance.EnsureRoot();
+            self.EnsureRoot();
             
             return layer switch
             {
-                UILayer.World => _instance._root.GetChild(0),
-                UILayer.Screen => _instance._root.GetChild(1),
-                UILayer.Window => _instance._root.GetChild(2),
-                UILayer.Popup => _instance._root.GetChild(3),
-                UILayer.Dragging => _instance._root.GetChild(4),
-                UILayer.Overlay => _instance._root.GetChild(5),
-                UILayer.Tooltip => _instance._root.GetChild(6),
+                UILayer.World => self._root.GetChild(0),
+                UILayer.Screen => self._root.GetChild(1),
+                UILayer.Window => self._root.GetChild(2),
+                UILayer.Popup => self._root.GetChild(3),
+                UILayer.Dragging => self._root.GetChild(4),
+                UILayer.Overlay => self._root.GetChild(5),
+                UILayer.Tooltip => self._root.GetChild(6),
                 _ => null,
             };
         }
 
         void CreateLayer(UILayer uiLayer)
         {
-            var transform = (RectTransform)new GameObject(uiLayer.ToString(), typeof(RectTransform)).transform;
-            transform.SetParent(_root, false);
-            transform.anchorMin = Vector2.zero;
-            transform.anchorMax = Vector2.one;
-            transform.offsetMin = Vector2.zero;
-            transform.offsetMax = Vector2.zero;
-            transform.sizeDelta = Vector2.zero;
-            transform.localScale = Vector3.one;
+            new GameObject(uiLayer.ToString()).transform.SetParent(_root, false);
         }
 
         void EnsureRoot()

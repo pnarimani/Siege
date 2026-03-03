@@ -1,4 +1,5 @@
 using System.Linq;
+using AutofacUnity;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UIElements;
@@ -18,11 +19,11 @@ namespace Siege.Gameplay.UI
 
         ResourceWidget _food, _water, _fuel, _materials, _meds;
         ProgressBar _morale, _unrest, _sickness;
-        Building[] _buildings = { };
-        float _buildingRefreshTimer;
+        GameState _gameState;
 
         void Awake()
         {
+            _gameState = Resolver.Resolve<GameState>();
             _food = this.FindElement<ResourceWidget>("Food");
             _water = this.FindElement<ResourceWidget>("Water");
             _fuel = this.FindElement<ResourceWidget>("Fuel");
@@ -49,13 +50,6 @@ namespace Siege.Gameplay.UI
 
         void Update()
         {
-            _buildingRefreshTimer -= Time.deltaTime;
-            if (_buildingRefreshTimer <= 0f)
-            {
-                _buildings = FindObjectsByType<Building>(FindObjectsSortMode.None);
-                _buildingRefreshTimer = 2f;
-            }
-
             UpdateResources();
             UpdateStatusBars();
         }
@@ -71,15 +65,14 @@ namespace Siege.Gameplay.UI
 
         void UpdateStatusBars()
         {
-            var gs = GameState.Current;
-            if (gs == null) return;
-            _morale?.Update01(gs.Morale / 100f);
-            _unrest?.Update01(gs.Unrest / 100f);
-            _sickness?.Update01(gs.Sickness / 100f);
+            if (_gameState == null) return;
+            _morale?.Update01(_gameState.Morale / 100f);
+            _unrest?.Update01(_gameState.Unrest / 100f);
+            _sickness?.Update01(_gameState.Sickness / 100f);
         }
 
         int SumResource(ResourceType type) =>
-            (int)_buildings
+            (int)Building.All
                 .Where(b => b != null)
                 .Sum(b => b.Resources.FirstOrDefault(r => r.Resource == type).Quantity);
 

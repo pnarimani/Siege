@@ -28,6 +28,9 @@ namespace Siege.Gameplay
 
     public class Building : MonoBehaviour, IPointerClickHandler
     {
+        static readonly List<Building> _all = new();
+        public static IReadOnlyList<Building> All => _all;
+
         public bool IsActive;
         public BuildingId Id;
         public int ActiveRecipeIndex;
@@ -36,8 +39,12 @@ namespace Siege.Gameplay
         readonly List<ResourceQuantity> _resources = new();
         public IReadOnlyList<ResourceQuantity> Resources => _resources;
 
-        float _productionProgress;
-        ProductionRecipe _inProgressRecipe;
+        [System.NonSerialized] public float ProductionProgress;
+        [System.NonSerialized] public ProductionRecipe InProgressRecipe;
+        BuildingDefinition _definition;
+
+        void OnEnable() => _all.Add(this);
+        void OnDisable() => _all.Remove(this);
 
         public void Add(ResourceType resource, int quantity)
         {
@@ -63,47 +70,15 @@ namespace Siege.Gameplay
             _resources[index] = rq;
         }
 
-        void Update()
-        {
-            if (!IsActive)
-                return;
-
-            if (Id == BuildingId.Storage)
-                return;
-
-            if (_productionProgress == 0)
-            {
-                var recipe = GetCurrentRecipe();
-                if (recipe == null)
-                    return;
-
-                if (!Resolver.Resolve<ResourceManagement>().TryConsumeResources(recipe.Input))
-                {
-                    return;
-                }
-
-                _inProgressRecipe = recipe;
-            }
-            
-            _productionProgress += Time.deltaTime;
-            
-            if (_productionProgress >= _inProgressRecipe.Duration)
-            {
-                Resolver.Resolve<ResourceManagement>().ProduceResources(_inProgressRecipe.Output);
-                _productionProgress = 0;
-                _inProgressRecipe = null;
-            }
-        }
-
         public void OnPointerClick(PointerEventData eventData)
         {
             UISystem.GetExisting<BuildingView>().Show(this);
         }
 
-        ProductionRecipe GetCurrentRecipe()
+        public ProductionRecipe GetCurrentRecipe()
         {
             var definition = GetDefinition();
-            if (definition.Recipes == null || definition.Recipes.Length == 0)
+            if (definition?.Recipes == null || definition.Recipes.Length == 0)
                 return null;
 
             var recipe = definition.Recipes[ActiveRecipeIndex];
@@ -119,7 +94,7 @@ namespace Siege.Gameplay
 
         public BuildingDefinition GetDefinition()
         {
-            return Resolver.Resolve<GameBalance>().Buildings.FirstOrDefault(x => x.Id == Id);
+            return _definition ??= Resolver.Resolve<GameBalance>().Buildings.FirstOrDefault(x => x.Id == Id);
         }
     }
 }

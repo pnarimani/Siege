@@ -1,5 +1,5 @@
 using System.Linq;
-using UnityEngine;
+using AutofacUnity;
 
 namespace Siege.Gameplay
 {
@@ -7,16 +7,15 @@ namespace Siege.Gameplay
     {
         public static void Reallocate()
         {
-            var buildings = Object.FindObjectsByType<Building>(FindObjectsSortMode.None);
-            var state = GameState.Current;
+            var state = Resolver.Resolve<GameState>();
             if (state == null) return;
 
-            var eligible = buildings
+            foreach (var b in Building.All)
+                b.AllocatedWorkers = 0;
+
+            var eligible = Building.All
                 .Where(b => b.IsActive && b.Id != BuildingId.Storage)
                 .ToArray();
-
-            foreach (var b in buildings)
-                b.AllocatedWorkers = 0;
 
             if (eligible.Length == 0) return;
 

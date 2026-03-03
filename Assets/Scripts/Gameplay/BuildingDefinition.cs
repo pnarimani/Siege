@@ -14,7 +14,7 @@ namespace Siege.Gameplay
     public class ProductionRecipe
     {
         public string Id;
-        public Func<bool> IsAvailable;
+        public Func<bool> IsAvailable = () => true;
         public float Duration;
         public ResourceQuantity[] Input;
         public ResourceQuantity[] Output;

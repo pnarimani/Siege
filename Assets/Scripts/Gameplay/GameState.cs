@@ -4,8 +4,6 @@ namespace Siege.Gameplay
     {
         readonly GameBalance _gameBalance;
 
-        public static GameState Current { get; private set; }
-
         public double Time { get; set; }
         public int Day => (int)(Time / _gameBalance.DayDurationSeconds);
 
@@ -31,7 +29,6 @@ namespace Siege.Gameplay
         
         public GameState(GameBalance gameBalance)
         {
-            Current = this;
             _gameBalance = gameBalance;
 
             Morale = gameBalance.StartingMorale;

@@ -116,6 +116,8 @@ namespace Siege.Gameplay.Simulation
         public readonly Dictionary<string, int> OrderCooldowns = new(); // orderId → days remaining
         public readonly HashSet<string> TriggeredEventIds = new();
         public int EventsFiredToday;
+        public int OrdersIssuedCount;
+        public bool IsGameOver;
 
         // ── Death Tracking ────────────────────────────────────────────
 

@@ -61,6 +61,7 @@ namespace Siege.Gameplay.Simulation
             _clock.Advance(dt);
 
             if (_clock.IsPaused) return;
+            if (_state.IsGameOver) return;
 
             float scaledDt = dt * _clock.TimeScale;
 

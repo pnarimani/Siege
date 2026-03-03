@@ -5,6 +5,7 @@ using Siege.Gameplay.Buildings;
 using Siege.Gameplay.Defense;
 using Siege.Gameplay.Events;
 using Siege.Gameplay.Laws;
+using Siege.Gameplay.LossConditions;
 using Siege.Gameplay.Missions;
 using Siege.Gameplay.Political;
 using Siege.Gameplay.Population;
@@ -66,6 +67,9 @@ namespace Siege.Gameplay.Installers
             // Events
             builder.RegisterType<EventManager>().SingleInstance();
             builder.RegisterType<EventTriggerSystem>().As<ISimulationSystem>().SingleInstance();
+
+            // Win/Loss Conditions
+            builder.RegisterType<LossConditionSystem>().AsSelf().As<ISimulationSystem>().SingleInstance();
         }
     }
 }

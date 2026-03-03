@@ -54,7 +54,7 @@ Buildings can be **activated** or **deactivated** using the `toggle` command. Wh
 
 ## Specializations
 
-Each building can be specialized to modify its behavior. Use `specialize <building>` to view and select options.
+Each building can be specialized to modify its behavior. 
 
 ### Farm
 - **Grain Silos**: Output 4 food/worker (up from 3)

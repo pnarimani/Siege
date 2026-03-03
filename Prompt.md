@@ -12,6 +12,7 @@ Most runs should fail before **Day 25**. Survival to Day 40 should be rare and f
 * Make variables easy to tune
 * We are making the game in Unity
 * Use UI Toolkit for UI
+* The game is 3D with a top-down camera
 * Architecture the code in such a way that it's easy to explain to the player WHY something is happening.
 * Use maintainable and extendable architecture.
 * Make sure the player knows all the important game state, all the available actions and the cost and consequences of those actions.
@@ -72,6 +73,8 @@ Food and Water must be critical within first 6–8 days without intervention.
 
 This game is a real time game similar to FrostPunk. The player can pause the game by hitting "Space" key.
 Introduce a variable for day length with the default value of 60 seconds.
+
+All the resources are produced and consumed in real time. 
 
 ---
 

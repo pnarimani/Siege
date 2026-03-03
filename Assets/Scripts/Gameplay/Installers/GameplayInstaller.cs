@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Siege.Gameplay.Buildings;
 using Siege.Gameplay.Defense;
 using Siege.Gameplay.Laws;
+using Siege.Gameplay.Missions;
 using Siege.Gameplay.Political;
 using Siege.Gameplay.Population;
 using Siege.Gameplay.Resources;
@@ -55,6 +56,11 @@ namespace Siege.Gameplay.Installers
             // Orders
             builder.RegisterType<Orders.OrderManager>().SingleInstance();
             builder.RegisterType<Orders.OrderEffectSystem>().As<ISimulationSystem>().SingleInstance();
+
+            // Missions
+            builder.RegisterType<MissionManager>().SingleInstance();
+            builder.RegisterType<MissionProgressSystem>().As<ISimulationSystem>().SingleInstance();
+            builder.RegisterType<ScavengingSystem>().AsSelf().As<ISimulationSystem>().SingleInstance();
         }
     }
 }

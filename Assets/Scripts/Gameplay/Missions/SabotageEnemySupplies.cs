@@ -1,0 +1,66 @@
+using Siege.Gameplay.Simulation;
+using UnityEngine;
+
+namespace Siege.Gameplay.Missions
+{
+    public class SabotageEnemySupplies : Mission
+    {
+        const int Duration = 3;
+        const int Workers = 4;
+        const float ChanceGreatSuccess = 0.40f;
+        const float ChancePartialSuccess = 0.30f;
+        const int FailDeaths = 4;
+        const double FailUnrest = 20;
+
+        public override string Id => "sabotage_enemy_supplies";
+        public override string Name => "Sabotage Enemy Supplies";
+        public override string Description => "Infiltrate enemy camps and destroy their supply lines.";
+        public override int DurationDays => Duration;
+        public override int WorkerCost => Workers;
+
+        public override bool CanLaunch(GameState state) => state.HealthyWorkers >= Workers;
+
+        public override MissionOutcome Resolve(GameState state, ChangeLog log)
+        {
+            float roll = Random.value;
+
+            if (roll < ChanceGreatSuccess)
+            {
+                // Full siege damage reduction for 5 days — applied as immediate intensity drop
+                state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - 1);
+                log.Record("SiegeIntensity", -1, Name);
+                // TODO: temporal 5-day damage reduction modifier
+                return new MissionOutcome
+                {
+                    NarrativeText = "Their grain stores are ash. The siege falters as hunger gnaws at the enemy.",
+                    Success = true
+                };
+            }
+
+            if (roll < ChanceGreatSuccess + ChancePartialSuccess)
+            {
+                // Partial reduction for 3 days
+                log.Record("SiegeIntensity", 0, Name + " (partial)");
+                // TODO: temporal 3-day partial damage reduction modifier
+                return new MissionOutcome
+                {
+                    NarrativeText = "Some supplies burned, but the enemy recovered quickly. A brief reprieve.",
+                    Success = true
+                };
+            }
+
+            state.Unrest += FailUnrest;
+            state.TotalDeaths += FailDeaths;
+            state.DeathsToday += FailDeaths;
+            log.Record("Unrest", FailUnrest, Name);
+            log.Record("Deaths", FailDeaths, Name);
+
+            return new MissionOutcome
+            {
+                NarrativeText = "The saboteurs were caught and executed in view of the walls.",
+                Success = false,
+                Deaths = FailDeaths
+            };
+        }
+    }
+}

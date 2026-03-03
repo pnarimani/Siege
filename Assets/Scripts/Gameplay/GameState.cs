@@ -19,15 +19,31 @@ namespace Siege.Gameplay
 
         public int SiegeEscalationDelayDays { get; set; }
 
+        public int HealthyWorkerCount { get; set; }
+        public int SickWorkerCount { get; set; }
+        public int TotalWorkerCount => HealthyWorkerCount + SickWorkerCount;
+        
+        public int ElderlyCount { get; set; }
+        
+        public int HealthyGuardsCount { get; set; }
+        public int SickGuardsCount { get; set; }
+        public int TotalGuardsCount => HealthyGuardsCount + SickGuardsCount;
+        
         public GameState(GameBalance gameBalance)
         {
             Current = this;
             _gameBalance = gameBalance;
-            
+
             Morale = gameBalance.StartingMorale;
             Unrest = gameBalance.StartingUnrest;
             Sickness = gameBalance.StartingSickness;
             SiegeIntensity = 1;
+            
+            HealthyWorkerCount = gameBalance.StartingHealthyWorkers;
+            SickWorkerCount = gameBalance.StartingSickWorkers;
+            ElderlyCount = gameBalance.StartingElderly;
+            HealthyGuardsCount = gameBalance.StartingGuards;
+            SickGuardsCount = 0;
         }
     }
 }

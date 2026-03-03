@@ -5,7 +5,7 @@
         <ui:VisualElement name="Root" class="building-panel">
             <ui:Label text="Label" name="Title" class="text building-panel__title"/>
             <ui:VisualElement name="ProductionBuilding" style="flex-grow: 1;">
-                <Siege.Gameplay.UI.SiegeButton text="Enabled" name="BuildingToggle"/>
+                <Siege.Gameplay.UI.SiegeButton text="Enabled" name="BuildingToggle" style="height: 32px; width: 228px;"/>
             </ui:VisualElement>
             <ui:VisualElement name="StorageBuilding" style="flex-grow: 1;">
                 <Siege.Gameplay.UI.ResourceWidget name="Food" icon="project://database/Assets/Content/Sprites/Res/bread.png?fileID=21300000&amp;guid=42351608d58751a4db9603e65687614c&amp;type=3#bread">

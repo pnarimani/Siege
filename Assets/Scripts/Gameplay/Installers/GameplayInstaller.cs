@@ -51,6 +51,10 @@ namespace Siege.Gameplay.Installers
             // Laws
             builder.RegisterType<LawManager>().SingleInstance();
             builder.RegisterType<LawEffectSystem>().As<ISimulationSystem>().SingleInstance();
+
+            // Orders
+            builder.RegisterType<Orders.OrderManager>().SingleInstance();
+            builder.RegisterType<Orders.OrderEffectSystem>().As<ISimulationSystem>().SingleInstance();
         }
     }
 }

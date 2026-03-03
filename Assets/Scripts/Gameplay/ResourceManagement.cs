@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Siege.Gameplay
 {
@@ -15,7 +16,7 @@ namespace Siege.Gameplay
 
         public bool TryConsumeResources(ResourceQuantity[] requiredResources)
         {
-            var storages = UnityEngine.Object.FindObjectsByType<Building>(UnityEngine.FindObjectsSortMode.None)
+            var storages = Object.FindObjectsByType<Building>(FindObjectsSortMode.None)
                 .Where(b => b.Id == BuildingId.Storage)
                 .OrderBy(b => b.GetDefinition().Zone)
                 .ToList();
@@ -52,7 +53,7 @@ namespace Siege.Gameplay
 
         public void ProduceResources(ResourceQuantity[] output)
         {
-            var storages = UnityEngine.Object.FindObjectsByType<Building>(UnityEngine.FindObjectsSortMode.None)
+            var storages = Object.FindObjectsByType<Building>(FindObjectsSortMode.None)
                 .Where(b => b.Id == BuildingId.Storage)
                 .OrderBy(b => b.GetDefinition().Zone)
                 .ToList();

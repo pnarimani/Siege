@@ -30,8 +30,9 @@ namespace Siege.Gameplay.Missions
             if (roll < ChanceGreatSuccess)
             {
                 state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - 1);
+                state.SiegeDamageReductionDays = 3;
+                state.SiegeDamageReductionMultiplier = 0.7;
                 log.Record("SiegeIntensity", -1, Name);
-                // TODO: temporal siege delay of +3 days
                 return new MissionOutcome
                 {
                     NarrativeText = "The raid was devastating. Enemy siege engines burn and their advance stalls.",
@@ -41,8 +42,9 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceGreatSuccess + ChancePartialSuccess)
             {
-                // TODO: temporal siege delay of +2 days
                 log.Record("SiegeIntensity", 0, Name + " (delay)");
+                state.SiegeDamageReductionDays = 2;
+                state.SiegeDamageReductionMultiplier = 0.85;
                 return new MissionOutcome
                 {
                     NarrativeText = "The raiders caused some disruption. The enemy pauses to regroup.",

@@ -126,6 +126,17 @@ namespace Siege.Gameplay.Simulation
             else
                 _state.ConsecutiveLowSicknessDays = 0;
 
+            // Tick down temporal modifiers
+            if (_state.SiegeDamageReductionDays > 0)
+            {
+                _state.SiegeDamageReductionDays--;
+                if (_state.SiegeDamageReductionDays <= 0)
+                    _state.SiegeDamageReductionMultiplier = 1.0;
+            }
+
+            if (_state.TaintedWellDays > 0)
+                _state.TaintedWellDays--;
+
             // Decrement order cooldowns
             var keys = new List<string>(_state.OrderCooldowns.Keys);
             foreach (var key in keys)

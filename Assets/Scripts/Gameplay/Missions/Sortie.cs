@@ -29,8 +29,9 @@ namespace Siege.Gameplay.Missions
             if (roll < ChanceGreatSuccess)
             {
                 state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - GreatIntensityDrop);
+                state.SiegeDamageReductionDays = 3;
+                state.SiegeDamageReductionMultiplier = 0.7;
                 log.Record("SiegeIntensity", -GreatIntensityDrop, Name);
-                // TODO: temporal siege delay of +3 days
                 return new MissionOutcome
                 {
                     NarrativeText = "A glorious charge! The enemy lines buckle and their siege stalls.",
@@ -40,9 +41,9 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceGreatSuccess + ChancePartialSuccess)
             {
-                // Damage reduction for 3 days
                 log.Record("SiegeIntensity", 0, Name + " (partial)");
-                // TODO: temporal 3-day damage reduction modifier
+                state.SiegeDamageReductionDays = 3;
+                state.SiegeDamageReductionMultiplier = 0.8;
                 return new MissionOutcome
                 {
                     NarrativeText = "The sortie held them at bay. The enemy regroups cautiously.",

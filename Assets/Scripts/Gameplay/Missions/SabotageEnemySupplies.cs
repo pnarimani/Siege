@@ -26,10 +26,10 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceGreatSuccess)
             {
-                // Full siege damage reduction for 5 days — applied as immediate intensity drop
                 state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - 1);
+                state.SiegeDamageReductionDays = 5;
+                state.SiegeDamageReductionMultiplier = 0.6;
                 log.Record("SiegeIntensity", -1, Name);
-                // TODO: temporal 5-day damage reduction modifier
                 return new MissionOutcome
                 {
                     NarrativeText = "Their grain stores are ash. The siege falters as hunger gnaws at the enemy.",
@@ -39,9 +39,9 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceGreatSuccess + ChancePartialSuccess)
             {
-                // Partial reduction for 3 days
                 log.Record("SiegeIntensity", 0, Name + " (partial)");
-                // TODO: temporal 3-day partial damage reduction modifier
+                state.SiegeDamageReductionDays = 3;
+                state.SiegeDamageReductionMultiplier = 0.8;
                 return new MissionOutcome
                 {
                     NarrativeText = "Some supplies burned, but the enemy recovered quickly. A brief reprieve.",

@@ -1,3 +1,5 @@
+using AutofacUnity;
+using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 
@@ -24,7 +26,7 @@ namespace Siege.Gameplay.Orders
         public override bool CanDeactivate => false;
 
         public override bool CanIssue(GameState state) =>
-            true; // TODO: require Tyranny >= 4
+            Resolver.Resolve<PoliticalState>().Tyranny.Value >= 4;
 
         public override void Execute(GameState state, ChangeLog log)
         {

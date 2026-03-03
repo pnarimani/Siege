@@ -1,3 +1,5 @@
+using AutofacUnity;
+using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Orders
@@ -16,7 +18,7 @@ namespace Siege.Gameplay.Orders
         public override int CooldownDays => Cooldown;
 
         public override bool CanIssue(GameState state) =>
-            state.Food >= FoodCost && state.Water >= WaterCost; // TODO: require Faith >= 2
+            state.Food >= FoodCost && state.Water >= WaterCost && Resolver.Resolve<PoliticalState>().Faith.Value >= 2;
 
         public override void Execute(GameState state, ChangeLog log)
         {

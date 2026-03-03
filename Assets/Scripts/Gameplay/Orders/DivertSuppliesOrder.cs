@@ -25,7 +25,10 @@ namespace Siege.Gameplay.Orders
             state.Fuel -= FuelCost;
             log.Record("Fuel", -FuelCost, Id);
 
-            // TODO: +100% repair output for today
+            // Repair output boost applied as direct integrity gain to perimeter
+            var perimeter = state.ActivePerimeter;
+            state.Zones[perimeter].Integrity += 10;
+            log.Record("Integrity", 10, Id + " repair boost");
         }
     }
 }

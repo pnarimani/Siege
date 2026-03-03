@@ -26,10 +26,10 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceGreatSuccess)
             {
-                // Siege damage ×0.6 for 5 days — immediate intensity drop as proxy
                 state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - 1);
+                state.SiegeDamageReductionDays = 5;
+                state.SiegeDamageReductionMultiplier = 0.6;
                 log.Record("SiegeIntensity", -1, Name);
-                // TODO: temporal 5-day siege damage ×0.6 modifier
                 return new MissionOutcome
                 {
                     NarrativeText = "The tunnels collapsed their siege ramp. The enemy scrambles to rebuild.",
@@ -39,9 +39,9 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceGreatSuccess + ChancePartialSuccess)
             {
-                // Siege damage ×0.8 for 3 days
                 log.Record("SiegeIntensity", 0, Name + " (partial)");
-                // TODO: temporal 3-day siege damage ×0.8 modifier
+                state.SiegeDamageReductionDays = 3;
+                state.SiegeDamageReductionMultiplier = 0.8;
                 return new MissionOutcome
                 {
                     NarrativeText = "The tunnels disrupted their approach. A partial success.",

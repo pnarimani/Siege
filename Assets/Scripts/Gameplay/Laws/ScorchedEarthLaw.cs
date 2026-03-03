@@ -1,3 +1,5 @@
+using AutofacUnity;
+using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Laws
@@ -15,8 +17,8 @@ namespace Siege.Gameplay.Laws
 
         public override double SiegeDamageMultiplier => 0.7;
 
-        // TODO: Add political checks (e.g., Fortification >= threshold) when PoliticalState is accessible
-        public override bool CanEnact(GameState state) => true;
+        public override bool CanEnact(GameState state) =>
+            Resolver.Resolve<PoliticalState>().Fortification.Value >= 3;
 
         protected override void ApplyImmediate(GameState state, ChangeLog log)
         {

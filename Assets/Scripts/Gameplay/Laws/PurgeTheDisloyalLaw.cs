@@ -1,3 +1,5 @@
+using AutofacUnity;
+using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Laws
@@ -13,8 +15,8 @@ namespace Siege.Gameplay.Laws
         public override string Description => "Root out suspected traitors and make examples of them. Devastating but effective.";
         public override string NarrativeText => "The lists were drawn up at midnight. By dawn, eight cells were empty.";
 
-        // TODO: Add political checks (e.g., Tyranny >= threshold) when PoliticalState is accessible
-        public override bool CanEnact(GameState state) => true;
+        public override bool CanEnact(GameState state) =>
+            Resolver.Resolve<PoliticalState>().Tyranny.Value >= 6;
 
         protected override void ApplyImmediate(GameState state, ChangeLog log)
         {

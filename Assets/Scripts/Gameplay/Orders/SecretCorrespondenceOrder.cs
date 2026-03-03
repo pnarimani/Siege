@@ -1,4 +1,6 @@
+using AutofacUnity;
 using Siege.Gameplay;
+using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 
@@ -30,7 +32,7 @@ namespace Siege.Gameplay.Orders
         public override bool IsToggle => true;
 
         public override bool CanIssue(GameState state) =>
-            true; // TODO: require Faith >= 4
+            Resolver.Resolve<PoliticalState>().Faith.Value >= 4;
 
         public override void Execute(GameState state, ChangeLog log) { }
 

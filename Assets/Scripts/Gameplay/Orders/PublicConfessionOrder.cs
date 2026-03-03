@@ -1,3 +1,5 @@
+using AutofacUnity;
+using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Orders
@@ -15,8 +17,11 @@ namespace Siege.Gameplay.Orders
         public override string NarrativeText => "They kneel in the square and recite their crimes. Whether the words are true no longer matters.";
         public override int CooldownDays => Cooldown;
 
-        public override bool CanIssue(GameState state) =>
-            true; // TODO: require Tyranny >= 4 AND FearLevel >= 2
+        public override bool CanIssue(GameState state)
+        {
+            var p = Resolver.Resolve<PoliticalState>();
+            return p.Tyranny.Value >= 4 && p.FearLevel.Value >= 2;
+        }
 
         public override void Execute(GameState state, ChangeLog log)
         {

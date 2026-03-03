@@ -1,4 +1,5 @@
 using System;
+using Siege.Gameplay.Laws;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.Zones;
 
@@ -18,13 +19,15 @@ namespace Siege.Gameplay.Siege
 
         readonly ZoneManager _zoneManager;
         readonly ChangeLog _changeLog;
+        readonly LawManager _lawManager;
 
         bool _appliedToday;
 
-        public SiegeSystem(ZoneManager zoneManager, ChangeLog changeLog)
+        public SiegeSystem(ZoneManager zoneManager, ChangeLog changeLog, LawManager lawManager)
         {
             _zoneManager = zoneManager;
             _changeLog = changeLog;
+            _lawManager = lawManager;
         }
 
         public void OnDayStart(GameState state, int day)
@@ -72,7 +75,11 @@ namespace Siege.Gameplay.Siege
             }
 
             // Apply modifiers
-            double damage = baseDamage;
+            double damage = baseDamage * _lawManager.CombinedSiegeDamageMultiplier;
+
+            // Temporal reduction from missions
+            if (state.SiegeDamageReductionDays > 0)
+                damage *= state.SiegeDamageReductionMultiplier;
 
             // Guard reduction
             double guardReduction = state.Guards * GuardDamageReductionPerGuard;

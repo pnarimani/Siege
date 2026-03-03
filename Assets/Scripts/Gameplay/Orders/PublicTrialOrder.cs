@@ -1,3 +1,5 @@
+using AutofacUnity;
+using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Orders
@@ -15,8 +17,11 @@ namespace Siege.Gameplay.Orders
         public override string NarrativeText => "The verdict was decided before the trial began. Everyone knows it. No one objects.";
         public override int CooldownDays => Cooldown;
 
-        public override bool CanIssue(GameState state) =>
-            true; // TODO: require Tyranny >= 2 OR Faith >= 2
+        public override bool CanIssue(GameState state)
+        {
+            var p = Resolver.Resolve<PoliticalState>();
+            return p.Tyranny.Value >= 2 || p.Faith.Value >= 2;
+        }
 
         public override void Execute(GameState state, ChangeLog log)
         {

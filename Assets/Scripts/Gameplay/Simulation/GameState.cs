@@ -111,6 +111,10 @@ namespace Siege.Gameplay.Simulation
         public int TaintedWellDays;
         public int ReliefArmyDay;
 
+        // Temporal modifiers from missions (days remaining, multiplier)
+        public int SiegeDamageReductionDays;
+        public double SiegeDamageReductionMultiplier = 1.0;
+
         public readonly HashSet<string> EnactedLawIds = new();
         public readonly HashSet<string> ActiveToggleOrderIds = new();
         public readonly Dictionary<string, int> OrderCooldowns = new(); // orderId → days remaining
@@ -162,7 +166,7 @@ namespace Siege.Gameplay.Simulation
             FinalAssaultActive = false;
             PlagueRatsActive = false;
             TaintedWellDays = 0;
-            ReliefArmyDay = 0;
+            ReliefArmyDay = UnityEngine.Random.Range(35, 46);
 
             TotalDeaths = 0;
             DeathsToday = 0;

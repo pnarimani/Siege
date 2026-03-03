@@ -14,7 +14,7 @@ namespace Siege.Gameplay.Orders
         public override int CooldownDays => Cooldown;
 
         public override bool CanIssue(GameState state) =>
-            state.ZonesLostCount < MaxZonesLost; // TODO: check zone can be evacuated
+            state.ZonesLostCount < MaxZonesLost && state.ActivePerimeter != ZoneId.Keep;
 
         public override void Execute(GameState state, ChangeLog log)
         {

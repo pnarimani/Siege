@@ -20,7 +20,9 @@ namespace Siege.Gameplay.Orders
 
         public override void Execute(GameState state, ChangeLog log)
         {
-            // TODO: pause siege escalation while active
+            // Pause siege escalation: reduce intensity by 1 while active
+            state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - 1);
+            log.Record("SiegeIntensity", -1, Id);
         }
 
         public override void OnDayTick(GameState state, ChangeLog log)

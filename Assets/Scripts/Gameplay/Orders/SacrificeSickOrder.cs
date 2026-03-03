@@ -1,3 +1,5 @@
+using AutofacUnity;
+using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Orders
@@ -18,7 +20,7 @@ namespace Siege.Gameplay.Orders
         public override int CooldownDays => Cooldown;
 
         public override bool CanIssue(GameState state) =>
-            state.SickWorkers > MinSick; // TODO: require Tyranny >= 3
+            state.SickWorkers > MinSick && Resolver.Resolve<PoliticalState>().Tyranny.Value >= 3;
 
         public override void Execute(GameState state, ChangeLog log)
         {

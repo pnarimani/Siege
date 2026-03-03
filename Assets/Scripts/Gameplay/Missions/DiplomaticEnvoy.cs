@@ -28,10 +28,10 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceGreatSuccess)
             {
-                // Major delay — may accelerate relief army arrival
                 state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - 1);
+                state.SiegeDamageReductionDays = 5;
+                state.SiegeDamageReductionMultiplier = 0.7;
                 log.Record("SiegeIntensity", -1, Name);
-                // TODO: temporal siege delay of +5 days; accelerate relief army
                 return new MissionOutcome
                 {
                     NarrativeText = "The envoys bought time. Rumors say a relief force stirs in the east.",
@@ -41,9 +41,9 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceGreatSuccess + ChancePartialSuccess)
             {
-                // Minor delay
                 log.Record("SiegeIntensity", 0, Name + " (delay)");
-                // TODO: temporal siege delay of +2 days
+                state.SiegeDamageReductionDays = 2;
+                state.SiegeDamageReductionMultiplier = 0.85;
                 return new MissionOutcome
                 {
                     NarrativeText = "The enemy entertained our envoys, if only for the amusement. A small delay.",

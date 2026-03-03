@@ -30,7 +30,9 @@ namespace Siege.Gameplay.Orders
             state.Materials -= DailyMaterialsCost;
             log.Record("Materials", -DailyMaterialsCost, Id);
 
-            // TODO: integrate -20% siege damage with SiegeSystem
+            // -20% siege damage via temporal modifier
+            state.SiegeDamageReductionDays = 1;
+            state.SiegeDamageReductionMultiplier = 0.8;
 
             if (Random.value < InterceptChance)
             {

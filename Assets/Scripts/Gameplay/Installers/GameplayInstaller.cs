@@ -2,8 +2,10 @@ using Autofac;
 using AutofacUnity;
 using JetBrains.Annotations;
 using Siege.Gameplay.Buildings;
+using Siege.Gameplay.Defense;
 using Siege.Gameplay.Political;
 using Siege.Gameplay.Resources;
+using Siege.Gameplay.Siege;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.Zones;
 
@@ -32,6 +34,12 @@ namespace Siege.Gameplay.Installers
             builder.RegisterType<ResourceProductionSystem>().As<ISimulationSystem>().SingleInstance();
             builder.RegisterType<ResourceConsumptionSystem>().As<ISimulationSystem>().SingleInstance();
             builder.RegisterType<CareSystem>().As<ISimulationSystem>().SingleInstance();
+
+            // Siege & Defense
+            builder.RegisterType<DefenseManager>().SingleInstance();
+            builder.RegisterType<ReliefArmy>().AsSelf().As<ISimulationSystem>().SingleInstance();
+            builder.RegisterType<SiegeSystem>().As<ISimulationSystem>().SingleInstance();
+            builder.RegisterType<GuardEffectSystem>().As<ISimulationSystem>().SingleInstance();
         }
     }
 }

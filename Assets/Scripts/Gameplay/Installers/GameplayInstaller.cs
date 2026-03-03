@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Siege.Gameplay.Buildings;
 using Siege.Gameplay.Defense;
 using Siege.Gameplay.Political;
+using Siege.Gameplay.Population;
 using Siege.Gameplay.Resources;
 using Siege.Gameplay.Siege;
 using Siege.Gameplay.Simulation;
@@ -40,6 +41,11 @@ namespace Siege.Gameplay.Installers
             builder.RegisterType<ReliefArmy>().AsSelf().As<ISimulationSystem>().SingleInstance();
             builder.RegisterType<SiegeSystem>().As<ISimulationSystem>().SingleInstance();
             builder.RegisterType<GuardEffectSystem>().As<ISimulationSystem>().SingleInstance();
+
+            // Population & Health
+            builder.RegisterType<PopulationSystem>().As<ISimulationSystem>().SingleInstance();
+            builder.RegisterType<SicknessSystem>().As<ISimulationSystem>().SingleInstance();
+            builder.RegisterType<OvercrowdingSystem>().As<ISimulationSystem>().SingleInstance();
         }
     }
 }

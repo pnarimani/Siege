@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: UIRegistry
   m_EditorClassIdentifier: Siege.Gameplay::Siege.Gameplay.UI.AddressableUIRegistry
   _entries:
-  - Type: Siege.Gameplay.UI.BuildingView
-    Address: Content/Prefabs/UI/BuildingView.prefab
   - Type: Siege.Gameplay.UI.ButtonFeedbacks
     Address: Content/Prefabs/UI/Button.prefab
   - Type: FastSpring.TransformSpring
@@ -22,6 +20,8 @@ MonoBehaviour:
   - Type: Siege.Gameplay.UI.LocalizeTextComponent
     Address: Content/Prefabs/UI/Button.prefab
   - Type: Siege.Gameplay.UI.GameplayHUD
+    Address: Content/Prefabs/UI/GameplayHUD.prefab
+  - Type: Siege.Gameplay.UI.BuildingView
     Address: Content/Prefabs/UI/GameplayHUD.prefab
   - Type: Siege.MainMenu.MainMenuView
     Address: Content/Prefabs/UI/MainMenu.prefab

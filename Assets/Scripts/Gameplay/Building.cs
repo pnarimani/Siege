@@ -96,7 +96,7 @@ namespace Siege.Gameplay
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            UISystem.Open<BuildingView>(UILayer.Window).Show(this);
+            UISystem.GetExisting<BuildingView>().Show(this);
         }
 
         ProductionRecipe GetCurrentRecipe()

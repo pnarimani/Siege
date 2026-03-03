@@ -1,30 +1,62 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
-         editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Content/UI/Siege.uss?fileID=7433441132597879392&amp;guid=2f14999a55ec4402ab6db8d64423fd87&amp;type=3#Siege"/>
     <Style src="project://database/Assets/Content/UI/GameplayHUD.uss?fileID=7433441132597879392&amp;guid=1d6d313ffa7d66b418c52451100923c0&amp;type=3#GameplayHUD"/>
     <ui:VisualElement picking-mode="Ignore" class="gameplay-hud">
         <ui:VisualElement class="gameplay-hud__top">
             <ui:VisualElement style="flex-grow: 1; flex-direction: row; align-items: center;">
-                <Siege.Gameplay.UI.ResourceWidget name="Food"
-                                                  icon="project://database/Assets/Content/Sprites/Res/bread.png?fileID=21300000&amp;guid=42351608d58751a4db9603e65687614c&amp;type=3#bread"/>
-                <Siege.Gameplay.UI.ResourceWidget name="Water"
-                                                  icon="project://database/Assets/Content/Sprites/Res/water.png?fileID=21300000&amp;guid=0085582bc0a22f248879065fb2c9b414&amp;type=3#water"
-                                                  text=""/>
-                <Siege.Gameplay.UI.ResourceWidget name="Fuel"
-                                                  icon="project://database/Assets/Content/Sprites/Res/coal.png?fileID=21300000&amp;guid=c429f3ff1041266409eccbfeb9e5c20d&amp;type=3#coal"/>
-                <Siege.Gameplay.UI.ResourceWidget name="Materials"
-                                                  icon="project://database/Assets/Content/Sprites/Res/materials.png?fileID=21300000&amp;guid=7ac75f0021d16c74fb2eecbfd3928eda&amp;type=3#materials"/>
-                <Siege.Gameplay.UI.ResourceWidget name="Meds"
-                                                  icon="project://database/Assets/Content/Sprites/Res/meds.png?fileID=21300000&amp;guid=602546d6c5de57b49bf093960b29ad63&amp;type=3#meds"/>
+                <Siege.Gameplay.UI.ResourceWidget name="Food" icon="project://database/Assets/Content/Sprites/Res/bread.png?fileID=21300000&amp;guid=42351608d58751a4db9603e65687614c&amp;type=3#bread"/>
+                <Siege.Gameplay.UI.ResourceWidget name="Water" icon="project://database/Assets/Content/Sprites/Res/water.png?fileID=21300000&amp;guid=0085582bc0a22f248879065fb2c9b414&amp;type=3#water" text=""/>
+                <Siege.Gameplay.UI.ResourceWidget name="Fuel" icon="project://database/Assets/Content/Sprites/Res/coal.png?fileID=21300000&amp;guid=c429f3ff1041266409eccbfeb9e5c20d&amp;type=3#coal"/>
+                <Siege.Gameplay.UI.ResourceWidget name="Materials" icon="project://database/Assets/Content/Sprites/Res/materials.png?fileID=21300000&amp;guid=7ac75f0021d16c74fb2eecbfd3928eda&amp;type=3#materials"/>
+                <Siege.Gameplay.UI.ResourceWidget name="Meds" icon="project://database/Assets/Content/Sprites/Res/meds.png?fileID=21300000&amp;guid=602546d6c5de57b49bf093960b29ad63&amp;type=3#meds"/>
             </ui:VisualElement>
-            <ui:VisualElement
-                    style="flex-grow: 1; flex-direction: row; justify-content: flex-end; align-items: center;">
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: flex-end; align-items: center;">
                 <Siege.Gameplay.UI.ProgressBar name="Unrest" label="Unrest"/>
                 <Siege.Gameplay.UI.ProgressBar name="Morale" label="Morale"/>
                 <Siege.Gameplay.UI.ProgressBar name="Sickness" label="Sickness"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement picking-mode="Ignore" class="gameplay-hud__mid"/>
+        <ui:VisualElement picking-mode="Ignore" class="gameplay-hud__mid">
+            <ui:VisualElement name="Root" class="building-panel" style="bottom: 0; top: 0; right: 0;">
+                <ui:Label text="Label" name="Title" class="text building-panel__title"/>
+                <ui:VisualElement name="ProductionBuilding">
+                    <Siege.Gameplay.UI.SiegeButton text="Enabled" name="BuildingToggle"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="StorageBuilding">
+                    <Siege.Gameplay.UI.ResourceWidget name="Food" icon="project://database/Assets/Content/Sprites/Res/bread.png?fileID=21300000&amp;guid=42351608d58751a4db9603e65687614c&amp;type=3#bread">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="Label" table="GUID:4d033c6acfe3747eeae039f45bc0f2cd" entry="Id(200000000000000)"/>
+                            <ui:DataBinding property="Text" data-source-path="Food" data-source-type="Siege.Gameplay.UI.StorageViewModel, Siege.Gameplay" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </Siege.Gameplay.UI.ResourceWidget>
+                    <Siege.Gameplay.UI.ResourceWidget name="Water" icon="project://database/Assets/Content/Sprites/Res/water.png?fileID=21300000&amp;guid=0085582bc0a22f248879065fb2c9b414&amp;type=3#water">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="Label" table="GUID:4d033c6acfe3747eeae039f45bc0f2cd" entry="Id(200000000000001)"/>
+                            <ui:DataBinding property="Text" data-source-path="Water" data-source-type="Siege.Gameplay.UI.StorageViewModel, Siege.Gameplay" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </Siege.Gameplay.UI.ResourceWidget>
+                    <Siege.Gameplay.UI.ResourceWidget name="Fuel" icon="project://database/Assets/Content/Sprites/Res/coal.png?fileID=21300000&amp;guid=c429f3ff1041266409eccbfeb9e5c20d&amp;type=3#coal">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="Label" table="GUID:4d033c6acfe3747eeae039f45bc0f2cd" entry="Id(200000000000002)"/>
+                            <ui:DataBinding property="Text" data-source-path="Fuel" data-source-type="Siege.Gameplay.UI.StorageViewModel, Siege.Gameplay" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </Siege.Gameplay.UI.ResourceWidget>
+                    <Siege.Gameplay.UI.ResourceWidget name="Materials" icon="project://database/Assets/Content/Sprites/Res/materials.png?fileID=21300000&amp;guid=7ac75f0021d16c74fb2eecbfd3928eda&amp;type=3#materials">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="Label" table="GUID:4d033c6acfe3747eeae039f45bc0f2cd" entry="Id(200000000000003)"/>
+                            <ui:DataBinding property="Text" data-source-path="Materials" data-source-type="Siege.Gameplay.UI.StorageViewModel, Siege.Gameplay" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </Siege.Gameplay.UI.ResourceWidget>
+                    <Siege.Gameplay.UI.ResourceWidget name="Medicine" text="343" icon="project://database/Assets/Content/Sprites/Res/meds.png?fileID=21300000&amp;guid=602546d6c5de57b49bf093960b29ad63&amp;type=3#meds">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="Label" table="GUID:4d033c6acfe3747eeae039f45bc0f2cd" entry="Id(200000000000004)"/>
+                            <ui:DataBinding property="Text" data-source-path="Medicine" data-source-type="Siege.Gameplay.UI.StorageViewModel, Siege.Gameplay" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </Siege.Gameplay.UI.ResourceWidget>
+                </ui:VisualElement>
+                <Siege.Gameplay.UI.SiegeButton text="Destroy" name="DestroyBuilding"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
         <ui:VisualElement class="gameplay-hud__bottom"/>
     </ui:VisualElement>
 </ui:UXML>

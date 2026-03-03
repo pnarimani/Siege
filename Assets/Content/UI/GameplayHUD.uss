@@ -27,35 +27,91 @@
     margin: 4px 15px;
 }
 
-/* Morale — blue (cold hope), good when high */
 .progress-bar--morale .progress-bar__fill {
     background-color: rgb(40, 150, 200);
 }
+
 .progress-bar--morale .progress-bar__increase {
     background-color: rgba(80, 180, 230, 0.55);
 }
+
 .progress-bar--morale .progress-bar__decrease {
     background-color: rgba(40, 150, 200, 0.3);
 }
 
-/* Unrest — red, bad when high */
 .progress-bar--unrest .progress-bar__fill {
     background-color: rgb(190, 50, 40);
 }
+
 .progress-bar--unrest .progress-bar__increase {
     background-color: rgba(230, 90, 70, 0.65);
 }
+
 .progress-bar--unrest .progress-bar__decrease {
     background-color: rgba(190, 50, 40, 0.3);
 }
 
-/* Sickness — amber, bad when high */
 .progress-bar--sickness .progress-bar__fill {
     background-color: rgb(195, 150, 30);
 }
+
 .progress-bar--sickness .progress-bar__increase {
     background-color: rgba(235, 190, 60, 0.65);
 }
+
 .progress-bar--sickness .progress-bar__decrease {
     background-color: rgba(195, 150, 30, 0.3);
+}
+
+.building-button--activated > .button__bg {
+    background-color: rgb(35, 120, 70);
+    transition-duration: 500ms;
+}
+
+.building-button--activated > .button__text {
+    color: white;
+}
+
+.building-button--disabled > .button__text {
+    color: white;
+}
+
+.building-button--disabled > .button__bg {
+    background-color: rgb(150, 40, 35);
+    transition-duration: 500ms;
+}
+
+.building-panel {
+    background-color: rgb(12, 18, 28);
+    border-color: rgba(55, 80, 110, 0.5);
+    border-width: 1px;
+    width: 400px;
+    padding: 10px;
+    padding-right: 110px;
+    translate: 400px 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.building-panel--in {
+    translate: 100px 0;
+    transition-property: translate;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out-back;
+    transition-delay: 0s;
+}
+
+.building-panel__title {
+    color: rgb(205, 220, 235);
+    -unity-font-style: normal;
+    -unity-text-align: upper-center;
+    font-size: 26px;
+}
+
+.root-panel {
+    flex-grow: 1;
+    flex-direction: row-reverse;
+    margin-top: 30px;
+    margin-bottom: 50px;
 }

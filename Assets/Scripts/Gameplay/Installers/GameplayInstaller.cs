@@ -3,6 +3,7 @@ using AutofacUnity;
 using JetBrains.Annotations;
 using Siege.Gameplay.Buildings;
 using Siege.Gameplay.Defense;
+using Siege.Gameplay.Events;
 using Siege.Gameplay.Laws;
 using Siege.Gameplay.Missions;
 using Siege.Gameplay.Political;
@@ -61,6 +62,10 @@ namespace Siege.Gameplay.Installers
             builder.RegisterType<MissionManager>().SingleInstance();
             builder.RegisterType<MissionProgressSystem>().As<ISimulationSystem>().SingleInstance();
             builder.RegisterType<ScavengingSystem>().AsSelf().As<ISimulationSystem>().SingleInstance();
+
+            // Events
+            builder.RegisterType<EventManager>().SingleInstance();
+            builder.RegisterType<EventTriggerSystem>().As<ISimulationSystem>().SingleInstance();
         }
     }
 }

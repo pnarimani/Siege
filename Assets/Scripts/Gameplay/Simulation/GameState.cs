@@ -29,6 +29,10 @@ namespace Siege.Gameplay.Simulation
         public const double StartingSickness = 10;
         public const int StartingSiegeIntensity = 1;
 
+        // ── Day Tracking ─────────────────────────────────────────────
+
+        public int CurrentDay = 1;
+
         // ── Population ────────────────────────────────────────────────
 
         public int HealthyWorkers;
@@ -105,6 +109,7 @@ namespace Siege.Gameplay.Simulation
         public bool FinalAssaultActive;
         public bool PlagueRatsActive;
         public int TaintedWellDays;
+        public int ReliefArmyDay;
 
         public readonly HashSet<string> EnactedLawIds = new();
         public readonly HashSet<string> ActiveToggleOrderIds = new();
@@ -125,6 +130,7 @@ namespace Siege.Gameplay.Simulation
 
         public void Initialize()
         {
+            CurrentDay = 1;
             HealthyWorkers = StartingHealthyWorkers;
             SickWorkers = StartingSickWorkers;
             Guards = StartingGuards;
@@ -154,6 +160,7 @@ namespace Siege.Gameplay.Simulation
             FinalAssaultActive = false;
             PlagueRatsActive = false;
             TaintedWellDays = 0;
+            ReliefArmyDay = 0;
 
             TotalDeaths = 0;
             DeathsToday = 0;
@@ -221,6 +228,12 @@ namespace Siege.Gameplay.Simulation
             WoundedGuards = Math.Max(0, WoundedGuards);
             Elderly = Math.Max(0, Elderly);
         }
+
+        public double GetZoneIntegrity(ZoneId id) => Zones[id].Integrity;
+
+        public void SetZoneIntegrity(ZoneId id, double value) => Zones[id].Integrity = value;
+
+        public bool IsZoneLost(ZoneId id) => Zones[id].IsLost;
     }
 
     /// <summary>

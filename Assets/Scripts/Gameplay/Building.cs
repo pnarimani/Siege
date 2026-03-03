@@ -1,5 +1,6 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using AutofacUnity;
 using Siege.Gameplay.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -27,12 +28,15 @@ namespace Siege.Gameplay
 
     public class Building : MonoBehaviour, IPointerClickHandler
     {
-        public bool IsEnabled;
+        public bool IsActive;
         public BuildingId Id;
         public int ActiveRecipeIndex;
 
         readonly List<ResourceQuantity> _resources = new();
         public IReadOnlyList<ResourceQuantity> Resources => _resources;
+
+        float _productionProgress;
+        readonly List<ResourceQuantity> _outputBuffer = new();
 
         public void Add(ResourceType resource, int quantity)
         {
@@ -49,26 +53,67 @@ namespace Siege.Gameplay
             }
         }
 
+        public void Remove(ResourceType resource, double quantity)
+        {
+            var index = _resources.FindIndex(r => r.Resource == resource);
+            if (index == -1) return;
+            var rq = _resources[index];
+            rq.Quantity -= quantity;
+            _resources[index] = rq;
+        }
+
+        void Update()
+        {
+            if (!IsActive)
+                return;
+
+            if (Id == BuildingId.Storage)
+                return;
+
+            if (_productionProgress == 0)
+            {
+                var recipe = GetCurrentRecipe();
+                if (recipe == null)
+                    return;
+
+                if (!Resolver.Resolve<ResourceConsumptionHandler>().TryConsumeResources(recipe.Input))
+                {
+                    return;
+                }
+                
+                _outputBuffer.Clear();
+                _outputBuffer.AddRange(recipe.Output);
+            }
+            
+            _productionProgress += Time.deltaTime;
+            
+        }
+
         public void OnPointerClick(PointerEventData eventData)
         {
             UISystem.Open<BuildingView>(UILayer.Window).Show(this);
         }
-    }
 
-    public class BuildingDefinition
-    {
-        public BuildingId Id;
-        public bool IsBuilt = true;
-        public int MaxWorkers;
-        public ZoneId Zone;
-        public ProductionRecipe[] Recipes;
-    }
+        ProductionRecipe GetCurrentRecipe()
+        {
+            var definition = GetDefinition();
+            if (definition.Recipes == null || definition.Recipes.Length == 0)
+                return null;
 
-    public class ProductionRecipe
-    {
-        public string Id;
-        public Func<bool> IsAvailable;
-        public ResourceQuantity[] Input;
-        public ResourceQuantity[] Output;
+            var recipe = definition.Recipes[ActiveRecipeIndex];
+
+            if (!recipe.IsAvailable())
+            {
+                ActiveRecipeIndex = 0;
+                recipe = definition.Recipes[ActiveRecipeIndex];
+            }
+
+            return recipe;
+        }
+
+        public BuildingDefinition GetDefinition()
+        {
+            return Resolver.Resolve<GameBalance>().Buildings.FirstOrDefault(x => x.Id == Id);
+        }
     }
 }

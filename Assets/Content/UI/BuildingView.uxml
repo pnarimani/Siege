@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/Content/UI/BuildingView.uss?fileID=7433441132597879392&amp;guid=d749fd167ff24d04e8a6610922726914&amp;type=3#BuildingView"/>
     <ui:VisualElement picking-mode="Ignore" class="root-panel">
         <ui:VisualElement name="Root" class="building-panel">
-            <ui:Label text="Label" name="Title" class="text"/>
+            <ui:Label text="Label" name="Title" class="text building-panel__title"/>
             <ui:VisualElement name="ProductionBuilding" style="flex-grow: 1;">
                 <Siege.Gameplay.UI.SiegeButton text="Enabled" name="BuildingToggle"/>
             </ui:VisualElement>

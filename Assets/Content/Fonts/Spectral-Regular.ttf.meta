@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 05c628696cf7aa74ebcbf037dbe804d2
+guid: 011a45456a372469f9d328fbb2c7d22a
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - DIN 1451 Std
+  - Spectral
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

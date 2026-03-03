@@ -1,8 +1,5 @@
-:root {
-}
-
-.building-button--activated .button__bg {
-    background-color: rgb(23, 135, 0);
+.building-button--activated > .button__bg {
+    background-color: rgb(35, 120, 70);
     transition-duration: 500ms;
 }
 
@@ -14,13 +11,15 @@
     color: white;
 }
 
-.building-button--disabled .button__bg {
-    background-color: rgb(149, 0, 0);
+.building-button--disabled > .button__bg {
+    background-color: rgb(150, 40, 35);
     transition-duration: 500ms;
 }
 
 .building-panel {
-    background-color: rgb(0, 94, 122);
+    background-color: rgb(12, 18, 28);
+    border-color: rgba(55, 80, 110, 0.5);
+    border-width: 1px;
     width: 300px;
     padding: 10px;
     padding-right: 110px;
@@ -28,15 +27,15 @@
 }
 
 .building-panel--in {
-    translate: 100 0;
+    translate: 100px 0;
     transition-property: translate;
     transition-duration: 0.3s;
     transition-timing-function: ease-out-back;
     transition-delay: 0s;
 }
 
-#Title {
-    color: white;
+.building-panel__title {
+    color: rgb(205, 220, 235);
     -unity-font-style: normal;
     -unity-text-align: upper-center;
     font-size: 26px;

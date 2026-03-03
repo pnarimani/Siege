@@ -1,12 +1,15 @@
 :root {
+    --font-body: url("project://database/Assets/Content/Fonts/Spectral-Regular.ttf?fileID=12800000&guid=011a45456a372469f9d328fbb2c7d22a&type=3#Spectral-Regular");
+    /*--font-title: url("project://database/Assets/Content/Fonts/Cinzel.ttf?fileID=12800000&guid=c3e63b3b4357a4c31840a15271f3b1df&type=3#Cinzel");*/
+    --font-title: url("project://database/Assets/FlatKit/Demos/[Demo]%20Mugs/Fonts/Oswald-Regular.ttf?fileID=12800000&guid=b88ed8160d94d47ec8631c273a6df62f&type=3#Oswald-Regular");
 }
 
-.text {
-    -unity-font-definition: url("project://database/Assets/Content/Fonts/DINEngschriftStd.otf?fileID=12800000&guid=05c628696cf7aa74ebcbf037dbe804d2&type=3#DINEngschriftStd");
+* {
+    -unity-font-definition: var(--font-body);
 }
 
 .button__bg {
-    background-color: white;
+    background-color: rgba(65, 103, 188, 0.8);
     border-radius: 10px;
     flex-grow: 1;
     position: absolute;
@@ -17,17 +20,16 @@
 }
 
 .button {
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 10px;
     min-width: 70px;
 }
 
 .button__shadow {
     flex-grow: 1;
-    background-color: rgba(38, 38, 38, 0.75);
+    background-color: rgba(43, 75, 147, 0.8);
     position: absolute;
     top: 0;
     left: 0;
@@ -37,16 +39,17 @@
 }
 
 .button__text {
+    -unity-font-definition: var(--font-title);
     font-size: 15px;
+    color: rgb(200, 215, 225);
     align-content: center;
     justify-content: center;
-    margin-top: 3px;
 }
 
 .resource-widget {
     height: 20px;
     flex-grow: 0;
-    background-color: rgb(135, 233, 176);
+    background-color: rgba(20, 28, 42, 0.85);
     margin: 4px;
     border-radius: 10px;
     flex-direction: row;
@@ -61,6 +64,8 @@
 
 .resource-widget__text {
     flex-grow: 1;
+    color: rgb(200, 215, 225);
+    font-size: 11px;
     justify-content: space-around;
     -unity-text-align: middle-right;
 }
@@ -70,7 +75,7 @@
     justify-content: center;
     align-content: center;
     align-items: center;
-    background-color: rgb(38, 67, 55);
+    background-color: rgb(8, 12, 18);
 }
 
 .progress-bar {
@@ -80,30 +85,32 @@
 
 .progress-bar__prefix-label {
     margin-right: 4px;
+    color: white;
+    justify-content: center;
 }
 
 .progress-bar__track {
     flex-grow: 1;
     height: 12px;
     border-radius: 6px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
     overflow: hidden;
 }
 
 .progress-bar__decrease {
-    background-color: rgba(255, 200, 60, 0.8);
+    background-color: rgba(160, 100, 20, 0.7);
     height: 100%;
     width: 0;
 }
 
 .progress-bar__increase {
-    background-color: rgba(100, 220, 130, 0.6);
+    background-color: rgba(40, 120, 180, 0.5);
     height: 100%;
     width: 0;
 }
 
 .progress-bar__fill {
-    background-color: rgb(100, 200, 120);
+    background-color: rgb(40, 130, 190);
     height: 100%;
     width: 0;
 }
@@ -120,13 +127,14 @@
 
 .progress-bar__label {
     font-size: 9px;
+    -unity-font-definition: var(--font-title);
     -unity-text-align: middle-left;
 }
 
 .tooltip {
     position: absolute;
-    background-color: rgba(18, 26, 20, 0.96);
-    border-color: rgba(80, 120, 80, 0.5);
+    background-color: rgba(10, 14, 20, 0.97);
+    border-color: rgba(55, 80, 115, 0.5);
     border-width: 1px;
     border-radius: 5px;
     padding: 10px 12px;
@@ -136,20 +144,20 @@
 
 .tooltip__title {
     font-size: 13px;
-    color: rgb(220, 240, 220);
+    color: rgb(205, 220, 235);
     -unity-font-style: bold;
     margin-bottom: 3px;
 }
 
 .tooltip__description {
     font-size: 11px;
-    color: rgba(180, 210, 180, 0.85);
+    color: rgba(155, 175, 200, 0.85);
     white-space: normal;
 }
 
 .tooltip__divider {
     height: 1px;
-    background-color: rgba(80, 120, 80, 0.4);
+    background-color: rgba(55, 80, 115, 0.4);
     margin-top: 8px;
     margin-bottom: 6px;
 }

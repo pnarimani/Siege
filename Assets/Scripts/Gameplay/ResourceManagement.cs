@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Siege.Gameplay
 {
-    public class ResourceConsumptionHandler
+    public class ResourceManagement
     {
         readonly GameBalance _gameBalance;
 
-        public ResourceConsumptionHandler(GameBalance gameBalance)
+        public ResourceManagement(GameBalance gameBalance)
         {
             _gameBalance = gameBalance;
         }
@@ -48,6 +48,32 @@ namespace Siege.Gameplay
             }
 
             return true;
+        }
+
+        public void ProduceResources(ResourceQuantity[] output)
+        {
+            var storages = UnityEngine.Object.FindObjectsByType<Building>(UnityEngine.FindObjectsSortMode.None)
+                .Where(b => b.Id == BuildingId.Storage)
+                .OrderBy(b => b.GetDefinition().Zone)
+                .ToList();
+
+            foreach (var produced in output)
+            {
+                var remaining = produced.Quantity;
+                foreach (var storage in storages)
+                {
+                    if (remaining <= 0) break;
+                    var capacity = _gameBalance.StorageBaseCapacity;
+                    var current = storage.Resources.FirstOrDefault(r => r.Resource == produced.Resource).Quantity;
+                    var availableSpace = capacity - current;
+                    var toAdd = Math.Min(availableSpace, remaining);
+                    if (toAdd > 0)
+                    {
+                        storage.Add(produced.Resource, (int)toAdd);
+                        remaining -= toAdd;
+                    }
+                }
+            }
         }
     }
 }

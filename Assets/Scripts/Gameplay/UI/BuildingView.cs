@@ -1,4 +1,5 @@
 using System.Linq;
+using AutofacUnity;
 using JetBrains.Annotations;
 using Unity.Properties;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Siege.Gameplay.UI
 {
     public class StorageViewModel
     {
-        [UsedImplicitly] [CreateProperty] public int Fuel, Food, Water, Medicine, Materials;
+        [UsedImplicitly] [CreateProperty] public string Fuel, Food, Water, Medicine, Materials;
     }
 
     public class BuildingView : MonoBehaviour
@@ -24,6 +25,7 @@ namespace Siege.Gameplay.UI
         const string DeactiveClass = "building-button--disabled";
 
         bool _isActivated = true;
+        GameBalance _gameBalance;
 
         void Awake()
         {
@@ -31,6 +33,8 @@ namespace Siege.Gameplay.UI
             _button = this.FindElement<SiegeButton>("BuildingToggle");
             _button.Clicked += OnButtonClicked;
             _viewModel = new StorageViewModel();
+            
+            _gameBalance = Resolver.Resolve<GameBalance>();
         }
 
         public async void Show(Building building)
@@ -86,9 +90,10 @@ namespace Siege.Gameplay.UI
             }
         }
 
-        void Assign(Building building, out int field, ResourceType type)
+        void Assign(Building building, out string field, ResourceType type)
         {
-            field = (int)building.Resources.FirstOrDefault(x => x.Resource == type).Quantity;
+            var x = building.Resources.FirstOrDefault(x => x.Resource == type).Quantity;
+            field = $"{x:F0}/{_gameBalance.StorageBaseCapacity}";
         }
     }
 }

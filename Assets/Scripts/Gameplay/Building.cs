@@ -36,7 +36,7 @@ namespace Siege.Gameplay
         public IReadOnlyList<ResourceQuantity> Resources => _resources;
 
         float _productionProgress;
-        readonly List<ResourceQuantity> _outputBuffer = new();
+        ProductionRecipe _inProgressRecipe;
 
         public void Add(ResourceType resource, int quantity)
         {
@@ -76,17 +76,22 @@ namespace Siege.Gameplay
                 if (recipe == null)
                     return;
 
-                if (!Resolver.Resolve<ResourceConsumptionHandler>().TryConsumeResources(recipe.Input))
+                if (!Resolver.Resolve<ResourceManagement>().TryConsumeResources(recipe.Input))
                 {
                     return;
                 }
-                
-                _outputBuffer.Clear();
-                _outputBuffer.AddRange(recipe.Output);
+
+                _inProgressRecipe = recipe;
             }
             
             _productionProgress += Time.deltaTime;
             
+            if (_productionProgress >= _inProgressRecipe.Duration)
+            {
+                Resolver.Resolve<ResourceManagement>().ProduceResources(_inProgressRecipe.Output);
+                _productionProgress = 0;
+                _inProgressRecipe = null;
+            }
         }
 
         public void OnPointerClick(PointerEventData eventData)

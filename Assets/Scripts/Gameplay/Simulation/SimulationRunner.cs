@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using AutofacUnity;
 
 namespace Siege.Gameplay.Simulation
 {
@@ -6,7 +8,7 @@ namespace Siege.Gameplay.Simulation
     /// Orchestrates the simulation tick pipeline. Ticks all registered systems each frame.
     /// Handles day/night transitions and end-of-day bookkeeping.
     /// </summary>
-    public class SimulationRunner
+    public class SimulationRunner : ITickable, IDisposable
     {
         const double LowSicknessThreshold = 20;
 
@@ -47,7 +49,7 @@ namespace Siege.Gameplay.Simulation
             _systems.Add(system);
         }
 
-        public void Tick(float deltaTime)
+        public void Update(float deltaTime)
         {
             _clock.Advance(deltaTime);
 

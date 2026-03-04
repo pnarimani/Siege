@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "068b1b0c62e6bf6aa73f7f69f07904aee4e9060f"
+      "hash": "c8fc9d7139e9a4ffe5bd4d3d294fa1131debb88a"
     },
     "com.pnarimani.fast-spring": {
       "version": "git@github.com:pnarimani/FastSpring.git",

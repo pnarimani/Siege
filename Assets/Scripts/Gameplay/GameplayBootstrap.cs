@@ -41,9 +41,6 @@ namespace Siege.Gameplay
 
             _runner.Initialize();
 
-            var tickRunner = gameObject.AddComponent<TickRunner>();
-            tickRunner.Register(_runner);
-
             // Pause input is handled by TickRunner reading Space key
             gameObject.AddComponent<PauseInputHandler>();
 

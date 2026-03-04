@@ -26,18 +26,8 @@ Success must feel like endurance, not triumph.
 - Write simple code. Avoid heavy abstractions.
 - Favor readability and maintainability over cleverness.
 - Prefer composition to inheritance.
+- Write high performance code. Don't allocate memory in hot paths. Don't do unncessary work.
 - Always ask: "Is there a more elegant way to solve this problem?"
 - Create folders by feature (Laws, Missions, Simulation, Events, etc.). Avoid folder names like "Models".
-
-### Minimizing Serialized Fields
-
-For inner-prefab and inner-scene dependencies, avoid serialized fields.
-Instead, name the target GameObject with a name starting with `#` and find it at runtime with `FindRecursive<T>`.
-```csharp
-        Button _start;
-        
-        void Awake()
-        {
-            _start = this.FindRecursive<Button>("#Start");
-        }
-```
+- Use UI Toolkit best practices. Read `ui-toolkit` skill whenever working with UI.
+- This game is localized. Read `unity-localization` skill whenever working with text. 

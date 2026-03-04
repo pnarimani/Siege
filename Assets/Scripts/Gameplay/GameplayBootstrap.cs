@@ -30,11 +30,6 @@ namespace Siege.Gameplay
             var political = Resolver.Resolve<PoliticalState>();
             political.Initialize();
 
-            // Add building selector to main camera
-            var cam = Camera.main;
-            if (cam != null && cam.GetComponent<BuildingSelector>() == null)
-                cam.gameObject.AddComponent<BuildingSelector>();
-
             // Distribute population across zones and auto-allocate workers
             var zoneManager = Resolver.Resolve<ZoneManager>();
             zoneManager.DistributePopulation();
@@ -92,6 +87,10 @@ namespace Siege.Gameplay
                 // Ensure Building component exists
                 if (buildingTransform.GetComponent<Building>() == null)
                     buildingTransform.gameObject.AddComponent<Building>();
+
+                // Ensure click handler for selection
+                if (buildingTransform.GetComponent<BuildingClickHandler>() == null)
+                    buildingTransform.gameObject.AddComponent<BuildingClickHandler>();
 
                 // Add StorageBuilding if flagged
                 if (def.IsStorage && buildingTransform.GetComponent<StorageBuilding>() == null)

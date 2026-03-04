@@ -1,0 +1,377 @@
+/* ============================================
+   SHARED DIALOG OVERLAY & PANEL
+   ============================================ */
+
+.dialog-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-panel {
+    background-color: rgb(31, 31, 36);
+    padding: 20px 24px;
+    width: 85%;
+    max-height: 80%;
+}
+
+.dialog-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.dialog-title {
+    font-size: 22px;
+    color: white;
+}
+
+.dialog-close {
+    background-color: transparent;
+    border-color: rgba(100, 100, 120, 0.5);
+    border-width: 1px;
+    color: rgb(160, 160, 170);
+    padding: 2px 8px;
+}
+
+.dialog-section-header {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.dialog-scroll {
+    flex-grow: 1;
+}
+
+.dialog-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(75, 75, 75, 255);
+}
+
+.dialog-row__info {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.dialog-row__name {
+    font-size: 15px;
+    color: white;
+}
+
+.dialog-row__desc {
+    font-size: 12px;
+    color: rgb(155, 155, 155);
+    white-space: normal;
+}
+
+/* ============================================
+   EVENT DIALOG
+   ============================================ */
+
+.event-dialog__panel {
+    max-width: 600px;
+    width: 80%;
+}
+
+.event-dialog__close {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
+
+.event-dialog__title {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 12px;
+}
+
+.event-dialog__description {
+    font-size: 14px;
+    color: rgb(204, 204, 204);
+    margin-bottom: 8px;
+    white-space: normal;
+}
+
+.event-dialog__narrative {
+    font-size: 13px;
+    color: rgb(179, 179, 153);
+    margin-bottom: 16px;
+    white-space: normal;
+    -unity-font-style: italic;
+}
+
+.event-dialog__response-btn {
+    margin-top: 4px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.event-dialog__continue-btn {
+    margin-top: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+/* ============================================
+   LAW PANEL
+   ============================================ */
+
+.law-panel__panel {
+    max-width: 650px;
+    width: 85%;
+    max-height: 80%;
+}
+
+.law-panel__row {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.law-panel__law-name {
+    font-size: 15px;
+    color: white;
+}
+
+.law-panel__law-desc {
+    font-size: 12px;
+    color: rgb(155, 155, 155);
+    white-space: normal;
+}
+
+.law-panel__enacted-badge {
+    color: rgb(102, 204, 102);
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.law-panel__enact-btn {
+    margin-left: 8px;
+}
+
+.law-panel__enact-btn--disabled {
+    opacity: 0.5;
+}
+
+/* ============================================
+   MISSION PANEL
+   ============================================ */
+
+.mission-panel__panel {
+    max-width: 700px;
+    width: 85%;
+    max-height: 85%;
+}
+
+.mission-panel__section-header--available {
+    color: rgb(230, 217, 179);
+}
+
+.mission-panel__section-header--active {
+    color: rgb(179, 217, 230);
+}
+
+.mission-panel__available-scroll {
+    flex-grow: 1;
+    min-height: 100px;
+    margin-bottom: 16px;
+}
+
+.mission-panel__active-scroll {
+    flex-grow: 1;
+    min-height: 60px;
+}
+
+.mission-panel__row {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.mission-panel__mission-name {
+    font-size: 14px;
+    color: white;
+}
+
+.mission-panel__mission-desc {
+    font-size: 11px;
+    color: rgb(155, 155, 155);
+    white-space: normal;
+}
+
+.mission-panel__cost {
+    font-size: 11px;
+    color: rgb(179, 179, 128);
+}
+
+.mission-panel__launch-btn {
+    margin-left: 8px;
+}
+
+.mission-panel__launch-btn--disabled {
+    opacity: 0.5;
+}
+
+.mission-panel__active-row {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(64, 64, 77, 255);
+}
+
+.mission-panel__active-name {
+    font-size: 14px;
+    color: rgb(179, 217, 255);
+    flex-grow: 1;
+}
+
+.mission-panel__progress-bg {
+    width: 120px;
+    height: 12px;
+    background-color: rgb(51, 51, 51);
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.mission-panel__progress-fill {
+    height: 100%;
+    background-color: rgb(77, 153, 230);
+}
+
+.mission-panel__days-remaining {
+    font-size: 11px;
+    color: rgb(155, 155, 155);
+    margin-left: 8px;
+    width: 50px;
+}
+
+.mission-panel__empty-label {
+    font-size: 12px;
+    color: rgb(128, 128, 128);
+    -unity-font-style: italic;
+}
+
+/* ============================================
+   ORDER PANEL
+   ============================================ */
+
+.order-panel__panel {
+    max-width: 650px;
+    width: 85%;
+    max-height: 80%;
+}
+
+.order-panel__row {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.order-panel__name-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.order-panel__order-name {
+    font-size: 15px;
+    color: white;
+}
+
+.order-panel__active-badge {
+    color: rgb(77, 179, 255);
+    font-size: 11px;
+    margin-left: 8px;
+}
+
+.order-panel__order-desc {
+    font-size: 12px;
+    color: rgb(155, 155, 155);
+    white-space: normal;
+}
+
+.order-panel__cooldown {
+    font-size: 11px;
+    color: rgb(230, 153, 77);
+}
+
+.order-panel__execute-btn {
+    margin-left: 8px;
+}
+
+.order-panel__execute-btn--disabled {
+    opacity: 0.5;
+}
+
+.order-panel__deactivate-btn {
+    margin-left: 8px;
+}
+
+/* ============================================
+   GAME OVER SCREEN
+   ============================================ */
+
+.game-over-screen {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.game-over-screen__panel {
+    background-color: rgb(26, 20, 20);
+    padding: 32px 40px;
+    max-width: 600px;
+    width: 80%;
+    align-items: center;
+}
+
+.game-over-screen__reason {
+    font-size: 28px;
+    color: rgb(230, 77, 77);
+    margin-bottom: 16px;
+}
+
+.game-over-screen__narrative {
+    font-size: 14px;
+    color: rgb(204, 204, 204);
+    margin-bottom: 20px;
+    white-space: normal;
+    -unity-font-style: italic;
+}
+
+.game-over-screen__stats {
+    font-size: 14px;
+    color: rgb(179, 179, 179);
+    margin-bottom: 24px;
+    white-space: normal;
+}
+
+.game-over-screen__menu-btn {
+    padding: 10px 24px;
+}
+
+/* ============================================
+   NARRATIVE LOG
+   ============================================ */
+
+.narrative-log__panel {
+    background-color: rgb(26, 26, 31);
+    max-width: 600px;
+    width: 80%;
+    max-height: 80%;
+}
+
+.narrative-log__entry {
+    font-size: 13px;
+    color: rgb(191, 191, 179);
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(51, 51, 51, 255);
+    white-space: normal;
+}

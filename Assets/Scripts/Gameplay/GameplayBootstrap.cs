@@ -18,6 +18,9 @@ namespace Siege.Gameplay
         {
             SetupScene();
 
+            var state = Resolver.Resolve<GameState>();
+            state.Initialize();
+
             _runner = gameObject.AddComponent<SimulationRunner>();
 
             var systems = Resolver.Resolve<IEnumerable<ISimulationSystem>>();

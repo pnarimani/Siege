@@ -57,6 +57,16 @@
                 <Siege.Gameplay.UI.SiegeButton text="Destroy" name="DestroyBuilding"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement class="gameplay-hud__bottom"/>
+        <ui:VisualElement class="gameplay-hud__bottom">
+            <ui:VisualElement class="gameplay-hud__day-info">
+                <ui:Label name="DayLabel" text="Day 1" class="gameplay-hud__day-label"/>
+                <ui:Label name="PhaseLabel" text="DAY" class="gameplay-hud__phase-label gameplay-hud__phase-label--day"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="gameplay-hud__action-buttons">
+                <Siege.Gameplay.UI.SiegeButton name="LawsBtn" text="Laws"/>
+                <Siege.Gameplay.UI.SiegeButton name="OrdersBtn" text="Orders"/>
+                <Siege.Gameplay.UI.SiegeButton name="MissionsBtn" text="Missions"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

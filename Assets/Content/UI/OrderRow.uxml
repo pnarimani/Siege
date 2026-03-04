@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Row" class="dialog-row order-panel__row">
+        <ui:VisualElement class="dialog-row__info">
+            <ui:VisualElement class="order-panel__name-row">
+                <ui:Label name="NameLabel" class="order-panel__order-name"/>
+                <ui:Label name="ActiveBadge" text="ACTIVE" class="order-panel__active-badge" style="display: none;"/>
+            </ui:VisualElement>
+            <ui:Label name="DescLabel" class="order-panel__order-desc"/>
+            <ui:Label name="CooldownLabel" class="order-panel__cooldown" style="display: none;"/>
+        </ui:VisualElement>
+        <ui:Button name="ExecuteBtn" class="order-panel__execute-btn"/>
+        <ui:Button name="DeactivateBtn" text="Deactivate" class="order-panel__deactivate-btn" style="display: none;"/>
+    </ui:VisualElement>
+</ui:UXML>

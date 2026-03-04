@@ -24,7 +24,6 @@ namespace Siege.Gameplay.Simulation
             _clock = Resolver.Resolve<GameClock>();
             _changeLog = Resolver.Resolve<ChangeLog>();
 
-            _state.Initialize();
             _clock.Initialize();
 
             _clock.DayStarted += OnDayStarted;

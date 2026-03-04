@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Content/UI/Siege.uss?fileID=7433441132597879392&amp;guid=2f14999a55ec4402ab6db8d64423fd87&amp;type=3#Siege"/>
+    <Style src="Dialogs.uss"/>
+    <ui:VisualElement name="Overlay" class="dialog-overlay mission-panel" style="display: none;">
+        <ui:VisualElement class="dialog-panel mission-panel__panel">
+            <ui:VisualElement class="dialog-header">
+                <ui:Label text="Missions" class="dialog-title mission-panel__title"/>
+                <ui:Button name="CloseBtn" text="X" class="dialog-close mission-panel__close"/>
+            </ui:VisualElement>
+            <ui:Label text="Available Missions" class="dialog-section-header mission-panel__section-header--available"/>
+            <ui:ScrollView name="AvailableScroll" mode="Vertical" class="mission-panel__available-scroll"/>
+            <ui:Label text="Active Missions" class="dialog-section-header mission-panel__section-header--active"/>
+            <ui:ScrollView name="ActiveScroll" mode="Vertical" class="mission-panel__active-scroll"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

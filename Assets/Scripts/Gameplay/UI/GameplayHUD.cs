@@ -20,6 +20,13 @@ namespace Siege.Gameplay.UI
         ResourceWidget _food, _water, _fuel, _materials, _meds;
         ProgressBar _morale, _unrest, _sickness;
 
+        SiegeButton _lawsBtn, _ordersBtn, _missionsBtn;
+        Label _dayLabel, _phaseLabel;
+
+        LawPanel _lawPanel;
+        OrderPanel _orderPanel;
+        MissionPanel _missionPanel;
+
         GameState _state;
         GameClock _clock;
 
@@ -39,6 +46,17 @@ namespace Siege.Gameplay.UI
             _unrest?.AddToClassList("progress-bar--unrest");
             _sickness?.AddToClassList("progress-bar--sickness");
 
+            _dayLabel = this.FindElement<Label>("DayLabel");
+            _phaseLabel = this.FindElement<Label>("PhaseLabel");
+
+            _lawsBtn = this.FindElement<SiegeButton>("LawsBtn");
+            _ordersBtn = this.FindElement<SiegeButton>("OrdersBtn");
+            _missionsBtn = this.FindElement<SiegeButton>("MissionsBtn");
+
+            if (_lawsBtn != null) _lawsBtn.Clicked += OnLawsClicked;
+            if (_ordersBtn != null) _ordersBtn.Clicked += OnOrdersClicked;
+            if (_missionsBtn != null) _missionsBtn.Clicked += OnMissionsClicked;
+
             SetupTooltip(_food, _foodTitle, _foodDesc);
             SetupTooltip(_water, _waterTitle, _waterDesc);
             SetupTooltip(_fuel, _fuelTitle, _fuelDesc);
@@ -53,6 +71,10 @@ namespace Siege.Gameplay.UI
         {
             _state = Resolver.Resolve<GameState>();
             _clock = Resolver.Resolve<GameClock>();
+
+            _lawPanel = UISystem.GetOrOpen<LawPanel>(UILayer.Window);
+            _orderPanel = UISystem.GetOrOpen<OrderPanel>(UILayer.Window);
+            _missionPanel = UISystem.GetOrOpen<MissionPanel>(UILayer.Window);
         }
 
         void Update()
@@ -60,6 +82,7 @@ namespace Siege.Gameplay.UI
             if (_state == null) return;
             UpdateResources();
             UpdateStatusBars();
+            UpdateActionBar();
         }
 
         void UpdateResources()
@@ -76,6 +99,55 @@ namespace Siege.Gameplay.UI
             _morale?.Set01((float)(_state.Morale / 100.0));
             _unrest?.Set01((float)(_state.Unrest / 100.0));
             _sickness?.Set01((float)(_state.Sickness / 100.0));
+        }
+
+        void UpdateActionBar()
+        {
+            if (_clock == null) return;
+
+            bool isDay = _clock.IsDay;
+
+            if (_dayLabel != null)
+                _dayLabel.text = $"Day {_clock.CurrentDay}";
+
+            if (_phaseLabel != null)
+            {
+                _phaseLabel.text = isDay ? "DAY" : "NIGHT";
+                _phaseLabel.EnableInClassList("gameplay-hud__phase-label--day", isDay);
+                _phaseLabel.EnableInClassList("gameplay-hud__phase-label--night", !isDay);
+            }
+
+            _lawsBtn?.SetEnabled(isDay);
+            _ordersBtn?.SetEnabled(isDay);
+            _missionsBtn?.SetEnabled(!isDay);
+        }
+
+        void OnLawsClicked()
+        {
+            bool wasShown = _lawPanel?.IsShown ?? false;
+            HideAllPanels();
+            if (!wasShown && _lawPanel != null) { _lawPanel.Show(); _lawsBtn?.AddToClassList("hud-btn--active"); }
+        }
+
+        void OnOrdersClicked()
+        {
+            bool wasShown = _orderPanel?.IsShown ?? false;
+            HideAllPanels();
+            if (!wasShown && _orderPanel != null) { _orderPanel.Show(); _ordersBtn?.AddToClassList("hud-btn--active"); }
+        }
+
+        void OnMissionsClicked()
+        {
+            bool wasShown = _missionPanel?.IsShown ?? false;
+            HideAllPanels();
+            if (!wasShown && _missionPanel != null) { _missionPanel.Show(); _missionsBtn?.AddToClassList("hud-btn--active"); }
+        }
+
+        void HideAllPanels()
+        {
+            _lawPanel?.Hide(); _lawsBtn?.RemoveFromClassList("hud-btn--active");
+            _orderPanel?.Hide(); _ordersBtn?.RemoveFromClassList("hud-btn--active");
+            _missionPanel?.Hide(); _missionsBtn?.RemoveFromClassList("hud-btn--active");
         }
 
         static void SetupTooltip(VisualElement el, LocalizedString title, LocalizedString desc)

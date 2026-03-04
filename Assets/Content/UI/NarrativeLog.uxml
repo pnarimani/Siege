@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Content/UI/Siege.uss?fileID=7433441132597879392&amp;guid=2f14999a55ec4402ab6db8d64423fd87&amp;type=3#Siege"/>
+    <Style src="Dialogs.uss"/>
+    <ui:VisualElement name="Overlay" class="dialog-overlay narrative-log" style="display: none;">
+        <ui:VisualElement class="dialog-panel narrative-log__panel">
+            <ui:VisualElement class="dialog-header">
+                <ui:Label text="Narrative Log" class="dialog-title narrative-log__title"/>
+                <ui:Button name="CloseBtn" text="X" class="dialog-close narrative-log__close"/>
+            </ui:VisualElement>
+            <ui:ScrollView name="ScrollView" mode="Vertical" class="dialog-scroll narrative-log__scroll"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Content/UI/Siege.uss?fileID=7433441132597879392&amp;guid=2f14999a55ec4402ab6db8d64423fd87&amp;type=3#Siege"/>
+    <Style src="Dialogs.uss"/>
+    <ui:VisualElement name="Overlay" class="dialog-overlay game-over-screen" style="display: none;">
+        <ui:VisualElement class="dialog-panel game-over-screen__panel">
+            <ui:Label name="ReasonLabel" class="game-over-screen__reason"/>
+            <ui:Label name="NarrativeLabel" class="game-over-screen__narrative"/>
+            <ui:Label name="StatsLabel" class="game-over-screen__stats"/>
+            <ui:Button name="MenuBtn" text="Return to Menu" class="game-over-screen__menu-btn"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

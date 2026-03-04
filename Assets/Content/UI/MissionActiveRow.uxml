@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Row" class="dialog-row mission-panel__active-row">
+        <ui:Label name="NameLabel" class="mission-panel__active-name"/>
+        <ui:VisualElement class="mission-panel__progress-bg">
+            <ui:VisualElement name="ProgressFill" class="mission-panel__progress-fill"/>
+        </ui:VisualElement>
+        <ui:Label name="DaysLabel" class="mission-panel__days-remaining"/>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Row" class="dialog-row mission-panel__row">
+        <ui:VisualElement class="dialog-row__info">
+            <ui:Label name="NameLabel" class="mission-panel__mission-name"/>
+            <ui:Label name="DescLabel" class="mission-panel__mission-desc"/>
+            <ui:Label name="CostLabel" class="mission-panel__cost"/>
+        </ui:VisualElement>
+        <ui:Button name="LaunchBtn" text="Launch" class="mission-panel__launch-btn"/>
+    </ui:VisualElement>
+</ui:UXML>

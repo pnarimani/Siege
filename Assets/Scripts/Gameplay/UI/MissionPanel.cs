@@ -18,7 +18,7 @@ namespace Siege.Gameplay.UI
 
         GameState _state;
         GameClock _clock;
-        MissionManager _missionManager;
+        MissionDispatcher _missionDispatcher;
 
         void Awake()
         {
@@ -34,12 +34,12 @@ namespace Siege.Gameplay.UI
         {
             _state = Resolver.Resolve<GameState>();
             _clock = Resolver.Resolve<GameClock>();
-            _missionManager = Resolver.Resolve<MissionManager>();
+            _missionDispatcher = Resolver.Resolve<MissionDispatcher>();
         }
 
         void Update()
         {
-            if (_state == null || _missionManager == null) return;
+            if (_state == null || _missionDispatcher == null) return;
             if (_root.style.display == DisplayStyle.None) return;
 
             RebuildAvailable();
@@ -51,7 +51,7 @@ namespace Siege.Gameplay.UI
             _availableScroll.Clear();
             bool isDay = _clock != null && _clock.IsDay;
 
-            foreach (var kvp in _missionManager.AllMissions)
+            foreach (var kvp in _missionDispatcher.AllMissions)
             {
                 var mission = kvp.Value;
                 if (mission.IsActive) continue;
@@ -64,14 +64,14 @@ namespace Siege.Gameplay.UI
                 if (mission.GuardCost > 0) costText += $" | Guards: {mission.GuardCost}";
                 row.Q<Label>("CostLabel").text = costText;
 
-                bool canLaunch = _missionManager.CanLaunch(mission.Id, _state) && !isDay;
+                bool canLaunch = _missionDispatcher.CanLaunch(mission.Id, _state) && !isDay;
                 var launchBtn = row.Q<SiegeButton>("LaunchBtn");
                 launchBtn.SetEnabled(canLaunch);
                 if (!canLaunch) launchBtn.AddToClassList("mission-panel__launch-btn--disabled");
                 if (isDay) launchBtn.tooltip = "Missions can only launch at night";
 
                 string missionId = mission.Id;
-                launchBtn.Clicked += () => _missionManager.Launch(missionId, _state);
+                launchBtn.Clicked += () => _missionDispatcher.Launch(missionId, _state);
                 _availableScroll.Add(row);
             }
         }
@@ -80,7 +80,7 @@ namespace Siege.Gameplay.UI
         {
             _activeScroll.Clear();
 
-            foreach (var mission in _missionManager.ActiveMissions)
+            foreach (var mission in _missionDispatcher.ActiveMissions)
             {
                 float progress = mission.DurationDays > 0
                     ? 1f - (float)mission.DaysRemaining / mission.DurationDays
@@ -93,7 +93,7 @@ namespace Siege.Gameplay.UI
                 _activeScroll.Add(row);
             }
 
-            if (_missionManager.ActiveMissions.Count == 0)
+            if (_missionDispatcher.ActiveMissions.Count == 0)
             {
                 var emptyLabel = new Label("No active missions");
                 emptyLabel.AddToClassList("mission-panel__empty-label");

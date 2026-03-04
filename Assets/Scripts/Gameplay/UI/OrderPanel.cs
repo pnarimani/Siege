@@ -15,7 +15,7 @@ namespace Siege.Gameplay.UI
         ScrollView _scrollView;
 
         GameState _state;
-        OrderManager _orderManager;
+        OrderDispatcher _orderDispatcher;
 
         void Awake()
         {
@@ -29,17 +29,17 @@ namespace Siege.Gameplay.UI
         void Start()
         {
             _state = Resolver.Resolve<GameState>();
-            _orderManager = Resolver.Resolve<OrderManager>();
+            _orderDispatcher = Resolver.Resolve<OrderDispatcher>();
         }
 
         void Update()
         {
-            if (_state == null || _orderManager == null) return;
+            if (_state == null || _orderDispatcher == null) return;
             if (_root.style.display == DisplayStyle.None) return;
 
             _scrollView.Clear();
 
-            foreach (var order in _orderManager.AllOrders)
+            foreach (var order in _orderDispatcher.AllOrders)
             {
                 var row = _rowTemplate.Instantiate();
                 row.Q<Label>("NameLabel").text = order.Name;
@@ -48,7 +48,7 @@ namespace Siege.Gameplay.UI
                 var activeBadge = row.Q("ActiveBadge");
                 activeBadge.style.display = (order.IsToggle && order.IsActive) ? DisplayStyle.Flex : DisplayStyle.None;
 
-                int cooldown = _orderManager.GetCooldownRemaining(order.Id);
+                int cooldown = _orderDispatcher.GetCooldownRemaining(order.Id);
                 var cooldownLabel = row.Q<Label>("CooldownLabel");
                 if (cooldown > 0)
                 {
@@ -65,16 +65,16 @@ namespace Siege.Gameplay.UI
                     deactivateBtn.style.display = DisplayStyle.Flex;
                     deactivateBtn.SetEnabled(order.CanDeactivate);
                     string orderId = order.Id;
-                    deactivateBtn.Clicked += () => _orderManager.TryDeactivate(orderId);
+                    deactivateBtn.Clicked += () => _orderDispatcher.TryDeactivate(orderId);
                 }
                 else
                 {
                     executeBtn.Text = order.IsToggle ? "Activate" : "Execute";
-                    bool canIssue = order.CanIssue(_state) && cooldown <= 0;
+                    bool canIssue = _orderDispatcher.CanIssue(order.Id) && cooldown <= 0;
                     executeBtn.SetEnabled(canIssue);
                     if (!canIssue) executeBtn.AddToClassList("order-panel__execute-btn--disabled");
                     string orderId = order.Id;
-                    executeBtn.Clicked += () => _orderManager.TryExecute(orderId);
+                    executeBtn.Clicked += () => _orderDispatcher.TryExecute(orderId);
                 }
 
                 _scrollView.Add(row);

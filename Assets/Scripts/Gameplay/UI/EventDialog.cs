@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using AutofacUnity;
-using Siege.Gameplay.Events;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 using UnityEngine.UIElements;
+using EventDispatcher = Siege.Gameplay.Events.EventDispatcher;
+using GameEvent = Siege.Gameplay.Events.GameEvent;
 
 namespace Siege.Gameplay.UI
 {
@@ -19,7 +20,7 @@ namespace Siege.Gameplay.UI
 
         GameState _state;
         GameClock _clock;
-        EventManager _eventManager;
+        EventDispatcher _eventDispatcher;
         bool _wasPaused;
 
         bool _isShowing;
@@ -42,14 +43,14 @@ namespace Siege.Gameplay.UI
         {
             _state = Resolver.Resolve<GameState>();
             _clock = Resolver.Resolve<GameClock>();
-            _eventManager = Resolver.Resolve<EventManager>();
-            _eventManager.EventTriggered += OnEventTriggered;
+            _eventDispatcher = Resolver.Resolve<EventDispatcher>();
+            _eventDispatcher.EventTriggered += OnEventTriggered;
             Popup.Requested += OnPopupRequested;
         }
 
         void OnDestroy()
         {
-            if (_eventManager != null) _eventManager.EventTriggered -= OnEventTriggered;
+            if (_eventDispatcher != null) _eventDispatcher.EventTriggered -= OnEventTriggered;
             Popup.Requested -= OnPopupRequested;
         }
 
@@ -150,13 +151,13 @@ namespace Siege.Gameplay.UI
 
         void RespondToEvent(int index)
         {
-            _eventManager.RespondToEvent(_state, index);
+            _eventDispatcher.RespondToEvent(_state, index);
             HideAndAdvanceQueue();
         }
 
         void Dismiss()
         {
-            _eventManager.DismissEvent();
+            _eventDispatcher.DismissEvent();
             HideAndAdvanceQueue();
         }
 

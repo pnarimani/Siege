@@ -1,38 +1,11 @@
-using AutofacUnity;
-using Siege.Gameplay.Political;
-using Siege.Gameplay.Simulation;
-using Siege.Gameplay.UI;
-
 namespace Siege.Gameplay.Laws
 {
     public class PurgeTheDisloyalLaw : Law
     {
-        const double ImmediateUnrest = -30;
-        const double ImmediateMorale = -15;
-        const int ImmediateDeaths = 8;
-
-        public override string Id => "purge_disloyal";
-        public override string Name => "Purge the Disloyal";
-        public override string Description => "Root out suspected traitors and make examples of them. Devastating but effective.";
-        public override string NarrativeText => "The lists were drawn up at midnight. By dawn, eight cells were empty.";
-
-        public override bool CanEnact(GameState state) =>
-            Resolver.Resolve<PoliticalState>().Tyranny.Value >= 6;
-
-        protected override void ApplyImmediate(GameState state, ChangeLog log)
-        {
-            int before = log.CurrentChanges.Count;
-            state.Unrest += ImmediateUnrest;
-            log.Record("Unrest", ImmediateUnrest, "Purge the Disloyal");
-
-            state.Morale += ImmediateMorale;
-            log.Record("Morale", ImmediateMorale, "Purge the Disloyal");
-
-            state.HealthyWorkers -= ImmediateDeaths;
-            state.TotalDeaths += ImmediateDeaths;
-            state.DeathsToday += ImmediateDeaths;
-            log.Record("HealthyWorkers", -ImmediateDeaths, "Purge the Disloyal");
-            Popup.Open(Name, NarrativeText, log.SliceSince(before));
-        }
+        public bool IsEnacted { get; set; }
+        public string Id => "purge_disloyal";
+        public string Name => "Purge the Disloyal";
+        public string Description => "Root out suspected traitors and make examples of them. Devastating but effective.";
+        public string NarrativeText => "The lists were drawn up at midnight. By dawn, eight cells were empty.";
     }
 }

@@ -15,7 +15,7 @@ namespace Siege.Gameplay.UI
         ScrollView _scrollView;
 
         GameState _state;
-        LawManager _lawManager;
+        LawDispatcher _lawDispatcher;
 
         void Awake()
         {
@@ -29,17 +29,17 @@ namespace Siege.Gameplay.UI
         void Start()
         {
             _state = Resolver.Resolve<GameState>();
-            _lawManager = Resolver.Resolve<LawManager>();
+            _lawDispatcher = Resolver.Resolve<LawDispatcher>();
         }
 
         void Update()
         {
-            if (_state == null || _lawManager == null) return;
+            if (_state == null || _lawDispatcher == null) return;
             if (_root.style.display == DisplayStyle.None) return;
 
             _scrollView.Clear();
 
-            foreach (var law in _lawManager.AllLaws)
+            foreach (var law in _lawDispatcher.AllLaws)
             {
                 var row = _rowTemplate.Instantiate();
                 row.Q<Label>("NameLabel").text = law.Name;
@@ -52,12 +52,12 @@ namespace Siege.Gameplay.UI
                 }
                 else
                 {
-                    bool canEnact = law.CanEnact(_state);
+                    bool canEnact = _lawDispatcher.CanEnact(law.Id);
                     var enactBtn = row.Q<SiegeButton>("EnactBtn");
                     enactBtn.SetEnabled(canEnact);
                     if (!canEnact) enactBtn.AddToClassList("law-panel__enact-btn--disabled");
                     string lawId = law.Id;
-                    enactBtn.Clicked += () => _lawManager.TryEnact(lawId);
+                    enactBtn.Clicked += () => _lawDispatcher.TryEnact(lawId);
                 }
 
                 _scrollView.Add(row);

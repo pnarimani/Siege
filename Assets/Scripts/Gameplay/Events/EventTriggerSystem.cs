@@ -4,18 +4,18 @@ namespace Siege.Gameplay.Events
 {
     public class EventTriggerSystem : ISimulationSystem
     {
-        readonly EventManager _eventManager;
+        readonly EventDispatcher _eventDispatcher;
 
-        public EventTriggerSystem(EventManager eventManager)
+        public EventTriggerSystem(EventDispatcher eventDispatcher)
         {
-            _eventManager = eventManager;
+            _eventDispatcher = eventDispatcher;
         }
 
         public void Tick(GameState state, float deltaTime) { }
 
         public void OnDayStart(GameState state, int day)
         {
-            _eventManager.EvaluateEvents(state);
+            _eventDispatcher.EvaluateEvents(state);
         }
     }
 }

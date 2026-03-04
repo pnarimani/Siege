@@ -1,31 +1,12 @@
-using Siege.Gameplay.Simulation;
-using Siege.Gameplay.UI;
-
 namespace Siege.Gameplay.Orders
 {
     public class VoluntaryEvacuationOrder : Order
     {
-        const int Cooldown = 0;
-        const int MaxZonesLost = 4;
-
-        public override string Id => "voluntary_evacuation";
-        public override string Name => "Voluntary Evacuation";
-        public override string Description => "Abandon the outermost zone, pulling the perimeter inward.";
-        public override string NarrativeText => "Families carry what they can. Behind them, the district falls silent.";
-        public override int CooldownDays => Cooldown;
-
-        public override bool CanIssue(GameState state) =>
-            state.ZonesLostCount < MaxZonesLost && state.ActivePerimeter != ZoneId.Keep;
-
-        public override void Execute(GameState state, ChangeLog log)
-        {
-            int before = log.CurrentChanges.Count;
-            // NOTE: simplified — real evacuation should go through ZoneManager
-            var zone = state.Zones[state.ActivePerimeter];
-            zone.IsLost = true;
-            zone.Integrity = 0;
-            log.Record("ZoneLost", 1, Id);
-            Popup.Open(Name, NarrativeText, log.SliceSince(before));
-        }
+        public bool IsActive { get; set; }
+        public string Id => "voluntary_evacuation";
+        public string Name => "Voluntary Evacuation";
+        public string Description => "Abandon the outermost zone, pulling the perimeter inward.";
+        public string NarrativeText => "Families carry what they can. Behind them, the district falls silent.";
+        public int CooldownDays => 0;
     }
 }

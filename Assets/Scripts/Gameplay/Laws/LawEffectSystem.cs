@@ -7,14 +7,12 @@ namespace Siege.Gameplay.Laws
     /// </summary>
     public class LawEffectSystem : ISimulationSystem
     {
-        readonly LawManager _lawManager;
-        readonly ChangeLog _changeLog;
+        readonly LawDispatcher _lawDispatcher;
         bool _processedToday;
 
-        public LawEffectSystem(LawManager lawManager, ChangeLog changeLog)
+        public LawEffectSystem(LawDispatcher lawDispatcher)
         {
-            _lawManager = lawManager;
-            _changeLog = changeLog;
+            _lawDispatcher = lawDispatcher;
         }
 
         public void OnDayStart(GameState state, int day)
@@ -26,12 +24,7 @@ namespace Siege.Gameplay.Laws
         {
             if (_processedToday) return;
             _processedToday = true;
-
-            foreach (var law in _lawManager.AllLaws)
-            {
-                if (law.IsEnacted)
-                    law.OnDayTick(state, _changeLog);
-            }
+            _lawDispatcher.TickAll();
         }
     }
 }

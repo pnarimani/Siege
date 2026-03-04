@@ -1,44 +1,12 @@
-using AutofacUnity;
-using Siege.Gameplay.Political;
-using Siege.Gameplay.Simulation;
-using Siege.Gameplay.UI;
-
 namespace Siege.Gameplay.Orders
 {
     public class PublicConfessionOrder : Order
     {
-        const int Cooldown = 3;
-        const double UnrestReduction = 20;
-        const double MoraleLoss = 10;
-        const int Deaths = 2;
-
-        public override string Id => "public_confession";
-        public override string Name => "Public Confession";
-        public override string Description => "Force accused dissidents to confess publicly, crushing unrest through fear.";
-        public override string NarrativeText => "They kneel in the square and recite their crimes. Whether the words are true no longer matters.";
-        public override int CooldownDays => Cooldown;
-
-        public override bool CanIssue(GameState state)
-        {
-            var p = Resolver.Resolve<PoliticalState>();
-            return p.Tyranny.Value >= 4 && p.FearLevel.Value >= 2;
-        }
-
-        public override void Execute(GameState state, ChangeLog log)
-        {
-            int before = log.CurrentChanges.Count;
-            state.Unrest -= UnrestReduction;
-            log.Record("Unrest", -UnrestReduction, Id);
-
-            state.Morale -= MoraleLoss;
-            log.Record("Morale", -MoraleLoss, Id);
-
-            state.HealthyWorkers -= Deaths;
-            state.TotalDeaths += Deaths;
-            state.DeathsToday += Deaths;
-            log.Record("HealthyWorkers", -Deaths, Id);
-            log.Record("Deaths", Deaths, Id);
-            Popup.Open(Name, NarrativeText, log.SliceSince(before));
-        }
+        public bool IsActive { get; set; }
+        public string Id => "public_confession";
+        public string Name => "Public Confession";
+        public string Description => "Force accused dissidents to confess publicly, crushing unrest through fear.";
+        public string NarrativeText => "They kneel in the square and recite their crimes. Whether the words are true no longer matters.";
+        public int CooldownDays => 3;
     }
 }

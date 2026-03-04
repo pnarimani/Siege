@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using AutofacUnity;
-using Siege.Gameplay.Events;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 using UnityEngine.UIElements;
+using EventDispatcher = Siege.Gameplay.Events.EventDispatcher;
+using GameEvent = Siege.Gameplay.Events.GameEvent;
 
 namespace Siege.Gameplay.UI
 {
@@ -13,7 +14,7 @@ namespace Siege.Gameplay.UI
         VisualElement _root;
         ScrollView _scrollView;
 
-        EventManager _eventManager;
+        EventDispatcher _eventDispatcher;
         GameState _state;
         readonly List<string> _entries = new();
 
@@ -29,13 +30,13 @@ namespace Siege.Gameplay.UI
         void Start()
         {
             _state = Resolver.Resolve<GameState>();
-            _eventManager = Resolver.Resolve<EventManager>();
-            _eventManager.EventTriggered += OnEventTriggered;
+            _eventDispatcher = Resolver.Resolve<EventDispatcher>();
+            _eventDispatcher.EventTriggered += OnEventTriggered;
         }
 
         void OnDestroy()
         {
-            if (_eventManager != null) _eventManager.EventTriggered -= OnEventTriggered;
+            if (_eventDispatcher != null) _eventDispatcher.EventTriggered -= OnEventTriggered;
         }
 
         void OnEventTriggered(GameEvent evt)

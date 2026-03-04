@@ -7,14 +7,12 @@ namespace Siege.Gameplay.Orders
     /// </summary>
     public class OrderEffectSystem : ISimulationSystem
     {
-        readonly OrderManager _orderManager;
-        readonly ChangeLog _changeLog;
+        readonly OrderDispatcher _orderDispatcher;
         bool _processedToday;
 
-        public OrderEffectSystem(OrderManager orderManager, ChangeLog changeLog)
+        public OrderEffectSystem(OrderDispatcher orderDispatcher)
         {
-            _orderManager = orderManager;
-            _changeLog = changeLog;
+            _orderDispatcher = orderDispatcher;
         }
 
         public void OnDayStart(GameState state, int day)
@@ -26,12 +24,7 @@ namespace Siege.Gameplay.Orders
         {
             if (_processedToday) return;
             _processedToday = true;
-
-            foreach (var order in _orderManager.AllOrders)
-            {
-                if (order.IsToggle && order.IsActive)
-                    order.OnDayTick(state, _changeLog);
-            }
+            _orderDispatcher.TickActiveOrders();
         }
     }
 }

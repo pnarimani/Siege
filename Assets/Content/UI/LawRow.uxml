@@ -1,10 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Content/UI/Siege.uss?fileID=7433441132597879392&amp;guid=2f14999a55ec4402ab6db8d64423fd87&amp;type=3#Siege"/>
     <ui:VisualElement name="Row" class="dialog-row law-panel__row">
         <ui:VisualElement class="dialog-row__info">
             <ui:Label name="NameLabel" class="law-panel__law-name"/>
             <ui:Label name="DescLabel" class="law-panel__law-desc"/>
         </ui:VisualElement>
         <ui:Label name="EnactedBadge" text="ENACTED" class="law-panel__enacted-badge" style="display: none;"/>
-        <ui:Button name="EnactBtn" text="Enact" class="law-panel__enact-btn"/>
+        <Siege.Gameplay.UI.SiegeButton name="EnactBtn" text="Enact" class="law-panel__enact-btn"/>
     </ui:VisualElement>
 </ui:UXML>

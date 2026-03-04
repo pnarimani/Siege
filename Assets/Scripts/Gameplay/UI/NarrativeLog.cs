@@ -23,7 +23,7 @@ namespace Siege.Gameplay.UI
             var root = _document.rootVisualElement;
             _root = root.Q("Overlay");
             _scrollView = root.Q<ScrollView>("ScrollView");
-            root.Q<Button>("CloseBtn").clicked += Hide;
+            root.Q<SiegeButton>("CloseBtn").Clicked += Hide;
         }
 
         void Start()

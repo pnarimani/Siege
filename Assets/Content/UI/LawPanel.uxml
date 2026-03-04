@@ -5,7 +5,7 @@
         <ui:VisualElement class="dialog-panel law-panel__panel">
             <ui:VisualElement class="dialog-header">
                 <ui:Label text="Laws" class="dialog-title law-panel__title"/>
-                <ui:Button name="CloseBtn" text="X" class="dialog-close law-panel__close"/>
+                <Siege.Gameplay.UI.SiegeButton name="CloseBtn" text="X" class="dialog-close law-panel__close"/>
             </ui:VisualElement>
             <ui:ScrollView name="ScrollView" mode="Vertical" class="dialog-scroll law-panel__scroll"/>
         </ui:VisualElement>

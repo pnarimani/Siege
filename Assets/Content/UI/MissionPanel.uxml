@@ -5,7 +5,7 @@
         <ui:VisualElement class="dialog-panel mission-panel__panel">
             <ui:VisualElement class="dialog-header">
                 <ui:Label text="Missions" class="dialog-title mission-panel__title"/>
-                <ui:Button name="CloseBtn" text="X" class="dialog-close mission-panel__close"/>
+                <Siege.Gameplay.UI.SiegeButton name="CloseBtn" text="X" class="dialog-close mission-panel__close"/>
             </ui:VisualElement>
             <ui:Label text="Available Missions" class="dialog-section-header mission-panel__section-header--available"/>
             <ui:ScrollView name="AvailableScroll" mode="Vertical" class="mission-panel__available-scroll"/>

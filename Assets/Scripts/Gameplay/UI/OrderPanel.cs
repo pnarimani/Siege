@@ -23,7 +23,7 @@ namespace Siege.Gameplay.UI
             var root = _document.rootVisualElement;
             _root = root.Q("Overlay");
             _scrollView = root.Q<ScrollView>("ScrollView");
-            root.Q<Button>("CloseBtn").clicked += Hide;
+            root.Q<SiegeButton>("CloseBtn").Clicked += Hide;
         }
 
         void Start()
@@ -56,8 +56,8 @@ namespace Siege.Gameplay.UI
                     cooldownLabel.style.display = DisplayStyle.Flex;
                 }
 
-                var executeBtn = row.Q<Button>("ExecuteBtn");
-                var deactivateBtn = row.Q<Button>("DeactivateBtn");
+                var executeBtn = row.Q<SiegeButton>("ExecuteBtn");
+                var deactivateBtn = row.Q<SiegeButton>("DeactivateBtn");
 
                 if (order.IsToggle && order.IsActive)
                 {
@@ -65,16 +65,16 @@ namespace Siege.Gameplay.UI
                     deactivateBtn.style.display = DisplayStyle.Flex;
                     deactivateBtn.SetEnabled(order.CanDeactivate);
                     string orderId = order.Id;
-                    deactivateBtn.clicked += () => _orderManager.TryDeactivate(orderId);
+                    deactivateBtn.Clicked += () => _orderManager.TryDeactivate(orderId);
                 }
                 else
                 {
-                    executeBtn.text = order.IsToggle ? "Activate" : "Execute";
+                    executeBtn.Text = order.IsToggle ? "Activate" : "Execute";
                     bool canIssue = order.CanIssue(_state) && cooldown <= 0;
                     executeBtn.SetEnabled(canIssue);
                     if (!canIssue) executeBtn.AddToClassList("order-panel__execute-btn--disabled");
                     string orderId = order.Id;
-                    executeBtn.clicked += () => _orderManager.TryExecute(orderId);
+                    executeBtn.Clicked += () => _orderManager.TryExecute(orderId);
                 }
 
                 _scrollView.Add(row);

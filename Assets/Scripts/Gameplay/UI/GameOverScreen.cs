@@ -22,7 +22,7 @@ namespace Siege.Gameplay.UI
             _reasonLabel = root.Q<Label>("ReasonLabel");
             _narrativeLabel = root.Q<Label>("NarrativeLabel");
             _statsLabel = root.Q<Label>("StatsLabel");
-            root.Q<Button>("MenuBtn").clicked += () => SceneManager.LoadScene("Boot");
+            root.Q<SiegeButton>("MenuBtn").Clicked += () => SceneManager.LoadScene("Boot");
         }
 
         void Start()

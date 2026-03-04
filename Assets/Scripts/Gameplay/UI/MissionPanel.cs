@@ -27,7 +27,7 @@ namespace Siege.Gameplay.UI
             _root = root.Q("Overlay");
             _availableScroll = root.Q<ScrollView>("AvailableScroll");
             _activeScroll = root.Q<ScrollView>("ActiveScroll");
-            root.Q<Button>("CloseBtn").clicked += Hide;
+            root.Q<SiegeButton>("CloseBtn").Clicked += Hide;
         }
 
         void Start()
@@ -65,13 +65,13 @@ namespace Siege.Gameplay.UI
                 row.Q<Label>("CostLabel").text = costText;
 
                 bool canLaunch = _missionManager.CanLaunch(mission.Id, _state) && !isDay;
-                var launchBtn = row.Q<Button>("LaunchBtn");
+                var launchBtn = row.Q<SiegeButton>("LaunchBtn");
                 launchBtn.SetEnabled(canLaunch);
                 if (!canLaunch) launchBtn.AddToClassList("mission-panel__launch-btn--disabled");
                 if (isDay) launchBtn.tooltip = "Missions can only launch at night";
 
                 string missionId = mission.Id;
-                launchBtn.clicked += () => _missionManager.Launch(missionId, _state);
+                launchBtn.Clicked += () => _missionManager.Launch(missionId, _state);
                 _availableScroll.Add(row);
             }
         }

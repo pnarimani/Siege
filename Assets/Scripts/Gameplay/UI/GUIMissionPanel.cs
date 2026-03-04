@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace Siege.Gameplay.UI
 {
-    public class MissionPanel : MonoBehaviour
+    public class GUIMissionPanel : MonoBehaviour, IBackButtonHandler
     {
         [SerializeField] VisualTreeAsset _availableRowTemplate;
         [SerializeField] VisualTreeAsset _activeRowTemplate;
@@ -19,6 +19,7 @@ namespace Siege.Gameplay.UI
         GameState _state;
         GameClock _clock;
         MissionDispatcher _missionDispatcher;
+        BackButtonManager _backButtonManager;
         bool _dirty = true;
 
         void Awake()
@@ -29,6 +30,7 @@ namespace Siege.Gameplay.UI
             _availableScroll = root.Q<ScrollView>("AvailableScroll");
             _activeScroll = root.Q<ScrollView>("ActiveScroll");
             root.Q<SiegeButton>("CloseBtn").Clicked += Hide;
+            _backButtonManager = Resolver.Resolve<BackButtonManager>();
         }
 
         void Start()
@@ -61,6 +63,7 @@ namespace Siege.Gameplay.UI
             {
                 var mission = kvp.Value;
                 if (mission.IsActive) continue;
+                if (!_missionDispatcher.CanLaunch(mission.Id, _state)) continue;
 
                 var row = _availableRowTemplate.Instantiate();
                 row.Q<Label>("NameLabel").text = mission.Name;
@@ -108,7 +111,22 @@ namespace Siege.Gameplay.UI
         }
 
         public bool IsShown => _root.style.display == DisplayStyle.Flex;
-        public void Show() { _root.style.display = DisplayStyle.Flex; _dirty = true; }
-        public void Hide() => _root.style.display = DisplayStyle.None;
+
+        public void Show()
+        {
+            _root.style.display = DisplayStyle.Flex;
+            _dirty = true;
+            _backButtonManager?.PushHandler(this);
+        }
+
+        public void Hide()
+        {
+            _backButtonManager?.PopHandler(this);
+            _root.style.display = DisplayStyle.None;
+        }
+
+        // ── IBackButtonHandler ────────────────────────────────────────
+
+        public void OnBackButtonPressed() { Hide(); Object.Destroy(gameObject); }
     }
 }

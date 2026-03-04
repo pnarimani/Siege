@@ -225,7 +225,7 @@ namespace Siege.Gameplay.UI
         {
             var cycle = building.GetComponent<ProductionCycleState>();
             if (_productionProgress == null || cycle == null) return;
-            _productionProgress.Update01(cycle.Progress);
+            _productionProgress.Set01(cycle.Progress);
         }
 
         void UpdateToggleButton(Building building)

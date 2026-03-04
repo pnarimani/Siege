@@ -8,7 +8,7 @@ using EventDispatcher = Siege.Gameplay.Events.EventDispatcher;
 
 namespace Siege.Gameplay.UI
 {
-    public class NarrativeLog : MonoBehaviour
+    public class GUINarrativeLog : MonoBehaviour
     {
         UIDocument _document;
         VisualElement _root;

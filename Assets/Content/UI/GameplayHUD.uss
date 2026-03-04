@@ -116,7 +116,7 @@
 .building-panel__close-btn {
     position: absolute;
     top: 8px;
-    right: 8px;
+    left: 8px;
     width: 28px;
     height: 28px;
     min-width: 0;
@@ -254,7 +254,47 @@
     margin-bottom: 50px;
 }
 
-/* ── Notification Panel ───────────────────────────── */
+/* ── Day Progress Bar ────────────────────────────── */
+
+.gameplay-hud__day-progress {
+    flex-grow: 1;
+    margin: 0 12px;
+}
+
+.gameplay-hud__day-progress .progress-bar__prefix-label {
+    display: none;
+}
+
+.gameplay-hud__day-progress .progress-bar__track {
+    height: 6px;
+    border-radius: 3px;
+}
+
+.gameplay-hud__day-progress .progress-bar__fill {
+    background-color: rgb(220, 190, 80);
+}
+
+.gameplay-hud__day-progress .progress-bar__increase {
+    background-color: rgba(240, 210, 100, 0.4);
+}
+
+.gameplay-hud__day-progress .progress-bar__decrease {
+    background-color: rgba(220, 190, 80, 0.25);
+}
+
+.gameplay-hud__day-progress--night .progress-bar__fill {
+    background-color: rgb(80, 110, 190);
+}
+
+.gameplay-hud__day-progress--night .progress-bar__increase {
+    background-color: rgba(100, 140, 220, 0.4);
+}
+
+.gameplay-hud__day-progress--night .progress-bar__decrease {
+    background-color: rgba(80, 110, 190, 0.25);
+}
+
+/* ── Notification Panel ────────────────────────── */
 
 .notification-panel {
     position: absolute;

@@ -13,23 +13,25 @@ MonoBehaviour:
   m_Name: UIRegistry
   m_EditorClassIdentifier: Siege.Gameplay::Siege.Gameplay.UI.AddressableUIRegistry
   _entries:
-  - Type: Siege.Gameplay.UI.ButtonFeedbacks
-    Address: Content/Prefabs/UI/Button.prefab
   - Type: FastSpring.TransformSpring
     Address: Content/Prefabs/UI/Button.prefab
-  - Type: Siege.Gameplay.UI.LocalizeTextComponent
-    Address: Content/Prefabs/UI/Button.prefab
-  - Type: Siege.Gameplay.UI.GameplayHUD
+  - Type: Siege.Gameplay.UI.GUIEventDialog
+    Address: Content/Prefabs/UI/EventDialog.prefab
+  - Type: Siege.Gameplay.UI.GUIGameOverScreen
+    Address: Content/Prefabs/UI/GameOverScreen.prefab
+  - Type: Siege.Gameplay.UI.GUIGameplay
     Address: Content/Prefabs/UI/GameplayHUD.prefab
-  - Type: Siege.Gameplay.UI.BuildingView
+  - Type: Siege.Gameplay.UI.GUIBuildingPanel
     Address: Content/Prefabs/UI/GameplayHUD.prefab
+  - Type: Siege.Gameplay.UI.GUILawPanel
+    Address: Content/Prefabs/UI/LawPanel.prefab
   - Type: Siege.MainMenu.MainMenuView
     Address: Content/Prefabs/UI/MainMenu.prefab
+  - Type: Siege.Gameplay.UI.GUIMissionPanel
+    Address: Content/Prefabs/UI/MissionPanel.prefab
+  - Type: Siege.Gameplay.UI.GUINarrativeLog
+    Address: Content/Prefabs/UI/NarrativeLog.prefab
+  - Type: Siege.Gameplay.UI.GUIOrderPanel
+    Address: Content/Prefabs/UI/OrderPanel.prefab
   - Type: Siege.Gameplay.UI.SiegeTooltipSystem
     Address: Content/Prefabs/UI/Tooltip.prefab
-  - Type: Siege.Gameplay.UI.LawPanel
-    Address: Content/Prefabs/UI/LawPanel.prefab
-  - Type: Siege.Gameplay.UI.OrderPanel
-    Address: Content/Prefabs/UI/OrderPanel.prefab
-  - Type: Siege.Gameplay.UI.MissionPanel
-    Address: Content/Prefabs/UI/MissionPanel.prefab

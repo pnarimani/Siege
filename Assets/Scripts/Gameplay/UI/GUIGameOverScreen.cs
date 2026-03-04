@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace Siege.Gameplay.UI
 {
-    public class GameOverScreen : MonoBehaviour
+    public class GUIGameOverScreen : MonoBehaviour
     {
         UIDocument _document;
         VisualElement _root;

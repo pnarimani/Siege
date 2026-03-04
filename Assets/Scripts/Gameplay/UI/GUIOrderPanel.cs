@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace Siege.Gameplay.UI
 {
-    public class OrderPanel : MonoBehaviour
+    public class GUIOrderPanel : MonoBehaviour, IBackButtonHandler
     {
         [SerializeField] VisualTreeAsset _rowTemplate;
 
@@ -17,6 +17,7 @@ namespace Siege.Gameplay.UI
         GameState _state;
         OrderDispatcher _orderDispatcher;
         GameClock _clock;
+        BackButtonManager _backButtonManager;
         bool _dirty = true;
 
         void Awake()
@@ -26,6 +27,7 @@ namespace Siege.Gameplay.UI
             _root = root.Q("Overlay");
             _scrollView = root.Q<ScrollView>("ScrollView");
             root.Q<SiegeButton>("CloseBtn").Clicked += Hide;
+            _backButtonManager = Resolver.Resolve<BackButtonManager>();
         }
 
         void Start()
@@ -48,6 +50,11 @@ namespace Siege.Gameplay.UI
 
             foreach (var order in _orderDispatcher.AllOrders)
             {
+                bool unavailable = !order.IsActive
+                    && _orderDispatcher.GetCooldownRemaining(order.Id) == 0
+                    && !_orderDispatcher.CanIssue(order.Id);
+                if (unavailable) continue;
+
                 var row = _rowTemplate.Instantiate();
                 row.Q<Label>("NameLabel").text = order.Name;
                 row.Q<Label>("DescLabel").text = order.Description;
@@ -89,7 +96,22 @@ namespace Siege.Gameplay.UI
         }
 
         public bool IsShown => _root.style.display == DisplayStyle.Flex;
-        public void Show() { _root.style.display = DisplayStyle.Flex; _dirty = true; }
-        public void Hide() => _root.style.display = DisplayStyle.None;
+
+        public void Show()
+        {
+            _root.style.display = DisplayStyle.Flex;
+            _dirty = true;
+            _backButtonManager?.PushHandler(this);
+        }
+
+        public void Hide()
+        {
+            _backButtonManager?.PopHandler(this);
+            _root.style.display = DisplayStyle.None;
+        }
+
+        // ── IBackButtonHandler ────────────────────────────────────────
+
+        public void OnBackButtonPressed() { Hide(); Object.Destroy(gameObject); }
     }
 }

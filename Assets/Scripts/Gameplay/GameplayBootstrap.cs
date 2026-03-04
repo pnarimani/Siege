@@ -44,7 +44,7 @@ namespace Siege.Gameplay
             // Pause input is handled by TickRunner reading Space key
             gameObject.AddComponent<PauseInputHandler>();
 
-            UISystem.Open<GameplayHUD>(UILayer.Screen);
+            UISystem.Open<GUIGameplay>(UILayer.Screen);
         }
 
         // ── Scene Setup ───────────────────────────────────────────────

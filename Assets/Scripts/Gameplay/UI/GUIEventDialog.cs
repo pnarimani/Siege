@@ -8,7 +8,7 @@ using EventDispatcher = Siege.Gameplay.Events.EventDispatcher;
 
 namespace Siege.Gameplay.UI
 {
-    public class EventDialog : MonoBehaviour
+    public class GUIEventDialog : MonoBehaviour, IBackButtonHandler
     {
         UIDocument _document;
         VisualElement _root;
@@ -22,9 +22,11 @@ namespace Siege.Gameplay.UI
         GameClock _clock;
         EventDispatcher _eventDispatcher;
         IPopupService _popupService;
+        BackButtonManager _backButtonManager;
         bool _wasPaused;
 
         bool _isShowing;
+        int? _singleResponseIndex; // null = back button disabled; -1 = dismiss; >= 0 = respond
         readonly Queue<PopupRequest> _popupQueue = new();
 
         void Awake()
@@ -45,6 +47,7 @@ namespace Siege.Gameplay.UI
             _state = Resolver.Resolve<GameState>();
             _clock = Resolver.Resolve<GameClock>();
             _popupService = Resolver.Resolve<IPopupService>();
+            _backButtonManager = Resolver.Resolve<BackButtonManager>();
             _eventDispatcher = Resolver.Resolve<EventDispatcher>();
             _eventDispatcher.EventTriggered += OnEventTriggered;
             _popupService.Requested += OnPopupRequested;
@@ -97,6 +100,7 @@ namespace Siege.Gameplay.UI
             if (evt.IsRespondable)
             {
                 var responses = evt.GetResponses(_state);
+                _singleResponseIndex = responses.Length == 1 ? 0 : (int?)null;
                 for (int i = 0; i < responses.Length; i++)
                 {
                     int index = i;
@@ -111,6 +115,7 @@ namespace Siege.Gameplay.UI
             }
             else
             {
+                _singleResponseIndex = -1;
                 var btn = new SiegeButton { Text = "Continue" };
                 btn.AddToClassList("event-dialog__continue-btn");
                 btn.Clicked += Dismiss;
@@ -122,6 +127,7 @@ namespace Siege.Gameplay.UI
 
         void ShowPopup(PopupRequest req)
         {
+            _singleResponseIndex = -1;
             _title.text = req.Title;
             _description.style.display = DisplayStyle.None;
             _narrative.text = req.Narrative;
@@ -182,12 +188,23 @@ namespace Siege.Gameplay.UI
             _isShowing = true;
             _wasPaused = _clock.IsPaused;
             _clock.IsPaused = true;
+            _backButtonManager?.PushHandler(this);
         }
 
         void Hide()
         {
+            _backButtonManager?.PopHandler(this);
             _root.style.display = DisplayStyle.None;
             _isShowing = false;
+        }
+
+        // ── IBackButtonHandler ────────────────────────────────────────
+
+        public void OnBackButtonPressed()
+        {
+            if (_singleResponseIndex == null) return;
+            if (_singleResponseIndex == -1) Dismiss();
+            else RespondToEvent(_singleResponseIndex.Value);
         }
     }
 }

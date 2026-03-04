@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace Siege.Gameplay.UI
 {
-    public class GameplayHUD : MonoBehaviour
+    public class GUIGameplay : MonoBehaviour
     {
         [SerializeField] LocalizedString _foodTitle, _foodDesc;
         [SerializeField] LocalizedString _waterTitle, _waterDesc;
@@ -22,10 +22,11 @@ namespace Siege.Gameplay.UI
 
         SiegeButton _lawsBtn, _ordersBtn, _missionsBtn;
         Label _dayLabel, _phaseLabel;
+        ProgressBar _dayProgress;
 
-        LawPanel _lawPanel;
-        OrderPanel _orderPanel;
-        MissionPanel _missionPanel;
+        GUILawPanel _lawPanel;
+        GUIOrderPanel _orderPanel;
+        GUIMissionPanel _missionPanel;
 
         GameState _state;
         GameClock _clock;
@@ -49,6 +50,7 @@ namespace Siege.Gameplay.UI
 
             _dayLabel = this.FindElement<Label>("DayLabel");
             _phaseLabel = this.FindElement<Label>("PhaseLabel");
+            _dayProgress = this.FindElement<ProgressBar>("DayProgress");
 
             _lawsBtn = this.FindElement<SiegeButton>("LawsBtn");
             _ordersBtn = this.FindElement<SiegeButton>("OrdersBtn");
@@ -89,6 +91,7 @@ namespace Siege.Gameplay.UI
             UpdateResources();
             UpdateStatusBars();
             UpdateActionBar();
+            CleanupDestroyedPanels();
         }
 
         int _prevFood, _prevWater, _prevFuel, _prevMaterials, _prevMeds;
@@ -132,30 +135,43 @@ namespace Siege.Gameplay.UI
                 _phaseLabel.EnableInClassList("gameplay-hud__phase-label--night", !isDay);
             }
 
+            if (_dayProgress != null)
+            {
+                _dayProgress.Set01(_clock.DayProgress);
+                _dayProgress.EnableInClassList("gameplay-hud__day-progress--night", !isDay);
+            }
+
             _lawsBtn?.SetEnabled(isDay);
             _ordersBtn?.SetEnabled(isDay);
             _missionsBtn?.SetEnabled(!isDay);
+        }
+
+        void CleanupDestroyedPanels()
+        {
+            if (_lawPanel == null) _lawsBtn?.RemoveFromClassList("hud-btn--active");
+            if (_orderPanel == null) _ordersBtn?.RemoveFromClassList("hud-btn--active");
+            if (_missionPanel == null) _missionsBtn?.RemoveFromClassList("hud-btn--active");
         }
 
         void OnLawsClicked()
         {
             bool wasShown = _lawPanel != null;
             CloseAllPanels();
-            if (!wasShown) { _lawPanel = UISystem.Open<LawPanel>(UILayer.Window); _lawPanel?.Show(); _lawsBtn?.AddToClassList("hud-btn--active"); }
+            if (!wasShown) { _lawPanel = UISystem.Open<GUILawPanel>(UILayer.Window); _lawPanel?.Show(); _lawsBtn?.AddToClassList("hud-btn--active"); }
         }
 
         void OnOrdersClicked()
         {
             bool wasShown = _orderPanel != null;
             CloseAllPanels();
-            if (!wasShown) { _orderPanel = UISystem.Open<OrderPanel>(UILayer.Window); _orderPanel?.Show(); _ordersBtn?.AddToClassList("hud-btn--active"); }
+            if (!wasShown) { _orderPanel = UISystem.Open<GUIOrderPanel>(UILayer.Window); _orderPanel?.Show(); _ordersBtn?.AddToClassList("hud-btn--active"); }
         }
 
         void OnMissionsClicked()
         {
             bool wasShown = _missionPanel != null;
             CloseAllPanels();
-            if (!wasShown) { _missionPanel = UISystem.Open<MissionPanel>(UILayer.Window); _missionPanel?.Show(); _missionsBtn?.AddToClassList("hud-btn--active"); }
+            if (!wasShown) { _missionPanel = UISystem.Open<GUIMissionPanel>(UILayer.Window); _missionPanel?.Show(); _missionsBtn?.AddToClassList("hud-btn--active"); }
         }
 
         void CloseAllPanels()

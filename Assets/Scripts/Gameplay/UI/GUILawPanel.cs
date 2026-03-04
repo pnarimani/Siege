@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace Siege.Gameplay.UI
 {
-    public class LawPanel : MonoBehaviour
+    public class GUILawPanel : MonoBehaviour, IBackButtonHandler
     {
         [SerializeField] VisualTreeAsset _rowTemplate;
 
@@ -16,6 +16,7 @@ namespace Siege.Gameplay.UI
 
         GameState _state;
         LawDispatcher _lawDispatcher;
+        BackButtonManager _backButtonManager;
         bool _dirty = true;
 
         void Awake()
@@ -25,6 +26,7 @@ namespace Siege.Gameplay.UI
             _root = root.Q("Overlay");
             _scrollView = root.Q<ScrollView>("ScrollView");
             root.Q<SiegeButton>("CloseBtn").Clicked += Hide;
+            _backButtonManager = Resolver.Resolve<BackButtonManager>();
         }
 
         void Start()
@@ -45,6 +47,8 @@ namespace Siege.Gameplay.UI
 
             foreach (var law in _lawDispatcher.AllLaws)
             {
+                if (!law.IsEnacted && !_lawDispatcher.CanEnact(law.Id)) continue;
+
                 var row = _rowTemplate.Instantiate();
                 row.Q<Label>("NameLabel").text = law.Name;
                 row.Q<Label>("DescLabel").text = law.Description;
@@ -68,8 +72,25 @@ namespace Siege.Gameplay.UI
             }
         }
 
+        // ── IBackButtonHandler ────────────────────────────────────────
+
+        public void OnBackButtonPressed() { Hide(); Object.Destroy(gameObject); }
+
+        // ─────────────────────────────────────────────────────────────
+
         public bool IsShown => _root.style.display == DisplayStyle.Flex;
-        public void Show() { _root.style.display = DisplayStyle.Flex; _dirty = true; }
-        public void Hide() => _root.style.display = DisplayStyle.None;
+
+        public void Show()
+        {
+            _root.style.display = DisplayStyle.Flex;
+            _dirty = true;
+            _backButtonManager?.PushHandler(this);
+        }
+
+        public void Hide()
+        {
+            _backButtonManager?.PopHandler(this);
+            _root.style.display = DisplayStyle.None;
+        }
     }
 }

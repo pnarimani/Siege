@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 
 namespace Siege.Gameplay.UI
 {
-    public class GUIBuildingPanel : MonoBehaviour
+    public class GUIBuildingPanel : MonoBehaviour, IBackButtonHandler
     {
         const string PanelInClass = "building-panel--in";
         const string ActivatedClass = "building-button--activated";
@@ -26,11 +26,13 @@ namespace Siege.Gameplay.UI
         ProgressBar _productionProgress;
         SiegeButton _toggleButton;
         SiegeButton _destroyButton;
+        SiegeButton _closeButton;
 
         Building _selected;
         ResourceStorage _resourceStorage;
         GameState _gameState;
         LawDispatcher _lawDispatcher;
+        BackButtonManager _backButtonManager;
 
         readonly List<VisualElement> _recipeCards = new();
 
@@ -45,9 +47,11 @@ namespace Siege.Gameplay.UI
             _productionProgress = this.FindElement<ProgressBar>("ProductionProgress");
             _toggleButton = this.FindElement<SiegeButton>("BuildingToggle");
             _destroyButton = this.FindElement<SiegeButton>("DestroyBuilding");
+            _closeButton = this.FindElement<SiegeButton>("CloseButton");
 
-            if (_toggleButton != null) _toggleButton.Clicked += OnToggleClicked;
-            if (_destroyButton != null) _destroyButton.Clicked += OnDestroyClicked;
+            _toggleButton.Clicked += OnToggleClicked;
+            _destroyButton.Clicked += OnDestroyClicked;
+            _closeButton.Clicked += () => OnBuildingSelected(null);
 
             Building.Selected += OnBuildingSelected;
         }
@@ -57,6 +61,7 @@ namespace Siege.Gameplay.UI
             _resourceStorage = Resolver.Resolve<ResourceStorage>();
             _gameState = Resolver.Resolve<GameState>();
             _lawDispatcher = Resolver.Resolve<LawDispatcher>();
+            _backButtonManager = Resolver.Resolve<BackButtonManager>();
         }
 
         void OnDestroy()
@@ -77,12 +82,18 @@ namespace Siege.Gameplay.UI
             ShowPanel(building);
         }
 
+        // ── IBackButtonHandler ────────────────────────────────────────
+
+        public void OnBackButtonPressed() => OnBuildingSelected(null);
+
+        // ─────────────────────────────────────────────────────────────
+
         void ShowPanel(Building building)
         {
             if (_title != null)
                 _title.text = building.Definition.Name;
 
-            bool isStorage = building.Definition.IsStorage;
+            var isStorage = building.Definition.IsStorage;
             if (_productionSection != null)
                 _productionSection.style.display = isStorage ? DisplayStyle.None : DisplayStyle.Flex;
             if (_storageSection != null)
@@ -99,11 +110,13 @@ namespace Siege.Gameplay.UI
                 UpdateStorageDisplay(building);
             }
 
+            _backButtonManager?.PushHandler(this);
             _root?.AddToClassList(PanelInClass);
         }
 
         void HidePanel()
         {
+            _backButtonManager?.PopHandler(this);
             _root?.RemoveFromClassList(PanelInClass);
         }
 
@@ -112,7 +125,9 @@ namespace Siege.Gameplay.UI
             if (_selected == null) return;
 
             if (_selected.Definition.IsStorage)
+            {
                 UpdateStorageDisplay(_selected);
+            }
             else
             {
                 UpdateWorkers(_selected);
@@ -133,10 +148,10 @@ namespace Siege.Gameplay.UI
             if (cycle == null) return;
 
             var available = cycle.GetAvailableRecipes();
-            for (int i = 0; i < available.Count; i++)
+            for (var i = 0; i < available.Count; i++)
             {
                 var recipe = available[i];
-                int capturedIndex = i;
+                var capturedIndex = i;
 
                 var card = new VisualElement();
                 card.AddToClassList("recipe-card");
@@ -270,9 +285,10 @@ namespace Siege.Gameplay.UI
                         deposited += other.Deposit(resource, amount - deposited);
                         if (deposited >= amount) break;
                     }
+
                     // Update game state — only the amount actually moved survives
                     // (the game state already tracked total; adjust for lost resources)
-                    double lost = amount - deposited;
+                    var lost = amount - deposited;
                     if (lost > 0)
                         _gameState.AddResource(resource, -lost);
                 }

@@ -73,10 +73,6 @@ namespace Siege.Gameplay.UI
             _state = Resolver.Resolve<GameState>();
             _clock = Resolver.Resolve<GameClock>();
 
-            _lawPanel = UISystem.GetOrOpen<LawPanel>(UILayer.Window);
-            _orderPanel = UISystem.GetOrOpen<OrderPanel>(UILayer.Window);
-            _missionPanel = UISystem.GetOrOpen<MissionPanel>(UILayer.Window);
-
             var notificationList = this.FindElement<VisualElement>("NotificationList");
             var notificationService = Resolver.Resolve<NotificationService>();
             _notificationPanel = new NotificationPanel(notificationList, notificationService);
@@ -134,30 +130,33 @@ namespace Siege.Gameplay.UI
 
         void OnLawsClicked()
         {
-            bool wasShown = _lawPanel?.IsShown ?? false;
-            HideAllPanels();
-            if (!wasShown && _lawPanel != null) { _lawPanel.Show(); _lawsBtn?.AddToClassList("hud-btn--active"); }
+            bool wasShown = _lawPanel != null;
+            CloseAllPanels();
+            if (!wasShown) { _lawPanel = UISystem.Open<LawPanel>(UILayer.Window); _lawPanel?.Show(); _lawsBtn?.AddToClassList("hud-btn--active"); }
         }
 
         void OnOrdersClicked()
         {
-            bool wasShown = _orderPanel?.IsShown ?? false;
-            HideAllPanels();
-            if (!wasShown && _orderPanel != null) { _orderPanel.Show(); _ordersBtn?.AddToClassList("hud-btn--active"); }
+            bool wasShown = _orderPanel != null;
+            CloseAllPanels();
+            if (!wasShown) { _orderPanel = UISystem.Open<OrderPanel>(UILayer.Window); _orderPanel?.Show(); _ordersBtn?.AddToClassList("hud-btn--active"); }
         }
 
         void OnMissionsClicked()
         {
-            bool wasShown = _missionPanel?.IsShown ?? false;
-            HideAllPanels();
-            if (!wasShown && _missionPanel != null) { _missionPanel.Show(); _missionsBtn?.AddToClassList("hud-btn--active"); }
+            bool wasShown = _missionPanel != null;
+            CloseAllPanels();
+            if (!wasShown) { _missionPanel = UISystem.Open<MissionPanel>(UILayer.Window); _missionPanel?.Show(); _missionsBtn?.AddToClassList("hud-btn--active"); }
         }
 
-        void HideAllPanels()
+        void CloseAllPanels()
         {
-            _lawPanel?.Hide(); _lawsBtn?.RemoveFromClassList("hud-btn--active");
-            _orderPanel?.Hide(); _ordersBtn?.RemoveFromClassList("hud-btn--active");
-            _missionPanel?.Hide(); _missionsBtn?.RemoveFromClassList("hud-btn--active");
+            if (_lawPanel != null) { Object.Destroy(_lawPanel.gameObject); _lawPanel = null; }
+            _lawsBtn?.RemoveFromClassList("hud-btn--active");
+            if (_orderPanel != null) { Object.Destroy(_orderPanel.gameObject); _orderPanel = null; }
+            _ordersBtn?.RemoveFromClassList("hud-btn--active");
+            if (_missionPanel != null) { Object.Destroy(_missionPanel.gameObject); _missionPanel = null; }
+            _missionsBtn?.RemoveFromClassList("hud-btn--active");
         }
 
         static void SetupTooltip(VisualElement el, LocalizedString title, LocalizedString desc)

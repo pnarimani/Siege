@@ -1,22 +1,25 @@
+using System;
 using System.Collections.Generic;
 
 namespace Siege.Gameplay.UI
 {
-    public class BackButtonManager
+    public class BackButtonManager : IDisposable
     {
-        readonly IUIBackButtonInput _input;
         readonly List<IBackButtonHandler> _handlers = new();
+        readonly PlayerInputActions _inputs;
 
-        public BackButtonManager(IUIBackButtonInput input)
+        public BackButtonManager()
         {
-            _input = input;
-            _input.OnBackButtonPressed += HandleBackButtonPressed;
+            _inputs = new PlayerInputActions();
+            _inputs.Enable();
+            _inputs.UI.Enable();
+            _inputs.UI.Cancel.performed += _ => HandleBackButtonPressed();
         }
 
         void HandleBackButtonPressed()
         {
             _handlers.RemoveAll(x => x == null);
-            
+
             if (_handlers.Count == 0)
                 return;
 
@@ -29,6 +32,14 @@ namespace Siege.Gameplay.UI
             _handlers.Add(handler);
         }
 
-        public void PopHandler(IBackButtonHandler handler) { _handlers.Remove(handler); }
+        public void PopHandler(IBackButtonHandler handler)
+        {
+            _handlers.Remove(handler);
+        }
+
+        public void Dispose()
+        {
+            _inputs?.Dispose();
+        }
     }
 }

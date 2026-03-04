@@ -20,6 +20,7 @@ namespace Siege.Gameplay.Installers
                 .AutoActivate();
             builder.RegisterType<NotificationService>()
                 .SingleInstance();
+            builder.RegisterType<BackButtonManager>().SingleInstance();
         }
     }
 }

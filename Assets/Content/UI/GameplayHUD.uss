@@ -113,6 +113,20 @@
     background-color: rgba(195, 150, 30, 0.3);
 }
 
+.building-panel__close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    min-width: 0;
+    padding: 0;
+}
+
+.building-panel__close-btn > .button__text {
+    font-size: 14px;
+}
+
 .building-panel__workers {
     color: rgb(160, 180, 205);
     font-size: 12px;
@@ -212,6 +226,10 @@
     position: absolute;
     right: 0;
     top: 0;
+    transition-property: translate;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-back;
+    transition-delay: 0s;
 }
 
 .building-panel--in {

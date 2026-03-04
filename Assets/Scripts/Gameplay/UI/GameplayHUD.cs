@@ -29,6 +29,7 @@ namespace Siege.Gameplay.UI
 
         GameState _state;
         GameClock _clock;
+        NotificationPanel _notificationPanel;
 
         void Awake()
         {
@@ -75,6 +76,15 @@ namespace Siege.Gameplay.UI
             _lawPanel = UISystem.GetOrOpen<LawPanel>(UILayer.Window);
             _orderPanel = UISystem.GetOrOpen<OrderPanel>(UILayer.Window);
             _missionPanel = UISystem.GetOrOpen<MissionPanel>(UILayer.Window);
+
+            var notificationList = this.FindElement<VisualElement>("NotificationList");
+            var notificationService = Resolver.Resolve<NotificationService>();
+            _notificationPanel = new NotificationPanel(notificationList, notificationService);
+        }
+
+        void OnDestroy()
+        {
+            _notificationPanel?.Dispose();
         }
 
         void Update()

@@ -18,6 +18,8 @@ namespace Siege.Gameplay.Installers
             builder.RegisterType<UISystem>()
                 .SingleInstance()
                 .AutoActivate();
+            builder.RegisterType<NotificationService>()
+                .SingleInstance();
         }
     }
 }

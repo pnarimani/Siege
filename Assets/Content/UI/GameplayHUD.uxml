@@ -21,6 +21,9 @@
             <ui:VisualElement name="Root" class="building-panel" style="bottom: 0; top: 0; right: 0;">
                 <ui:Label text="Label" name="Title" class="text building-panel__title"/>
                 <ui:VisualElement name="ProductionBuilding">
+                    <ui:Label text="Workers: 0 / 0" name="WorkersLabel" class="text building-panel__workers"/>
+                    <ui:VisualElement name="RecipeList" class="building-panel__recipe-list"/>
+                    <Siege.Gameplay.UI.ProgressBar name="ProductionProgress" label="Production" class="building-panel__production-progress"/>
                     <Siege.Gameplay.UI.SiegeButton text="Enabled" name="BuildingToggle"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="StorageBuilding">

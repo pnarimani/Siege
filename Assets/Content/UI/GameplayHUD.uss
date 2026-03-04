@@ -113,6 +113,76 @@
     background-color: rgba(195, 150, 30, 0.3);
 }
 
+.building-panel__workers {
+    color: rgb(160, 180, 205);
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.building-panel__section-title {
+    -unity-font-definition: var(--font-title);
+    color: rgb(140, 160, 185);
+    font-size: 11px;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+
+.building-panel__recipe-list {
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+
+.recipe-card {
+    background-color: rgba(30, 45, 65, 0.9);
+    border-color: rgba(55, 80, 110, 0.4);
+    border-width: 1px;
+    border-radius: 6px;
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    flex-direction: column;
+}
+
+.recipe-card--selected {
+    border-color: rgb(80, 140, 220);
+    border-width: 2px;
+    background-color: rgba(40, 65, 100, 0.9);
+}
+
+.recipe-card__name {
+    -unity-font-definition: var(--font-title);
+    color: rgb(200, 215, 230);
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.recipe-card__duration {
+    color: rgb(140, 160, 185);
+    font-size: 11px;
+}
+
+.recipe-card__resources {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 2px;
+}
+
+.building-panel__production-progress {
+    margin-top: 4px;
+    margin-bottom: 8px;
+}
+
+.building-panel__production-progress .progress-bar__fill {
+    background-color: rgb(50, 160, 100);
+}
+
+.building-panel__production-progress .progress-bar__increase {
+    background-color: rgba(80, 200, 130, 0.5);
+}
+
+.building-panel__production-progress .progress-bar__decrease {
+    background-color: rgba(50, 160, 100, 0.3);
+}
+
 .building-button--activated > .button__bg {
     background-color: rgb(35, 120, 70);
     transition-duration: 500ms;

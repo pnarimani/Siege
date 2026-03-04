@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9052373277518667165}
   - component: {fileID: 4590037497167974821}
-  - component: {fileID: 2475286124196285374}
   - component: {fileID: 2417879832301425608}
   m_Layer: 5
   m_Name: MainMenu
@@ -57,18 +56,6 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
---- !u!114 &2475286124196285374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6324328408220351264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1239e0235b6400cb043fc5e79a2af19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Siege.Gameplay::Siege.Gameplay.UI.HoverPunch
 --- !u!114 &2417879832301425608
 MonoBehaviour:
   m_ObjectHideFlags: 0

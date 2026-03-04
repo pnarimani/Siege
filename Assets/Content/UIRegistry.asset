@@ -27,3 +27,9 @@ MonoBehaviour:
     Address: Content/Prefabs/UI/MainMenu.prefab
   - Type: Siege.Gameplay.UI.SiegeTooltipSystem
     Address: Content/Prefabs/UI/Tooltip.prefab
+  - Type: Siege.Gameplay.UI.LawPanel
+    Address: Content/Prefabs/UI/LawPanel.prefab
+  - Type: Siege.Gameplay.UI.OrderPanel
+    Address: Content/Prefabs/UI/OrderPanel.prefab
+  - Type: Siege.Gameplay.UI.MissionPanel
+    Address: Content/Prefabs/UI/MissionPanel.prefab

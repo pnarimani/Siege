@@ -30,6 +30,7 @@ namespace Siege.Gameplay.Resources
                 if (!building.IsActive || building.NeedsRepair) continue;
                 if (building.Zone != null && building.Zone.IsLost) continue;
                 if (building.AssignedWorkers <= 0) continue;
+                if (building.GetComponent<ProductionCycleState>() != null) continue; // handled by real-time cycle
 
                 int workers = building.AssignedWorkers;
                 var inputs = building.GetCurrentInputs();

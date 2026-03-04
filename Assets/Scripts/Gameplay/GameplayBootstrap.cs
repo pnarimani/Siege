@@ -96,6 +96,10 @@ namespace Siege.Gameplay
                 if (def.IsStorage && buildingTransform.GetComponent<StorageBuilding>() == null)
                     buildingTransform.gameObject.AddComponent<StorageBuilding>();
 
+                // Add ProductionCycleState to non-storage buildings
+                if (!def.IsStorage && buildingTransform.GetComponent<ProductionCycleState>() == null)
+                    buildingTransform.gameObject.AddComponent<ProductionCycleState>();
+
                 // Ensure collider for selection
                 if (buildingTransform.GetComponent<Collider>() == null)
                     buildingTransform.gameObject.AddComponent<BoxCollider>();

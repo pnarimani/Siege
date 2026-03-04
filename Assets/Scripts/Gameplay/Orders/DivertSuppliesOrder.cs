@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
@@ -19,6 +20,7 @@ namespace Siege.Gameplay.Orders
 
         public override void Execute(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             state.Materials -= MaterialsCost;
             log.Record("Materials", -MaterialsCost, Id);
 
@@ -29,6 +31,7 @@ namespace Siege.Gameplay.Orders
             var perimeter = state.ActivePerimeter;
             state.Zones[perimeter].Integrity += 10;
             log.Record("Integrity", 10, Id + " repair boost");
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
     }
 }

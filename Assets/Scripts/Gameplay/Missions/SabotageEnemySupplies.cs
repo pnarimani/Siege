@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 using UnityEngine;
 
 namespace Siege.Gameplay.Missions
@@ -22,7 +23,9 @@ namespace Siege.Gameplay.Missions
 
         public override MissionOutcome Resolve(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             float roll = Random.value;
+            MissionOutcome outcome;
 
             if (roll < ChanceGreatSuccess)
             {
@@ -30,11 +33,13 @@ namespace Siege.Gameplay.Missions
                 state.SiegeDamageReductionDays = 5;
                 state.SiegeDamageReductionMultiplier = 0.6;
                 log.Record("SiegeIntensity", -1, Name);
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "Their grain stores are ash. The siege falters as hunger gnaws at the enemy.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             if (roll < ChanceGreatSuccess + ChancePartialSuccess)
@@ -42,11 +47,13 @@ namespace Siege.Gameplay.Missions
                 log.Record("SiegeIntensity", 0, Name + " (partial)");
                 state.SiegeDamageReductionDays = 3;
                 state.SiegeDamageReductionMultiplier = 0.8;
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "Some supplies burned, but the enemy recovered quickly. A brief reprieve.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             state.Unrest += FailUnrest;
@@ -55,12 +62,14 @@ namespace Siege.Gameplay.Missions
             log.Record("Unrest", FailUnrest, Name);
             log.Record("Deaths", FailDeaths, Name);
 
-            return new MissionOutcome
+            outcome = new MissionOutcome
             {
                 NarrativeText = "The saboteurs were caught and executed in view of the walls.",
                 Success = false,
                 Deaths = FailDeaths
             };
+            Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+            return outcome;
         }
     }
 }

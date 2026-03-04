@@ -1,6 +1,7 @@
 using AutofacUnity;
 using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 using UnityEngine;
 
 namespace Siege.Gameplay.Orders
@@ -30,6 +31,7 @@ namespace Siege.Gameplay.Orders
 
         public override void Execute(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             state.Food += FoodGain;
             log.Record("Food", FoodGain, Id);
 
@@ -44,6 +46,7 @@ namespace Siege.Gameplay.Orders
 
             state.Morale -= MoraleLoss;
             log.Record("Morale", -MoraleLoss, Id);
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
 
         public override void OnDayTick(GameState state, ChangeLog log)

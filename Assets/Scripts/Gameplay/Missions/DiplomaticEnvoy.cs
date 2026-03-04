@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 using UnityEngine;
 
 namespace Siege.Gameplay.Missions
@@ -24,7 +25,9 @@ namespace Siege.Gameplay.Missions
 
         public override MissionOutcome Resolve(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             float roll = Random.value;
+            MissionOutcome outcome;
 
             if (roll < ChanceGreatSuccess)
             {
@@ -32,11 +35,13 @@ namespace Siege.Gameplay.Missions
                 state.SiegeDamageReductionDays = 5;
                 state.SiegeDamageReductionMultiplier = 0.7;
                 log.Record("SiegeIntensity", -1, Name);
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "The envoys bought time. Rumors say a relief force stirs in the east.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             if (roll < ChanceGreatSuccess + ChancePartialSuccess)
@@ -44,11 +49,13 @@ namespace Siege.Gameplay.Missions
                 log.Record("SiegeIntensity", 0, Name + " (delay)");
                 state.SiegeDamageReductionDays = 2;
                 state.SiegeDamageReductionMultiplier = 0.85;
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "The enemy entertained our envoys, if only for the amusement. A small delay.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             state.Unrest += FailUnrest;
@@ -57,12 +64,14 @@ namespace Siege.Gameplay.Missions
             log.Record("Unrest", FailUnrest, Name);
             log.Record("Deaths", FailDeaths, Name);
 
-            return new MissionOutcome
+            outcome = new MissionOutcome
             {
                 NarrativeText = "The envoys were hanged from the siege towers. A grim message.",
                 Success = false,
                 Deaths = FailDeaths
             };
+            Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+            return outcome;
         }
     }
 }

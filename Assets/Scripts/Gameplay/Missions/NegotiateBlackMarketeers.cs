@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 using UnityEngine;
 
 namespace Siege.Gameplay.Missions
@@ -25,7 +26,9 @@ namespace Siege.Gameplay.Missions
 
         public override MissionOutcome Resolve(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             float roll = Random.value;
+            MissionOutcome outcome;
 
             if (roll < ChanceWater)
             {
@@ -33,11 +36,13 @@ namespace Siege.Gameplay.Missions
                 state.Unrest += DealUnrest;
                 log.Record("Water", WaterGain, Name);
                 log.Record("Unrest", DealUnrest, Name);
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "The smugglers delivered water barrels. The people mutter about favoritism.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             if (roll < ChanceWater + ChanceFood)
@@ -46,11 +51,13 @@ namespace Siege.Gameplay.Missions
                 state.Unrest += DealUnrest;
                 log.Record("Food", FoodGain, Name);
                 log.Record("Unrest", DealUnrest, Name);
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "Grain sacks arrived in the night. Whispers spread about where they came from.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             state.Unrest += BetrayalUnrest;
@@ -59,12 +66,14 @@ namespace Siege.Gameplay.Missions
             log.Record("Unrest", BetrayalUnrest, Name);
             log.Record("Deaths", BetrayalDeaths, Name);
 
-            return new MissionOutcome
+            outcome = new MissionOutcome
             {
                 NarrativeText = "It was a trap. The smugglers sold us out to the enemy.",
                 Success = false,
                 Deaths = BetrayalDeaths
             };
+            Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+            return outcome;
         }
     }
 }

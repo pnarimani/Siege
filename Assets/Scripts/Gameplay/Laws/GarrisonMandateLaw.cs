@@ -1,5 +1,6 @@
 using System;
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
@@ -22,6 +23,7 @@ namespace Siege.Gameplay.Laws
 
         protected override void ApplyImmediate(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             int converted = Math.Min(ImmediateConscripts, state.HealthyWorkers);
             state.HealthyWorkers -= converted;
             state.Guards += converted;
@@ -32,6 +34,7 @@ namespace Siege.Gameplay.Laws
             log.Record("Morale", ImmediateMorale, "Garrison Mandate");
 
             _dayCounter = 0;
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
 
         public override void OnDayTick(GameState state, ChangeLog log)

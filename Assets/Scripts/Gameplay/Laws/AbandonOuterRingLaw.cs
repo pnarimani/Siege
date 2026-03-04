@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
@@ -22,6 +23,7 @@ namespace Siege.Gameplay.Laws
 
         protected override void ApplyImmediate(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             var zone = state.Zones[ZoneId.OuterFarms];
             zone.IsLost = true;
             zone.Integrity = 0;
@@ -29,6 +31,7 @@ namespace Siege.Gameplay.Laws
 
             state.Unrest += UnrestIncrease;
             log.Record("Unrest", UnrestIncrease, "Abandon Outer Ring");
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
     }
 }

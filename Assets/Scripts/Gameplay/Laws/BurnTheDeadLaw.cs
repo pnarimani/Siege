@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
@@ -18,6 +19,7 @@ namespace Siege.Gameplay.Laws
 
         protected override void ApplyImmediate(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             state.Sickness += SicknessReduction;
             log.Record("Sickness", SicknessReduction, "Burn the Dead");
 
@@ -26,6 +28,7 @@ namespace Siege.Gameplay.Laws
 
             state.Morale += MoraleCost;
             log.Record("Morale", MoraleCost, "Burn the Dead");
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
     }
 }

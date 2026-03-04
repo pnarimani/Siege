@@ -1,5 +1,6 @@
 using UnityEngine;
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
@@ -21,8 +22,10 @@ namespace Siege.Gameplay.Laws
 
         protected override void ApplyImmediate(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             state.Morale += ImmediateMorale;
             log.Record("Morale", ImmediateMorale, "Extended Shifts");
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
 
         public override void OnDayTick(GameState state, ChangeLog log)

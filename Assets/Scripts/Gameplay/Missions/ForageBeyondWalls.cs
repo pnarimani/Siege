@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 using UnityEngine;
 
 namespace Siege.Gameplay.Missions
@@ -25,28 +26,34 @@ namespace Siege.Gameplay.Missions
 
         public override MissionOutcome Resolve(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             float roll = Random.value;
+            MissionOutcome outcome;
 
             if (roll < ChanceGreatSuccess)
             {
                 state.AddResource(ResourceType.Food, GreatFood);
                 log.Record("Food", GreatFood, Name);
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "The foragers found a hidden storehouse. A bounty of food returns to the city.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             if (roll < ChanceGreatSuccess + ChancePartialSuccess)
             {
                 state.AddResource(ResourceType.Food, PartialFood);
                 log.Record("Food", PartialFood, Name);
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "Slim pickings, but the foragers return with what they could carry.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             state.Unrest += AmbushUnrest;
@@ -55,13 +62,15 @@ namespace Siege.Gameplay.Missions
             log.Record("Unrest", AmbushUnrest, Name);
             log.Record("Deaths", AmbushDeaths, Name);
 
-            return new MissionOutcome
+            outcome = new MissionOutcome
             {
                 NarrativeText = "An enemy patrol ambushed the foragers. Bodies were dragged back through the gate.",
                 Success = false,
                 Deaths = AmbushDeaths,
                 Wounded = AmbushWounded
             };
+            Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+            return outcome;
         }
     }
 }

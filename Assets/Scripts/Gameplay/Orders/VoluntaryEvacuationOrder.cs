@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
@@ -18,11 +19,13 @@ namespace Siege.Gameplay.Orders
 
         public override void Execute(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             // NOTE: simplified — real evacuation should go through ZoneManager
             var zone = state.Zones[state.ActivePerimeter];
             zone.IsLost = true;
             zone.Integrity = 0;
             log.Record("ZoneLost", 1, Id);
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
     }
 }

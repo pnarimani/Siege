@@ -7,6 +7,7 @@
             <ui:Label name="Title" class="event-dialog__title"/>
             <ui:Label name="Description" class="event-dialog__description"/>
             <ui:Label name="Narrative" class="event-dialog__narrative"/>
+            <ui:VisualElement name="ChangesContainer" class="event-dialog__changes" style="display: none;"/>
             <ui:VisualElement name="ResponseContainer" class="event-dialog__responses"/>
         </ui:VisualElement>
     </ui:VisualElement>

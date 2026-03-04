@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
@@ -20,9 +21,11 @@ namespace Siege.Gameplay.Orders
 
         public override void Execute(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             // Pause siege escalation: reduce intensity by 1 while active
             state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - 1);
             log.Record("SiegeIntensity", -1, Id);
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
 
         public override void OnDayTick(GameState state, ChangeLog log)

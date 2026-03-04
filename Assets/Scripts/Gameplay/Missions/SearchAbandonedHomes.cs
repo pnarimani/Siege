@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 using UnityEngine;
 
 namespace Siege.Gameplay.Missions
@@ -25,7 +26,9 @@ namespace Siege.Gameplay.Missions
 
         public override MissionOutcome Resolve(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             float roll = Random.value;
+            MissionOutcome outcome;
 
             if (roll < ChanceMaterials)
             {
@@ -33,11 +36,13 @@ namespace Siege.Gameplay.Missions
                 state.Sickness += SicknessMinor;
                 log.Record("Materials", MaterialsGain, Name);
                 log.Record("Sickness", SicknessMinor, Name);
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "Useful materials recovered, but some workers fell ill from the filth.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             if (roll < ChanceMaterials + ChanceMedicine)
@@ -46,11 +51,13 @@ namespace Siege.Gameplay.Missions
                 state.Sickness += SicknessMinor;
                 log.Record("Medicine", MedicineGain, Name);
                 log.Record("Sickness", SicknessMinor, Name);
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "A hidden apothecary cache. The workers cough but carry on.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             state.Sickness += SicknessMajor;
@@ -59,12 +66,14 @@ namespace Siege.Gameplay.Missions
             log.Record("Sickness", SicknessMajor, Name);
             log.Record("Deaths", FailDeaths, Name);
 
-            return new MissionOutcome
+            outcome = new MissionOutcome
             {
                 NarrativeText = "The houses were plague-ridden. Two workers never returned.",
                 Success = false,
                 Deaths = FailDeaths
             };
+            Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+            return outcome;
         }
     }
 }

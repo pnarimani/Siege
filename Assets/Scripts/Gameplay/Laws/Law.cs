@@ -11,7 +11,7 @@ namespace Siege.Gameplay.Laws
         public abstract string Id { get; }
         public abstract string Name { get; }
         public abstract string Description { get; }
-        public abstract string NarrativeText { get; }
+        public virtual string NarrativeText => null;
 
         public bool IsEnacted { get; private set; }
 

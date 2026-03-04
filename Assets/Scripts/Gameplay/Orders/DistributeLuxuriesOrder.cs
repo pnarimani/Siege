@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
@@ -24,6 +25,7 @@ namespace Siege.Gameplay.Orders
 
         public override void Execute(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             state.Fuel -= FuelCost;
             log.Record("Fuel", -FuelCost, Id);
 
@@ -38,6 +40,7 @@ namespace Siege.Gameplay.Orders
 
             state.Sickness += SicknessIncrease;
             log.Record("Sickness", SicknessIncrease, Id);
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
     }
 }

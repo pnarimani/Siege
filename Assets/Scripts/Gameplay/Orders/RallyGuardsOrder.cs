@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
@@ -21,6 +22,7 @@ namespace Siege.Gameplay.Orders
 
         public override void Execute(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             state.Food -= FoodCost;
             log.Record("Food", -FoodCost, Id);
 
@@ -29,6 +31,7 @@ namespace Siege.Gameplay.Orders
 
             state.Morale += MoraleGain;
             log.Record("Morale", MoraleGain, Id);
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
     }
 }

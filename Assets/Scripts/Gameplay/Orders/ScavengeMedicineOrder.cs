@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
@@ -21,6 +22,7 @@ namespace Siege.Gameplay.Orders
 
         public override void Execute(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             state.Medicine += MedicineGain;
             log.Record("Medicine", MedicineGain, Id);
 
@@ -32,6 +34,7 @@ namespace Siege.Gameplay.Orders
             state.DeathsToday += Deaths;
             log.Record("HealthyWorkers", -Deaths, Id);
             log.Record("Deaths", Deaths, Id);
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
     }
 }

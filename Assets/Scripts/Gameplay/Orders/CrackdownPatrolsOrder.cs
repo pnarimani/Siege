@@ -1,6 +1,7 @@
 using AutofacUnity;
 using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
@@ -23,6 +24,7 @@ namespace Siege.Gameplay.Orders
 
         public override void Execute(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             state.Unrest -= UnrestReduction;
             log.Record("Unrest", -UnrestReduction, Id);
 
@@ -34,6 +36,7 @@ namespace Siege.Gameplay.Orders
 
             state.Morale -= MoraleLoss;
             log.Record("Morale", -MoraleLoss, Id);
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
     }
 }

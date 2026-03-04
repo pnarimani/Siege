@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AutofacUnity;
 using Siege.Gameplay.Events;
 using Siege.Gameplay.Simulation;
@@ -13,12 +14,16 @@ namespace Siege.Gameplay.UI
         Label _title;
         Label _description;
         Label _narrative;
+        VisualElement _changesContainer;
         VisualElement _responseContainer;
 
         GameState _state;
         GameClock _clock;
         EventManager _eventManager;
         bool _wasPaused;
+
+        bool _isShowing;
+        readonly Queue<PopupRequest> _popupQueue = new();
 
         void Awake()
         {
@@ -28,6 +33,7 @@ namespace Siege.Gameplay.UI
             _title = root.Q<Label>("Title");
             _description = root.Q<Label>("Description");
             _narrative = root.Q<Label>("Narrative");
+            _changesContainer = root.Q("ChangesContainer");
             _responseContainer = root.Q("ResponseContainer");
             root.Q<SiegeButton>("CloseBtn").Clicked += Dismiss;
         }
@@ -38,18 +44,50 @@ namespace Siege.Gameplay.UI
             _clock = Resolver.Resolve<GameClock>();
             _eventManager = Resolver.Resolve<EventManager>();
             _eventManager.EventTriggered += OnEventTriggered;
+            Popup.Requested += OnPopupRequested;
         }
 
         void OnDestroy()
         {
             if (_eventManager != null) _eventManager.EventTriggered -= OnEventTriggered;
+            Popup.Requested -= OnPopupRequested;
         }
 
         void OnEventTriggered(GameEvent evt)
         {
+            if (_isShowing)
+            {
+                // Queue as popup request (no changes section for events)
+                _popupQueue.Enqueue(new PopupRequest
+                {
+                    Title = evt.Name,
+                    Narrative = evt.GetNarrativeText(_state),
+                    Changes = null
+                });
+                return;
+            }
+
+            ShowEvent(evt);
+        }
+
+        void OnPopupRequested(PopupRequest req)
+        {
+            if (_isShowing)
+            {
+                _popupQueue.Enqueue(req);
+                return;
+            }
+
+            ShowPopup(req);
+        }
+
+        void ShowEvent(GameEvent evt)
+        {
             _title.text = evt.Name;
             _description.text = evt.Description;
+            _description.style.display = DisplayStyle.Flex;
             _narrative.text = evt.GetNarrativeText(_state);
+            _changesContainer.style.display = DisplayStyle.None;
 
             _responseContainer.Clear();
 
@@ -64,7 +102,7 @@ namespace Siege.Gameplay.UI
                     btn.AddToClassList("event-dialog__response-btn");
                     if (!string.IsNullOrEmpty(response.Description))
                         btn.tooltip = response.Description;
-                    btn.Clicked += () => Respond(index);
+                    btn.Clicked += () => RespondToEvent(index);
                     _responseContainer.Add(btn);
                 }
             }
@@ -77,25 +115,76 @@ namespace Siege.Gameplay.UI
             }
 
             Show();
-            _wasPaused = _clock.IsPaused;
-            _clock.IsPaused = true;
         }
 
-        void Respond(int index)
+        void ShowPopup(PopupRequest req)
+        {
+            _title.text = req.Title;
+            _description.style.display = DisplayStyle.None;
+            _narrative.text = req.Narrative;
+
+            _changesContainer.Clear();
+            if (req.Changes != null && req.Changes.Count > 0)
+            {
+                foreach (var change in req.Changes)
+                {
+                    var label = new Label(StateChangeFormatter.Format(change));
+                    label.AddToClassList("event-dialog__change-entry");
+                    _changesContainer.Add(label);
+                }
+                _changesContainer.style.display = DisplayStyle.Flex;
+            }
+            else
+            {
+                _changesContainer.style.display = DisplayStyle.None;
+            }
+
+            _responseContainer.Clear();
+            var okBtn = new SiegeButton { Text = "OK" };
+            okBtn.AddToClassList("event-dialog__continue-btn");
+            okBtn.Clicked += Dismiss;
+            _responseContainer.Add(okBtn);
+
+            Show();
+        }
+
+        void RespondToEvent(int index)
         {
             _eventManager.RespondToEvent(_state, index);
-            Hide();
-            if (!_wasPaused) _clock.IsPaused = false;
+            HideAndAdvanceQueue();
         }
 
         void Dismiss()
         {
             _eventManager.DismissEvent();
-            Hide();
-            if (!_wasPaused) _clock.IsPaused = false;
+            HideAndAdvanceQueue();
         }
 
-        public void Show() => _root.style.display = DisplayStyle.Flex;
-        public void Hide() => _root.style.display = DisplayStyle.None;
+        void HideAndAdvanceQueue()
+        {
+            Hide();
+            if (!_wasPaused) _clock.IsPaused = false;
+
+            if (_popupQueue.Count > 0)
+            {
+                var next = _popupQueue.Dequeue();
+                // Enqueued events were stored as PopupRequests (no changes); show them as popups
+                ShowPopup(next);
+            }
+        }
+
+        void Show()
+        {
+            _root.style.display = DisplayStyle.Flex;
+            _isShowing = true;
+            _wasPaused = _clock.IsPaused;
+            _clock.IsPaused = true;
+        }
+
+        void Hide()
+        {
+            _root.style.display = DisplayStyle.None;
+            _isShowing = false;
+        }
     }
 }

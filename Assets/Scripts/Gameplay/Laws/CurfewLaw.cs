@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
@@ -17,7 +18,11 @@ namespace Siege.Gameplay.Laws
         public override bool CanEnact(GameState state) =>
             state.Unrest > UnrestThreshold && !state.EnactedLawIds.Contains("martial_law");
 
-        protected override void ApplyImmediate(GameState state, ChangeLog log) { }
+        protected override void ApplyImmediate(GameState state, ChangeLog log)
+        {
+            int before = log.CurrentChanges.Count;
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
+        }
 
         public override void OnDayTick(GameState state, ChangeLog log)
         {

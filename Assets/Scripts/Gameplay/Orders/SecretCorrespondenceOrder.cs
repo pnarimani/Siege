@@ -2,6 +2,7 @@ using AutofacUnity;
 using Siege.Gameplay;
 using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 using UnityEngine;
 
 namespace Siege.Gameplay.Orders
@@ -34,7 +35,11 @@ namespace Siege.Gameplay.Orders
         public override bool CanIssue(GameState state) =>
             Resolver.Resolve<PoliticalState>().Faith.Value >= 4;
 
-        public override void Execute(GameState state, ChangeLog log) { }
+        public override void Execute(GameState state, ChangeLog log)
+        {
+            int before = log.CurrentChanges.Count;
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
+        }
 
         public override void OnDayTick(GameState state, ChangeLog log)
         {

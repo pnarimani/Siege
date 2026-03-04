@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
@@ -23,6 +24,7 @@ namespace Siege.Gameplay.Laws
 
         protected override void ApplyImmediate(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             foreach (var zone in state.Zones.Values)
             {
                 if (zone.IsLost) continue;
@@ -32,6 +34,7 @@ namespace Siege.Gameplay.Laws
 
             state.Unrest += ImmediateUnrest;
             log.Record("Unrest", ImmediateUnrest, "Emergency Shelters");
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
 
         public override void OnDayTick(GameState state, ChangeLog log)

@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 using UnityEngine;
 
 namespace Siege.Gameplay.Missions
@@ -21,18 +22,22 @@ namespace Siege.Gameplay.Missions
 
         public override MissionOutcome Resolve(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             float roll = Random.value;
+            MissionOutcome outcome;
 
             if (roll < ChanceSuccess)
             {
                 // Intel reveals enemy weak points — reduce siege intensity
                 state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - 1);
                 log.Record("SiegeIntensity", -1, Name);
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "The scouts mapped the enemy camp. We know where they are weakest.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             state.Unrest += FailUnrest;
@@ -41,12 +46,14 @@ namespace Siege.Gameplay.Missions
             log.Record("Unrest", FailUnrest, Name);
             log.Record("Deaths", FailDeaths, Name);
 
-            return new MissionOutcome
+            outcome = new MissionOutcome
             {
                 NarrativeText = "The scouts were spotted. Their heads were catapulted over the walls.",
                 Success = false,
                 Deaths = FailDeaths
             };
+            Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+            return outcome;
         }
     }
 }

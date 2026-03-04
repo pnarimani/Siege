@@ -1,6 +1,7 @@
 using AutofacUnity;
 using Siege.Gameplay.Political;
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
@@ -22,11 +23,13 @@ namespace Siege.Gameplay.Laws
 
         protected override void ApplyImmediate(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             state.Materials += ImmediateMaterials;
             log.Record("Materials", ImmediateMaterials, "Scorched Earth");
 
             state.Unrest += ImmediateUnrest;
             log.Record("Unrest", ImmediateUnrest, "Scorched Earth");
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
 
         public override void OnDayTick(GameState state, ChangeLog log)

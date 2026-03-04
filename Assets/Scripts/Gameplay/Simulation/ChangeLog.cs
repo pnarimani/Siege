@@ -53,5 +53,17 @@ namespace Siege.Gameplay.Simulation
                     total += c.Amount;
             return total;
         }
+
+        /// <summary>
+        /// Returns all changes recorded since the given index (exclusive snapshot point).
+        /// Use before/after pattern: int before = log.CurrentChanges.Count; ... log.SliceSince(before)
+        /// </summary>
+        public List<StateChange> SliceSince(int fromIndex)
+        {
+            var result = new List<StateChange>();
+            for (int i = fromIndex; i < _current.Count; i++)
+                result.Add(_current[i]);
+            return result;
+        }
     }
 }

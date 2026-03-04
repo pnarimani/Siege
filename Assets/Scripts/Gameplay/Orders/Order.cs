@@ -10,7 +10,7 @@ namespace Siege.Gameplay.Orders
         public abstract string Id { get; }
         public abstract string Name { get; }
         public abstract string Description { get; }
-        public abstract string NarrativeText { get; }
+        public virtual string NarrativeText => null;
         public abstract int CooldownDays { get; }
         public virtual bool IsToggle => false;
         public virtual bool CanDeactivate => true;

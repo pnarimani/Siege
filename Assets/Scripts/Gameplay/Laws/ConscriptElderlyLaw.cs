@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
@@ -17,6 +18,7 @@ namespace Siege.Gameplay.Laws
 
         protected override void ApplyImmediate(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             int converted = state.Elderly;
             state.HealthyWorkers += converted;
             state.Elderly = 0;
@@ -28,16 +30,18 @@ namespace Siege.Gameplay.Laws
 
             state.Unrest += UnrestIncrease;
             log.Record("Unrest", UnrestIncrease, "Conscript Elderly");
+            Popup.Open(Name, NarrativeText, log.SliceSince(before));
         }
 
         public override void OnDayTick(GameState state, ChangeLog log)
         {
             if (state.HealthyWorkers <= 0) return;
-
+            int before = log.CurrentChanges.Count;
             state.HealthyWorkers -= DailyDeaths;
             state.TotalDeaths += DailyDeaths;
             state.DeathsToday += DailyDeaths;
             log.Record("HealthyWorkers", -DailyDeaths, "Conscript Elderly (attrition)");
+            Popup.Open(Name, "Another elderly worker collapsed under the strain and did not rise again.", log.SliceSince(before));
         }
     }
 }

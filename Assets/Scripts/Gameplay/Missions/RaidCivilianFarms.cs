@@ -1,4 +1,5 @@
 using Siege.Gameplay.Simulation;
+using Siege.Gameplay.UI;
 using UnityEngine;
 
 namespace Siege.Gameplay.Missions
@@ -23,17 +24,21 @@ namespace Siege.Gameplay.Missions
 
         public override MissionOutcome Resolve(GameState state, ChangeLog log)
         {
+            int before = log.CurrentChanges.Count;
             float roll = Random.value;
+            MissionOutcome outcome;
 
             if (roll < ChanceCleanSuccess)
             {
                 state.AddResource(ResourceType.Food, CleanFood);
                 log.Record("Food", CleanFood, Name);
-                return new MissionOutcome
+                outcome = new MissionOutcome
                 {
                     NarrativeText = "The farms were abandoned. Carts returned loaded with grain.",
                     Success = true
                 };
+                Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+                return outcome;
             }
 
             state.AddResource(ResourceType.Food, DirtyFood);
@@ -44,12 +49,14 @@ namespace Siege.Gameplay.Missions
             log.Record("Unrest", DirtyUnrest, Name);
             log.Record("Deaths", DirtyDeaths, Name);
 
-            return new MissionOutcome
+            outcome = new MissionOutcome
             {
                 NarrativeText = "Farmers fought back. We took what we could, but blood was spilled.",
                 Success = false,
                 Deaths = DirtyDeaths
             };
+            Popup.Open(Name, outcome.NarrativeText, log.SliceSince(before));
+            return outcome;
         }
     }
 }

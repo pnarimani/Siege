@@ -1,4 +1,5 @@
 using Autofac;
+using Autofac.Builder;
 using AutofacUnity;
 using JetBrains.Annotations;
 using Siege.Gameplay.Buildings;
@@ -28,7 +29,7 @@ namespace Siege.Gameplay.Installers
             builder.RegisterType<GameState>().SingleInstance();
             builder.RegisterType<GameClock>().SingleInstance();
             builder.RegisterType<ChangeLog>().SingleInstance();
-            builder.RegisterType<SimulationRunner>().SingleInstance();
+            builder.RegisterType<SimulationRunner>().AsSelf().AsImplementedInterfaces().SingleInstance();
 
             // Political
             builder.RegisterType<PoliticalState>().SingleInstance();

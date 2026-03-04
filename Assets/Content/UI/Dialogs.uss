@@ -34,8 +34,6 @@
 
 .dialog-close {
     background-color: transparent;
-    border-color: rgba(100, 100, 120, 0.5);
-    border-width: 1px;
     color: rgb(160, 160, 170);
     width: 32px;
     height: 32px;

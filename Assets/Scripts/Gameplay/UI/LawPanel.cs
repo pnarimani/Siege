@@ -23,7 +23,7 @@ namespace Siege.Gameplay.UI
             var root = _document.rootVisualElement;
             _root = root.Q("Overlay");
             _scrollView = root.Q<ScrollView>("ScrollView");
-            root.Q<Button>("CloseBtn").clicked += Hide;
+            root.Q<SiegeButton>("CloseBtn").Clicked += Hide;
         }
 
         void Start()
@@ -48,16 +48,16 @@ namespace Siege.Gameplay.UI
                 if (law.IsEnacted)
                 {
                     row.Q("EnactedBadge").style.display = DisplayStyle.Flex;
-                    row.Q<Button>("EnactBtn").style.display = DisplayStyle.None;
+                    row.Q<SiegeButton>("EnactBtn").style.display = DisplayStyle.None;
                 }
                 else
                 {
                     bool canEnact = law.CanEnact(_state);
-                    var enactBtn = row.Q<Button>("EnactBtn");
+                    var enactBtn = row.Q<SiegeButton>("EnactBtn");
                     enactBtn.SetEnabled(canEnact);
                     if (!canEnact) enactBtn.AddToClassList("law-panel__enact-btn--disabled");
                     string lawId = law.Id;
-                    enactBtn.clicked += () => _lawManager.TryEnact(lawId);
+                    enactBtn.Clicked += () => _lawManager.TryEnact(lawId);
                 }
 
                 _scrollView.Add(row);

@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Content/UI/Siege.uss?fileID=7433441132597879392&amp;guid=2f14999a55ec4402ab6db8d64423fd87&amp;type=3#Siege"/>
     <ui:VisualElement name="Row" class="dialog-row mission-panel__active-row">
         <ui:Label name="NameLabel" class="mission-panel__active-name"/>
         <ui:VisualElement class="mission-panel__progress-bg">

@@ -5,7 +5,7 @@
         <ui:VisualElement class="dialog-panel narrative-log__panel">
             <ui:VisualElement class="dialog-header">
                 <ui:Label text="Narrative Log" class="dialog-title narrative-log__title"/>
-                <ui:Button name="CloseBtn" text="X" class="dialog-close narrative-log__close"/>
+                <Siege.Gameplay.UI.SiegeButton name="CloseBtn" text="X" class="dialog-close narrative-log__close"/>
             </ui:VisualElement>
             <ui:ScrollView name="ScrollView" mode="Vertical" class="dialog-scroll narrative-log__scroll"/>
         </ui:VisualElement>

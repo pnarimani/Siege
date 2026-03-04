@@ -29,7 +29,7 @@ namespace Siege.Gameplay.UI
             _description = root.Q<Label>("Description");
             _narrative = root.Q<Label>("Narrative");
             _responseContainer = root.Q("ResponseContainer");
-            root.Q<Button>("CloseBtn").clicked += Dismiss;
+            root.Q<SiegeButton>("CloseBtn").Clicked += Dismiss;
         }
 
         void Start()
@@ -60,19 +60,19 @@ namespace Siege.Gameplay.UI
                 {
                     int index = i;
                     var response = responses[i];
-                    var btn = new Button { text = response.Label };
+                    var btn = new SiegeButton { Text = response.Label };
                     btn.AddToClassList("event-dialog__response-btn");
                     if (!string.IsNullOrEmpty(response.Description))
                         btn.tooltip = response.Description;
-                    btn.clicked += () => Respond(index);
+                    btn.Clicked += () => Respond(index);
                     _responseContainer.Add(btn);
                 }
             }
             else
             {
-                var btn = new Button { text = "Continue" };
+                var btn = new SiegeButton { Text = "Continue" };
                 btn.AddToClassList("event-dialog__continue-btn");
-                btn.clicked += Dismiss;
+                btn.Clicked += Dismiss;
                 _responseContainer.Add(btn);
             }
 

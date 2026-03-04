@@ -7,13 +7,13 @@ namespace Siege.Gameplay
     {
         const int MaxPoolSize = 16;
 
-        static readonly Stack<TempList<T>> Pool = new();
+        static readonly Stack<TempList<T>> _pool = new();
 
         TempList() { }
 
         public static TempList<T> Get()
         {
-            if (Pool.TryPop(out var list))
+            if (_pool.TryPop(out var list))
             {
                 list.Clear();
                 return list;
@@ -25,8 +25,8 @@ namespace Siege.Gameplay
         public void Dispose()
         {
             Clear();
-            if (Pool.Count < MaxPoolSize)
-                Pool.Push(this);
+            if (_pool.Count < MaxPoolSize)
+                _pool.Push(this);
         }
     }
 }

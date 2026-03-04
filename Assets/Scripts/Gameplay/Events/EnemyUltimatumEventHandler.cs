@@ -3,37 +3,54 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class EnemyUltimatumEventHandler : EventHandler<EnemyUltimatumEvent>
+    public class EnemyUltimatumEventHandler : IEventHandler
     {
-        public EnemyUltimatumEventHandler(EnemyUltimatumEvent gameEvent) : base(gameEvent) { }
+        const int TriggerDay = 30;
+        const int DefianceMoraleBoost = 10;
+        const int DefianceUnrest = 15;
+        const int PartialSurrenderMoralePenalty = 5;
+        const int PartialSurrenderUnrest = 5;
+        const int PartialSurrenderWorkerLoss = 2;
+        const int FullSurrenderMoralePenalty = 15;
+        const int FullSurrenderUnrest = 20;
+        const int FullSurrenderWorkerLoss = 5;
 
-        public override bool CanTrigger(GameState state) => state.CurrentDay == 30;
+        readonly EnemyUltimatumEvent _event;
 
-        public override void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
+        public string EventId => _event.Id;
+
+        public EnemyUltimatumEventHandler(EnemyUltimatumEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) => state.CurrentDay == TriggerDay;
+
+        public void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
         {
             switch (responseIndex)
             {
                 case 0:
-                    state.Morale += 10;
-                    state.Unrest += 15;
-                    log.Record("Morale", 10, Event.Name);
-                    log.Record("Unrest", 15, Event.Name);
+                    state.Morale += DefianceMoraleBoost;
+                    state.Unrest += DefianceUnrest;
+                    log.Record("Morale", DefianceMoraleBoost, _event.Name);
+                    log.Record("Unrest", DefianceUnrest, _event.Name);
                     break;
                 case 1:
-                    state.Morale -= 5;
-                    state.Unrest += 5;
-                    state.HealthyWorkers = Math.Max(0, state.HealthyWorkers - 2);
-                    log.Record("Morale", -5, Event.Name);
-                    log.Record("Unrest", 5, Event.Name);
-                    log.Record("HealthyWorkers", -2, Event.Name);
+                    state.Morale -= PartialSurrenderMoralePenalty;
+                    state.Unrest += PartialSurrenderUnrest;
+                    state.HealthyWorkers = Math.Max(0, state.HealthyWorkers - PartialSurrenderWorkerLoss);
+                    log.Record("Morale", -PartialSurrenderMoralePenalty, _event.Name);
+                    log.Record("Unrest", PartialSurrenderUnrest, _event.Name);
+                    log.Record("HealthyWorkers", -PartialSurrenderWorkerLoss, _event.Name);
                     break;
                 case 2:
-                    state.Morale -= 15;
-                    state.Unrest += 20;
-                    state.HealthyWorkers = Math.Max(0, state.HealthyWorkers - 5);
-                    log.Record("Morale", -15, Event.Name);
-                    log.Record("Unrest", 20, Event.Name);
-                    log.Record("HealthyWorkers", -5, Event.Name);
+                    state.Morale -= FullSurrenderMoralePenalty;
+                    state.Unrest += FullSurrenderUnrest;
+                    state.HealthyWorkers = Math.Max(0, state.HealthyWorkers - FullSurrenderWorkerLoss);
+                    log.Record("Morale", -FullSurrenderMoralePenalty, _event.Name);
+                    log.Record("Unrest", FullSurrenderUnrest, _event.Name);
+                    log.Record("HealthyWorkers", -FullSurrenderWorkerLoss, _event.Name);
                     break;
             }
         }

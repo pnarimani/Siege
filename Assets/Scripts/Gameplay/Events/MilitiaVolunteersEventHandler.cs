@@ -2,34 +2,48 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class MilitiaVolunteersEventHandler : EventHandler<MilitiaVolunteersEvent>
+    public class MilitiaVolunteersEventHandler : IEventHandler
     {
-        public MilitiaVolunteersEventHandler(MilitiaVolunteersEvent gameEvent) : base(gameEvent) { }
+        const int TriggerDay = 6;
+        const int MinWorkersRequired = 3;
+        const int VolunteerCount = 3;
+        const int VolunteerMoraleBoost = 3;
+        const int ConscriptCount = 5;
+        const int ConscriptUnrest = 5;
 
-        public override bool CanTrigger(GameState state) =>
-            state.CurrentDay == 6 && state.HealthyWorkers >= 3;
+        readonly MilitiaVolunteersEvent _event;
 
-        public override void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
+        public string EventId => _event.Id;
+
+        public MilitiaVolunteersEventHandler(MilitiaVolunteersEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) =>
+            state.CurrentDay == TriggerDay && state.HealthyWorkers >= MinWorkersRequired;
+
+        public void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
         {
             switch (responseIndex)
             {
                 case 0:
-                    state.HealthyWorkers -= 3;
-                    state.Guards += 3;
-                    log.Record("HealthyWorkers", -3, Event.Name);
-                    log.Record("Guards", 3, Event.Name);
+                    state.HealthyWorkers -= VolunteerCount;
+                    state.Guards += VolunteerCount;
+                    log.Record("HealthyWorkers", -VolunteerCount, _event.Name);
+                    log.Record("Guards", VolunteerCount, _event.Name);
                     break;
                 case 1:
-                    state.Morale += 3;
-                    log.Record("Morale", 3, Event.Name);
+                    state.Morale += VolunteerMoraleBoost;
+                    log.Record("Morale", VolunteerMoraleBoost, _event.Name);
                     break;
                 case 2:
-                    state.HealthyWorkers -= 5;
-                    state.Guards += 5;
-                    state.Unrest += 5;
-                    log.Record("HealthyWorkers", -5, Event.Name);
-                    log.Record("Guards", 5, Event.Name);
-                    log.Record("Unrest", 5, Event.Name);
+                    state.HealthyWorkers -= ConscriptCount;
+                    state.Guards += ConscriptCount;
+                    state.Unrest += ConscriptUnrest;
+                    log.Record("HealthyWorkers", -ConscriptCount, _event.Name);
+                    log.Record("Guards", ConscriptCount, _event.Name);
+                    log.Record("Unrest", ConscriptUnrest, _event.Name);
                     break;
             }
         }

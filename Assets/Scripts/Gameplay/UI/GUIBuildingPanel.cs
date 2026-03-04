@@ -33,6 +33,8 @@ namespace Siege.Gameplay.UI
         GameState _gameState;
         LawDispatcher _lawDispatcher;
         BackButtonManager _backButtonManager;
+        StorageBuildingRegistry _storageBuildings;
+        BuildingService _buildingService;
 
         readonly List<VisualElement> _recipeCards = new();
 
@@ -62,6 +64,8 @@ namespace Siege.Gameplay.UI
             _gameState = Resolver.Resolve<GameState>();
             _lawDispatcher = Resolver.Resolve<LawDispatcher>();
             _backButtonManager = Resolver.Resolve<BackButtonManager>();
+            _storageBuildings = Resolver.Resolve<StorageBuildingRegistry>();
+            _buildingService = Resolver.Resolve<BuildingService>();
         }
 
         void OnDestroy()
@@ -270,38 +274,7 @@ namespace Siege.Gameplay.UI
             _selected = null;
             HidePanel();
 
-            // Move storage resources to other buildings first
-            var storageBuilding = building.GetComponent<StorageBuilding>();
-            if (storageBuilding != null)
-            {
-                var stored = storageBuilding.GetAllStored();
-                storageBuilding.ClearAll();
-                foreach (var (resource, amount) in stored)
-                {
-                    double deposited = 0;
-                    foreach (var other in StorageBuilding.All)
-                    {
-                        if (other == storageBuilding) continue;
-                        deposited += other.Deposit(resource, amount - deposited);
-                        if (deposited >= amount) break;
-                    }
-
-                    // Update game state — only the amount actually moved survives
-                    // (the game state already tracked total; adjust for lost resources)
-                    var lost = amount - deposited;
-                    if (lost > 0)
-                        _gameState.AddResource(resource, -lost);
-                }
-            }
-
-            // Give salvage materials to player
-            foreach (var salvage in building.Definition.SalvageMaterials)
-            {
-                _resourceStorage.Deposit(salvage.Resource, salvage.Quantity);
-                _gameState.AddResource(salvage.Resource, salvage.Quantity);
-            }
-
-            Destroy(building.gameObject);
+            _buildingService.DestroyBuilding(building);
         }
     }
 }

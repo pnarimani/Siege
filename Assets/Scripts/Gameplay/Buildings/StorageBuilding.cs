@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AutofacUnity;
 using UnityEngine;
 
 namespace Siege.Gameplay.Buildings
@@ -9,12 +10,12 @@ namespace Siege.Gameplay.Buildings
     /// </summary>
     public class StorageBuilding : MonoBehaviour
     {
-        // ── Static Registry ───────────────────────────────────────────
-        static readonly List<StorageBuilding> _all = new();
-        public static IReadOnlyList<StorageBuilding> All => _all;
+        public const double DefaultMaxCapacityPerResource = 200;
+
+        StorageBuildingRegistry _registry;
 
         // ── Configuration ─────────────────────────────────────────────
-        [SerializeField] double _maxCapacityPerResource = 200;
+        [SerializeField] double _maxCapacityPerResource = DefaultMaxCapacityPerResource;
 
         // ── State ─────────────────────────────────────────────────────
         readonly Dictionary<ResourceType, double> _stored = new();
@@ -24,11 +25,12 @@ namespace Siege.Gameplay.Buildings
 
         // ── Lifecycle ─────────────────────────────────────────────────
 
-        void OnEnable() => _all.Add(this);
-        void OnDisable() => _all.Remove(this);
+        void OnEnable() => _registry?.Register(this);
+        void OnDisable() => _registry?.Unregister(this);
 
         void Awake()
         {
+            _registry = Resolver.Resolve<StorageBuildingRegistry>();
             Building = GetComponent<Building>();
         }
 

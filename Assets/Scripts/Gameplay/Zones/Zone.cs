@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AutofacUnity;
 using Siege.Gameplay.Buildings;
 using UnityEngine;
 
@@ -11,9 +12,7 @@ namespace Siege.Gameplay.Zones
     /// </summary>
     public class Zone : MonoBehaviour
     {
-        // ── Static Registry ───────────────────────────────────────────
-        static readonly List<Zone> _all = new();
-        public static IReadOnlyList<Zone> All => _all;
+        ZoneRegistry _registry;
 
         // ── Runtime State ─────────────────────────────────────────────
         public ZoneId Id { get; private set; }
@@ -24,11 +23,12 @@ namespace Siege.Gameplay.Zones
 
         // ── Lifecycle ─────────────────────────────────────────────────
 
-        void OnEnable() => _all.Add(this);
-        void OnDisable() => _all.Remove(this);
+        void OnEnable() => _registry?.Register(this);
+        void OnDisable() => _registry?.Unregister(this);
 
         void Awake()
         {
+            _registry = Resolver.Resolve<ZoneRegistry>();
             Id = Enum.Parse<ZoneId>(gameObject.name);
         }
 

@@ -5,8 +5,11 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Missions
 {
-    public class RaidCivilianFarmsHandler : MissionHandler<RaidCivilianFarms>
+    public class RaidCivilianFarmsHandler : IMissionHandler
     {
+        readonly RaidCivilianFarms _mission;
+        readonly IPopupService _popup;
+
         const int Workers = 4;
         const float ChanceCleanSuccess = 0.60f;
         const double CleanFood = 60;
@@ -14,11 +17,17 @@ namespace Siege.Gameplay.Missions
         const double DirtyUnrest = 15;
         const int DirtyDeaths = 2;
 
-        public RaidCivilianFarmsHandler(RaidCivilianFarms mission, IPopupService popup) : base(mission, popup) { }
+        public RaidCivilianFarmsHandler(RaidCivilianFarms mission, IPopupService popup)
+        {
+            _mission = mission;
+            _popup = popup;
+        }
 
-        public override bool CanLaunch(GameState state) => state.HealthyWorkers >= Mission.WorkerCost;
+        public string MissionId => _mission.Id;
 
-        public override MissionOutcome Resolve(GameState state, ChangeLog log)
+        public bool CanLaunch(GameState state) => state.HealthyWorkers >= _mission.WorkerCost;
+
+        public MissionOutcome Resolve(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             float roll = Random.value;
@@ -27,13 +36,13 @@ namespace Siege.Gameplay.Missions
             if (roll < ChanceCleanSuccess)
             {
                 state.AddResource(ResourceType.Food, CleanFood);
-                log.Record("Food", CleanFood, Mission.Name);
+                log.Record("Food", CleanFood, _mission.Name);
                 outcome = new MissionOutcome
                 {
                     NarrativeText = "The farms were abandoned. Carts returned loaded with grain.",
                     Success = true
                 };
-                Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+                _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
                 return outcome;
             }
 
@@ -41,9 +50,9 @@ namespace Siege.Gameplay.Missions
             state.Unrest += DirtyUnrest;
             state.TotalDeaths += DirtyDeaths;
             state.DeathsToday += DirtyDeaths;
-            log.Record("Food", DirtyFood, Mission.Name);
-            log.Record("Unrest", DirtyUnrest, Mission.Name);
-            log.Record("Deaths", DirtyDeaths, Mission.Name);
+            log.Record("Food", DirtyFood, _mission.Name);
+            log.Record("Unrest", DirtyUnrest, _mission.Name);
+            log.Record("Deaths", DirtyDeaths, _mission.Name);
 
             outcome = new MissionOutcome
             {
@@ -51,7 +60,7 @@ namespace Siege.Gameplay.Missions
                 Success = false,
                 Deaths = DirtyDeaths
             };
-            Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+            _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
             return outcome;
         }
     }

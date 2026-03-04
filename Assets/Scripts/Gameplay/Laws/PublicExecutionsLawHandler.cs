@@ -3,18 +3,27 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
-    public class PublicExecutionsLawHandler : LawHandler<PublicExecutionsLaw>
+    public class PublicExecutionsLawHandler : ILawHandler
     {
+        readonly PublicExecutionsLaw _law;
+        readonly IPopupService _popup;
+
         const double UnrestThreshold = 60;
         const double ImmediateUnrest = -25;
         const double ImmediateMorale = -20;
         const int ImmediateDeaths = 5;
 
-        public PublicExecutionsLawHandler(PublicExecutionsLaw law, IPopupService popup) : base(law, popup) { }
+        public PublicExecutionsLawHandler(PublicExecutionsLaw law, IPopupService popup)
+        {
+            _law = law;
+            _popup = popup;
+        }
 
-        public override bool CanEnact(GameState state) => state.Unrest > UnrestThreshold;
+        public string LawId => _law.Id;
 
-        public override void ApplyImmediate(GameState state, ChangeLog log)
+        public bool CanEnact(GameState state) => state.Unrest > UnrestThreshold;
+
+        public void ApplyImmediate(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Unrest += ImmediateUnrest;
@@ -27,7 +36,7 @@ namespace Siege.Gameplay.Laws
             state.TotalDeaths += ImmediateDeaths;
             state.DeathsToday += ImmediateDeaths;
             log.Record("HealthyWorkers", -ImmediateDeaths, "Public Executions");
-            Popup.Open(Law.Name, Law.NarrativeText, log.SliceSince(before));
+            _popup.Open(_law.Name, _law.NarrativeText, log.SliceSince(before));
         }
     }
 }

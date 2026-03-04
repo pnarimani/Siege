@@ -13,19 +13,21 @@ namespace Siege.Gameplay.Resources
         readonly ChangeLog _changeLog;
         readonly ResourceStorage _storage;
         readonly LawDispatcher _lawDispatcher;
+        readonly BuildingRegistry _buildings;
 
-        public ResourceProductionSystem(ChangeLog changeLog, ResourceStorage storage, LawDispatcher lawDispatcher)
+        public ResourceProductionSystem(ChangeLog changeLog, ResourceStorage storage, LawDispatcher lawDispatcher, BuildingRegistry buildings)
         {
             _changeLog = changeLog;
             _storage = storage;
             _lawDispatcher = lawDispatcher;
+            _buildings = buildings;
         }
 
         public void Tick(GameState state, float deltaTime)
         {
             float dayFraction = deltaTime / GameClock.DayLengthSeconds;
 
-            foreach (var building in Building.All)
+            foreach (var building in _buildings.All)
             {
                 if (!building.IsActive || building.NeedsRepair) continue;
                 if (building.Zone != null && building.Zone.IsLost) continue;

@@ -3,26 +3,33 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Events
 {
-    public class SupplyCartsInterceptedEventHandler : EventHandler<SupplyCartsInterceptedEvent>
+    public class SupplyCartsInterceptedEventHandler : IEventHandler
     {
-        public SupplyCartsInterceptedEventHandler(SupplyCartsInterceptedEvent gameEvent) : base(gameEvent) { }
+        readonly SupplyCartsInterceptedEvent _event;
 
-        public override bool CanTrigger(GameState state) =>
+        public string EventId => _event.Id;
+
+        public SupplyCartsInterceptedEventHandler(SupplyCartsInterceptedEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) =>
             state.CurrentDay >= 3 && state.CurrentDay <= 5 && Random.value < 0.20f;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
-            Event.LostFood = Random.value < 0.5f;
+            _event.LostFood = Random.value < 0.5f;
 
-            if (Event.LostFood)
+            if (_event.LostFood)
             {
                 state.AddResource(ResourceType.Food, -15);
-                log.Record("Food", -15, Event.Name);
+                log.Record("Food", -15, _event.Name);
             }
             else
             {
                 state.AddResource(ResourceType.Water, -15);
-                log.Record("Water", -15, Event.Name);
+                log.Record("Water", -15, _event.Name);
             }
         }
     }

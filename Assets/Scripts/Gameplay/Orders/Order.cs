@@ -1,8 +1,10 @@
 using JetBrains.Annotations;
+using TypeRegistry;
 
 namespace Siege.Gameplay.Orders
 {
     [UsedImplicitly]
+    [RegisterTypeLookup]
     public interface IOrder
     {
         string Id { get; }

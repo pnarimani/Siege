@@ -4,20 +4,29 @@ using Siege.Gameplay;
 
 namespace Siege.Gameplay.Laws
 {
-    public class AbandonOuterRingLawHandler : LawHandler<AbandonOuterRingLaw>
+    public class AbandonOuterRingLawHandler : ILawHandler
     {
+        readonly AbandonOuterRingLaw _law;
+        readonly IPopupService _popup;
+
         const double IntegrityThreshold = 40;
         const double UnrestIncrease = 15;
 
-        public AbandonOuterRingLawHandler(AbandonOuterRingLaw law, IPopupService popup) : base(law, popup) { }
+        public AbandonOuterRingLawHandler(AbandonOuterRingLaw law, IPopupService popup)
+        {
+            _law = law;
+            _popup = popup;
+        }
 
-        public override bool CanEnact(GameState state)
+        public string LawId => _law.Id;
+
+        public bool CanEnact(GameState state)
         {
             var zone = state.Zones[ZoneId.OuterFarms];
             return !zone.IsLost && zone.Integrity < IntegrityThreshold;
         }
 
-        public override void ApplyImmediate(GameState state, ChangeLog log)
+        public void ApplyImmediate(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             var zone = state.Zones[ZoneId.OuterFarms];
@@ -27,7 +36,7 @@ namespace Siege.Gameplay.Laws
 
             state.Unrest += UnrestIncrease;
             log.Record("Unrest", UnrestIncrease, "Abandon Outer Ring");
-            Popup.Open(Law.Name, Law.NarrativeText, log.SliceSince(before));
+            _popup.Open(_law.Name, _law.NarrativeText, log.SliceSince(before));
         }
     }
 }

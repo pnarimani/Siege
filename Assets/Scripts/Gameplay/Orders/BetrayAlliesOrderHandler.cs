@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Orders
 {
-    public class BetrayAlliesOrderHandler : OrderHandler<BetrayAlliesOrder>
+    public class BetrayAlliesOrderHandler : IOrderHandler
     {
         const double FoodGain = 30;
         const double WaterGain = 30;
@@ -16,45 +16,51 @@ namespace Siege.Gameplay.Orders
         const double RetaliationUnrest = 8;
         const double RetaliationMoraleLoss = 5;
 
+        readonly BetrayAlliesOrder _order;
+        readonly IPopupService _popup;
         readonly PoliticalState _political;
 
-        public BetrayAlliesOrderHandler(BetrayAlliesOrder order, IPopupService popup, PoliticalState political) : base(order, popup)
+        public BetrayAlliesOrderHandler(BetrayAlliesOrder order, IPopupService popup, PoliticalState political)
         {
+            _order = order;
+            _popup = popup;
             _political = political;
         }
 
-        public override bool CanIssue(GameState state) =>
+        public string OrderId => _order.Id;
+
+        public bool CanIssue(GameState state) =>
             _political.Tyranny.Value >= 4;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Food += FoodGain;
-            log.Record("Food", FoodGain, Order.Id);
+            log.Record("Food", FoodGain, _order.Id);
 
             state.Water += WaterGain;
-            log.Record("Water", WaterGain, Order.Id);
+            log.Record("Water", WaterGain, _order.Id);
 
             state.Materials += MaterialsGain;
-            log.Record("Materials", MaterialsGain, Order.Id);
+            log.Record("Materials", MaterialsGain, _order.Id);
 
             state.Unrest += UnrestIncrease;
-            log.Record("Unrest", UnrestIncrease, Order.Id);
+            log.Record("Unrest", UnrestIncrease, _order.Id);
 
             state.Morale -= MoraleLoss;
-            log.Record("Morale", -MoraleLoss, Order.Id);
-            Popup.Open(Order.Name, Order.NarrativeText, log.SliceSince(before));
+            log.Record("Morale", -MoraleLoss, _order.Id);
+            _popup.Open(_order.Name, _order.NarrativeText, log.SliceSince(before));
         }
 
-        public override void OnDayTick(GameState state, ChangeLog log)
+        public void OnDayTick(GameState state, ChangeLog log)
         {
             if (Random.value < RetaliationChance)
             {
                 state.Unrest += RetaliationUnrest;
-                log.Record("Unrest", RetaliationUnrest, Order.Id + "_retaliation");
+                log.Record("Unrest", RetaliationUnrest, _order.Id + "_retaliation");
 
                 state.Morale -= RetaliationMoraleLoss;
-                log.Record("Morale", -RetaliationMoraleLoss, Order.Id + "_retaliation");
+                log.Record("Morale", -RetaliationMoraleLoss, _order.Id + "_retaliation");
             }
         }
     }

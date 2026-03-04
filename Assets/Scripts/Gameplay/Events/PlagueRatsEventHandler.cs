@@ -2,39 +2,56 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class PlagueRatsEventHandler : EventHandler<PlagueRatsEvent>
+    public class PlagueRatsEventHandler : IEventHandler
     {
-        public PlagueRatsEventHandler(PlagueRatsEvent gameEvent) : base(gameEvent) { }
+        const int TriggerDay = 23;
+        const int QuarantineSickness = 10;
+        const int QuarantineDeaths = 2;
+        const int QuarantineUnrest = 5;
+        const int BurnSickness = 5;
+        const int BurnMaterialCost = 10;
+        const int IgnoreSickness = 15;
+        const int IgnoreDeaths = 3;
+        const int IgnoreUnrest = 10;
 
-        public override bool CanTrigger(GameState state) => state.CurrentDay == 23;
+        readonly PlagueRatsEvent _event;
 
-        public override void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
+        public string EventId => _event.Id;
+
+        public PlagueRatsEventHandler(PlagueRatsEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) => state.CurrentDay == TriggerDay;
+
+        public void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
         {
             switch (responseIndex)
             {
                 case 0:
-                    state.Sickness += 10;
-                    state.TotalDeaths += 2;
-                    state.DeathsToday += 2;
-                    state.Unrest += 5;
-                    log.Record("Sickness", 10, Event.Name);
-                    log.Record("TotalDeaths", 2, Event.Name);
-                    log.Record("Unrest", 5, Event.Name);
+                    state.Sickness += QuarantineSickness;
+                    state.TotalDeaths += QuarantineDeaths;
+                    state.DeathsToday += QuarantineDeaths;
+                    state.Unrest += QuarantineUnrest;
+                    log.Record("Sickness", QuarantineSickness, _event.Name);
+                    log.Record("TotalDeaths", QuarantineDeaths, _event.Name);
+                    log.Record("Unrest", QuarantineUnrest, _event.Name);
                     break;
                 case 1:
-                    state.Sickness += 5;
-                    state.AddResource(ResourceType.Materials, -10);
-                    log.Record("Sickness", 5, Event.Name);
-                    log.Record("Materials", -10, Event.Name);
+                    state.Sickness += BurnSickness;
+                    state.AddResource(ResourceType.Materials, -BurnMaterialCost);
+                    log.Record("Sickness", BurnSickness, _event.Name);
+                    log.Record("Materials", -BurnMaterialCost, _event.Name);
                     break;
                 case 2:
-                    state.Sickness += 15;
-                    state.TotalDeaths += 3;
-                    state.DeathsToday += 3;
-                    state.Unrest += 10;
-                    log.Record("Sickness", 15, Event.Name);
-                    log.Record("TotalDeaths", 3, Event.Name);
-                    log.Record("Unrest", 10, Event.Name);
+                    state.Sickness += IgnoreSickness;
+                    state.TotalDeaths += IgnoreDeaths;
+                    state.DeathsToday += IgnoreDeaths;
+                    state.Unrest += IgnoreUnrest;
+                    log.Record("Sickness", IgnoreSickness, _event.Name);
+                    log.Record("TotalDeaths", IgnoreDeaths, _event.Name);
+                    log.Record("Unrest", IgnoreUnrest, _event.Name);
                     break;
             }
         }

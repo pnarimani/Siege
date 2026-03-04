@@ -1,7 +1,9 @@
 using Siege.Gameplay.Simulation;
+using TypeRegistry;
 
 namespace Siege.Gameplay.Events
 {
+    [RegisterTypeLookup]
     public interface IGameEvent
     {
         string Id { get; }

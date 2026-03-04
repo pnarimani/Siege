@@ -5,21 +5,26 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Events
 {
-    public class ChildrensPleaEventHandler : EventHandler<ChildrensPleaEvent>
+    public class ChildrensPleaEventHandler : IEventHandler
     {
+        readonly ChildrensPleaEvent _event;
+
+        public string EventId => _event.Id;
+
         readonly PoliticalState _political;
 
-        public ChildrensPleaEventHandler(ChildrensPleaEvent gameEvent, PoliticalState political) : base(gameEvent)
+        public ChildrensPleaEventHandler(ChildrensPleaEvent gameEvent, PoliticalState political)
         {
+            _event = gameEvent;
             _political = political;
         }
 
-        public override bool CanTrigger(GameState state) =>
+        public bool CanTrigger(GameState state) =>
             state.CurrentDay >= 12
             && _political.Faith.Value >= 3
             && UnityEngine.Random.value < 0.15f;
 
-        public override void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
+        public void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
         {
             switch (responseIndex)
             {
@@ -28,17 +33,17 @@ namespace Siege.Gameplay.Events
                     state.Morale += 10;
                     state.Sickness += 3;
                     _political.Faith.Add(1);
-                    log.Record("Materials", -10, Event.Name);
-                    log.Record("Morale", 10, Event.Name);
-                    log.Record("Sickness", 3, Event.Name);
+                    log.Record("Materials", -10, _event.Name);
+                    log.Record("Morale", 10, _event.Name);
+                    log.Record("Sickness", 3, _event.Name);
                     break;
 
                 case 1:
                     state.Morale -= 5;
                     state.Unrest += 5;
                     _political.Tyranny.Add(1);
-                    log.Record("Morale", -5, Event.Name);
-                    log.Record("Unrest", 5, Event.Name);
+                    log.Record("Morale", -5, _event.Name);
+                    log.Record("Unrest", 5, _event.Name);
                     break;
             }
         }

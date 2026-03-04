@@ -1,7 +1,1061 @@
 {
-    "Types": [],
+    "Types": [
+        {
+            "TypeName": "Siege.Gameplay.Events.BetrayalFromWithinEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.BetrayalFromWithinEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.BlackMarketTraderEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.BlackMarketTraderEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.BurningFarmsEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.BurningFarmsEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.ChildrensPleaEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.ChildrensPleaEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.CouncilRevoltEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.CouncilRevoltEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.CrisisOfFaithEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.CrisisOfFaithEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.DesertionWaveEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.DesertionWaveEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.DespairEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.DespairEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.DissidentsDiscoveredEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.DissidentsDiscoveredEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.DistantHornsEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.DistantHornsEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.EnemyCommanderLetterEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.EnemyCommanderLetterEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.EnemyMessengerEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.EnemyMessengerEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.EnemySappersEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.EnemySappersEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.EnemyUltimatumEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.EnemyUltimatumEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.FeverOutbreakEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.FeverOutbreakEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.FinalAssaultEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.FinalAssaultEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.FireArtisanQuarterEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.FireArtisanQuarterEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.FortuneFavorsBoldEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.FortuneFavorsBoldEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.HealthImprovingEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.HealthImprovingEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.HungerRiotEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.HungerRiotEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.IEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.IGameEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.IntelSiegeWarningEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.IntelSiegeWarningEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.MilitiaVolunteersEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.MilitiaVolunteersEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.OpeningBombardmentEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.OpeningBombardmentEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.PlagueRatsEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.PlagueRatsEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.RefugeesAtGatesEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.RefugeesAtGatesEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.ReliefBannersEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.ReliefBannersEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.ReliefDustCloudsEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.ReliefDustCloudsEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.ReliefHornsEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.ReliefHornsEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SiegeBombardmentEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SiegeBombardmentEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SiegeEngineersArriveEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SiegeEngineersArriveEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SiegeTowersSpottedEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SiegeTowersSpottedEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SignalFireEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SignalFireEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SmugglerAtGateEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SmugglerAtGateEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SpySellingIntelEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SpySellingIntelEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SteadySuppliesEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SteadySuppliesEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SupplyCartsInterceptedEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.SupplyCartsInterceptedEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.TaintedWellEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.TaintedWellEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.TotalCollapseEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.TotalCollapseEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.TyrantsReckoningEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.TyrantsReckoningEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.WallBreachEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.WallBreachEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.WallsStillStandEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.WallsStillStandEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.WellContaminationScareEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.WellContaminationScareEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.WorkerTakesLifeEvent",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Events.WorkerTakesLifeEventHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.AbandonOuterRingLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.AbandonOuterRingLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.BurnTheDeadLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.BurnTheDeadLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.CannibalismLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.CannibalismLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.CollectiveFarmsLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.CollectiveFarmsLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.ConscriptElderlyLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.ConscriptElderlyLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.CurfewLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.CurfewLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.EmergencySheltersLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.EmergencySheltersLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.ExtendedShiftsLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.ExtendedShiftsLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.FaithProcessionsLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.FaithProcessionsLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.FoodConfiscationLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.FoodConfiscationLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.GarrisonMandateLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.GarrisonMandateLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.ILaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.ILawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.MandatoryGuardServiceLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.MandatoryGuardServiceLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.MartialLawLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.MartialLawLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.MedicalTriageLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.MedicalTriageLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.OathOfMercyLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.OathOfMercyLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.PublicExecutionsLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.PublicExecutionsLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.PurgeTheDisloyalLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.PurgeTheDisloyalLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.ScorchedEarthLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.ScorchedEarthLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.ShadowCouncilLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.ShadowCouncilLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.StrictRationsLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.StrictRationsLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.WaterRationingLaw",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Laws.WaterRationingLawHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.DiplomaticEnvoy",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.DiplomaticEnvoyHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.EngineerTunnels",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.EngineerTunnelsHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.ForageBeyondWalls",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.ForageBeyondWallsHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.IMission",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.IMissionHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.NegotiateBlackMarketeers",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.NegotiateBlackMarketeersHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.NightRaid",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.NightRaidHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.RaidCivilianFarms",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.RaidCivilianFarmsHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.SabotageEnemySupplies",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.SabotageEnemySuppliesHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.ScoutingMission",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.ScoutingMissionHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.SearchAbandonedHomes",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.SearchAbandonedHomesHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.Sortie",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Missions.SortieHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.BetrayAlliesOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.BetrayAlliesOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.BribeEnemyOfficerOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.BribeEnemyOfficerOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.BurnSurplusOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.BurnSurplusOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.CrackdownPatrolsOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.CrackdownPatrolsOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.DayOfRemembranceOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.DayOfRemembranceOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.DistributeLuxuriesOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.DistributeLuxuriesOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.DivertSuppliesOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.DivertSuppliesOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.ForcedLaborOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.ForcedLaborOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.FortifyGateOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.FortifyGateOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.HoldFeastOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.HoldFeastOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.HostageExchangeOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.HostageExchangeOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.IOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.IOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.InspirePeopleOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.InspirePeopleOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.OfferTributeOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.OfferTributeOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.PublicConfessionOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.PublicConfessionOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.PublicTrialOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.PublicTrialOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.QuarantineDistrictOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.QuarantineDistrictOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.RallyGuardsOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.RallyGuardsOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.RationMedicineOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.RationMedicineOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.ReinforceWallsOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.ReinforceWallsOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.SacrificeSickOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.SacrificeSickOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.ScavengeMedicineOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.ScavengeMedicineOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.SecretCorrespondenceOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.SecretCorrespondenceOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.StorytellingNightOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.StorytellingNightOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.VoluntaryEvacuationOrder",
+            "AssemblyName": "Siege.Gameplay"
+        },
+        {
+            "TypeName": "Siege.Gameplay.Orders.VoluntaryEvacuationOrderHandler",
+            "AssemblyName": "Siege.Gameplay"
+        }
+    ],
     "AttributeToTypes": [],
     "AttributeToFields": [],
     "AttributeToMethods": [],
-    "BaseToDerived": []
+    "BaseToDerived": [
+        {
+            "BaseTypeName": "Siege.Gameplay.Events.IEventHandler",
+            "DerivedTypeNames": [
+                "Siege.Gameplay.Events.BetrayalFromWithinEventHandler",
+                "Siege.Gameplay.Events.BlackMarketTraderEventHandler",
+                "Siege.Gameplay.Events.BurningFarmsEventHandler",
+                "Siege.Gameplay.Events.ChildrensPleaEventHandler",
+                "Siege.Gameplay.Events.CouncilRevoltEventHandler",
+                "Siege.Gameplay.Events.CrisisOfFaithEventHandler",
+                "Siege.Gameplay.Events.DesertionWaveEventHandler",
+                "Siege.Gameplay.Events.DespairEventHandler",
+                "Siege.Gameplay.Events.DissidentsDiscoveredEventHandler",
+                "Siege.Gameplay.Events.DistantHornsEventHandler",
+                "Siege.Gameplay.Events.EnemyCommanderLetterEventHandler",
+                "Siege.Gameplay.Events.EnemyMessengerEventHandler",
+                "Siege.Gameplay.Events.EnemySappersEventHandler",
+                "Siege.Gameplay.Events.EnemyUltimatumEventHandler",
+                "Siege.Gameplay.Events.FeverOutbreakEventHandler",
+                "Siege.Gameplay.Events.FinalAssaultEventHandler",
+                "Siege.Gameplay.Events.FireArtisanQuarterEventHandler",
+                "Siege.Gameplay.Events.FortuneFavorsBoldEventHandler",
+                "Siege.Gameplay.Events.HealthImprovingEventHandler",
+                "Siege.Gameplay.Events.HungerRiotEventHandler",
+                "Siege.Gameplay.Events.IntelSiegeWarningEventHandler",
+                "Siege.Gameplay.Events.MilitiaVolunteersEventHandler",
+                "Siege.Gameplay.Events.OpeningBombardmentEventHandler",
+                "Siege.Gameplay.Events.PlagueRatsEventHandler",
+                "Siege.Gameplay.Events.RefugeesAtGatesEventHandler",
+                "Siege.Gameplay.Events.ReliefBannersEventHandler",
+                "Siege.Gameplay.Events.ReliefDustCloudsEventHandler",
+                "Siege.Gameplay.Events.ReliefHornsEventHandler",
+                "Siege.Gameplay.Events.SiegeBombardmentEventHandler",
+                "Siege.Gameplay.Events.SiegeEngineersArriveEventHandler",
+                "Siege.Gameplay.Events.SiegeTowersSpottedEventHandler",
+                "Siege.Gameplay.Events.SignalFireEventHandler",
+                "Siege.Gameplay.Events.SmugglerAtGateEventHandler",
+                "Siege.Gameplay.Events.SpySellingIntelEventHandler",
+                "Siege.Gameplay.Events.SteadySuppliesEventHandler",
+                "Siege.Gameplay.Events.SupplyCartsInterceptedEventHandler",
+                "Siege.Gameplay.Events.TaintedWellEventHandler",
+                "Siege.Gameplay.Events.TotalCollapseEventHandler",
+                "Siege.Gameplay.Events.TyrantsReckoningEventHandler",
+                "Siege.Gameplay.Events.WallBreachEventHandler",
+                "Siege.Gameplay.Events.WallsStillStandEventHandler",
+                "Siege.Gameplay.Events.WellContaminationScareEventHandler",
+                "Siege.Gameplay.Events.WorkerTakesLifeEventHandler"
+            ]
+        },
+        {
+            "BaseTypeName": "Siege.Gameplay.Events.IGameEvent",
+            "DerivedTypeNames": [
+                "Siege.Gameplay.Events.BetrayalFromWithinEvent",
+                "Siege.Gameplay.Events.BlackMarketTraderEvent",
+                "Siege.Gameplay.Events.BurningFarmsEvent",
+                "Siege.Gameplay.Events.ChildrensPleaEvent",
+                "Siege.Gameplay.Events.CouncilRevoltEvent",
+                "Siege.Gameplay.Events.CrisisOfFaithEvent",
+                "Siege.Gameplay.Events.DesertionWaveEvent",
+                "Siege.Gameplay.Events.DespairEvent",
+                "Siege.Gameplay.Events.DissidentsDiscoveredEvent",
+                "Siege.Gameplay.Events.DistantHornsEvent",
+                "Siege.Gameplay.Events.EnemyCommanderLetterEvent",
+                "Siege.Gameplay.Events.EnemyMessengerEvent",
+                "Siege.Gameplay.Events.EnemySappersEvent",
+                "Siege.Gameplay.Events.EnemyUltimatumEvent",
+                "Siege.Gameplay.Events.FeverOutbreakEvent",
+                "Siege.Gameplay.Events.FinalAssaultEvent",
+                "Siege.Gameplay.Events.FireArtisanQuarterEvent",
+                "Siege.Gameplay.Events.FortuneFavorsBoldEvent",
+                "Siege.Gameplay.Events.HealthImprovingEvent",
+                "Siege.Gameplay.Events.HungerRiotEvent",
+                "Siege.Gameplay.Events.IntelSiegeWarningEvent",
+                "Siege.Gameplay.Events.MilitiaVolunteersEvent",
+                "Siege.Gameplay.Events.OpeningBombardmentEvent",
+                "Siege.Gameplay.Events.PlagueRatsEvent",
+                "Siege.Gameplay.Events.RefugeesAtGatesEvent",
+                "Siege.Gameplay.Events.ReliefBannersEvent",
+                "Siege.Gameplay.Events.ReliefDustCloudsEvent",
+                "Siege.Gameplay.Events.ReliefHornsEvent",
+                "Siege.Gameplay.Events.SiegeBombardmentEvent",
+                "Siege.Gameplay.Events.SiegeEngineersArriveEvent",
+                "Siege.Gameplay.Events.SiegeTowersSpottedEvent",
+                "Siege.Gameplay.Events.SignalFireEvent",
+                "Siege.Gameplay.Events.SmugglerAtGateEvent",
+                "Siege.Gameplay.Events.SpySellingIntelEvent",
+                "Siege.Gameplay.Events.SteadySuppliesEvent",
+                "Siege.Gameplay.Events.SupplyCartsInterceptedEvent",
+                "Siege.Gameplay.Events.TaintedWellEvent",
+                "Siege.Gameplay.Events.TotalCollapseEvent",
+                "Siege.Gameplay.Events.TyrantsReckoningEvent",
+                "Siege.Gameplay.Events.WallBreachEvent",
+                "Siege.Gameplay.Events.WallsStillStandEvent",
+                "Siege.Gameplay.Events.WellContaminationScareEvent",
+                "Siege.Gameplay.Events.WorkerTakesLifeEvent"
+            ]
+        },
+        {
+            "BaseTypeName": "Siege.Gameplay.Laws.ILaw",
+            "DerivedTypeNames": [
+                "Siege.Gameplay.Laws.AbandonOuterRingLaw",
+                "Siege.Gameplay.Laws.BurnTheDeadLaw",
+                "Siege.Gameplay.Laws.CannibalismLaw",
+                "Siege.Gameplay.Laws.CollectiveFarmsLaw",
+                "Siege.Gameplay.Laws.ConscriptElderlyLaw",
+                "Siege.Gameplay.Laws.CurfewLaw",
+                "Siege.Gameplay.Laws.EmergencySheltersLaw",
+                "Siege.Gameplay.Laws.ExtendedShiftsLaw",
+                "Siege.Gameplay.Laws.FaithProcessionsLaw",
+                "Siege.Gameplay.Laws.FoodConfiscationLaw",
+                "Siege.Gameplay.Laws.GarrisonMandateLaw",
+                "Siege.Gameplay.Laws.MandatoryGuardServiceLaw",
+                "Siege.Gameplay.Laws.MartialLawLaw",
+                "Siege.Gameplay.Laws.MedicalTriageLaw",
+                "Siege.Gameplay.Laws.OathOfMercyLaw",
+                "Siege.Gameplay.Laws.PublicExecutionsLaw",
+                "Siege.Gameplay.Laws.PurgeTheDisloyalLaw",
+                "Siege.Gameplay.Laws.ScorchedEarthLaw",
+                "Siege.Gameplay.Laws.ShadowCouncilLaw",
+                "Siege.Gameplay.Laws.StrictRationsLaw",
+                "Siege.Gameplay.Laws.WaterRationingLaw"
+            ]
+        },
+        {
+            "BaseTypeName": "Siege.Gameplay.Laws.ILawHandler",
+            "DerivedTypeNames": [
+                "Siege.Gameplay.Laws.AbandonOuterRingLawHandler",
+                "Siege.Gameplay.Laws.BurnTheDeadLawHandler",
+                "Siege.Gameplay.Laws.CannibalismLawHandler",
+                "Siege.Gameplay.Laws.CollectiveFarmsLawHandler",
+                "Siege.Gameplay.Laws.ConscriptElderlyLawHandler",
+                "Siege.Gameplay.Laws.CurfewLawHandler",
+                "Siege.Gameplay.Laws.EmergencySheltersLawHandler",
+                "Siege.Gameplay.Laws.ExtendedShiftsLawHandler",
+                "Siege.Gameplay.Laws.FaithProcessionsLawHandler",
+                "Siege.Gameplay.Laws.FoodConfiscationLawHandler",
+                "Siege.Gameplay.Laws.GarrisonMandateLawHandler",
+                "Siege.Gameplay.Laws.MandatoryGuardServiceLawHandler",
+                "Siege.Gameplay.Laws.MartialLawLawHandler",
+                "Siege.Gameplay.Laws.MedicalTriageLawHandler",
+                "Siege.Gameplay.Laws.OathOfMercyLawHandler",
+                "Siege.Gameplay.Laws.PublicExecutionsLawHandler",
+                "Siege.Gameplay.Laws.PurgeTheDisloyalLawHandler",
+                "Siege.Gameplay.Laws.ScorchedEarthLawHandler",
+                "Siege.Gameplay.Laws.ShadowCouncilLawHandler",
+                "Siege.Gameplay.Laws.StrictRationsLawHandler",
+                "Siege.Gameplay.Laws.WaterRationingLawHandler"
+            ]
+        },
+        {
+            "BaseTypeName": "Siege.Gameplay.Missions.IMission",
+            "DerivedTypeNames": [
+                "Siege.Gameplay.Missions.DiplomaticEnvoy",
+                "Siege.Gameplay.Missions.EngineerTunnels",
+                "Siege.Gameplay.Missions.ForageBeyondWalls",
+                "Siege.Gameplay.Missions.NegotiateBlackMarketeers",
+                "Siege.Gameplay.Missions.NightRaid",
+                "Siege.Gameplay.Missions.RaidCivilianFarms",
+                "Siege.Gameplay.Missions.SabotageEnemySupplies",
+                "Siege.Gameplay.Missions.ScoutingMission",
+                "Siege.Gameplay.Missions.SearchAbandonedHomes",
+                "Siege.Gameplay.Missions.Sortie"
+            ]
+        },
+        {
+            "BaseTypeName": "Siege.Gameplay.Missions.IMissionHandler",
+            "DerivedTypeNames": [
+                "Siege.Gameplay.Missions.DiplomaticEnvoyHandler",
+                "Siege.Gameplay.Missions.EngineerTunnelsHandler",
+                "Siege.Gameplay.Missions.ForageBeyondWallsHandler",
+                "Siege.Gameplay.Missions.NegotiateBlackMarketeersHandler",
+                "Siege.Gameplay.Missions.NightRaidHandler",
+                "Siege.Gameplay.Missions.RaidCivilianFarmsHandler",
+                "Siege.Gameplay.Missions.SabotageEnemySuppliesHandler",
+                "Siege.Gameplay.Missions.ScoutingMissionHandler",
+                "Siege.Gameplay.Missions.SearchAbandonedHomesHandler",
+                "Siege.Gameplay.Missions.SortieHandler"
+            ]
+        },
+        {
+            "BaseTypeName": "Siege.Gameplay.Orders.IOrder",
+            "DerivedTypeNames": [
+                "Siege.Gameplay.Orders.BetrayAlliesOrder",
+                "Siege.Gameplay.Orders.BribeEnemyOfficerOrder",
+                "Siege.Gameplay.Orders.BurnSurplusOrder",
+                "Siege.Gameplay.Orders.CrackdownPatrolsOrder",
+                "Siege.Gameplay.Orders.DayOfRemembranceOrder",
+                "Siege.Gameplay.Orders.DistributeLuxuriesOrder",
+                "Siege.Gameplay.Orders.DivertSuppliesOrder",
+                "Siege.Gameplay.Orders.ForcedLaborOrder",
+                "Siege.Gameplay.Orders.FortifyGateOrder",
+                "Siege.Gameplay.Orders.HoldFeastOrder",
+                "Siege.Gameplay.Orders.HostageExchangeOrder",
+                "Siege.Gameplay.Orders.InspirePeopleOrder",
+                "Siege.Gameplay.Orders.OfferTributeOrder",
+                "Siege.Gameplay.Orders.PublicConfessionOrder",
+                "Siege.Gameplay.Orders.PublicTrialOrder",
+                "Siege.Gameplay.Orders.QuarantineDistrictOrder",
+                "Siege.Gameplay.Orders.RallyGuardsOrder",
+                "Siege.Gameplay.Orders.RationMedicineOrder",
+                "Siege.Gameplay.Orders.ReinforceWallsOrder",
+                "Siege.Gameplay.Orders.SacrificeSickOrder",
+                "Siege.Gameplay.Orders.ScavengeMedicineOrder",
+                "Siege.Gameplay.Orders.SecretCorrespondenceOrder",
+                "Siege.Gameplay.Orders.StorytellingNightOrder",
+                "Siege.Gameplay.Orders.VoluntaryEvacuationOrder"
+            ]
+        },
+        {
+            "BaseTypeName": "Siege.Gameplay.Orders.IOrderHandler",
+            "DerivedTypeNames": [
+                "Siege.Gameplay.Orders.BetrayAlliesOrderHandler",
+                "Siege.Gameplay.Orders.BribeEnemyOfficerOrderHandler",
+                "Siege.Gameplay.Orders.BurnSurplusOrderHandler",
+                "Siege.Gameplay.Orders.CrackdownPatrolsOrderHandler",
+                "Siege.Gameplay.Orders.DayOfRemembranceOrderHandler",
+                "Siege.Gameplay.Orders.DistributeLuxuriesOrderHandler",
+                "Siege.Gameplay.Orders.DivertSuppliesOrderHandler",
+                "Siege.Gameplay.Orders.ForcedLaborOrderHandler",
+                "Siege.Gameplay.Orders.FortifyGateOrderHandler",
+                "Siege.Gameplay.Orders.HoldFeastOrderHandler",
+                "Siege.Gameplay.Orders.HostageExchangeOrderHandler",
+                "Siege.Gameplay.Orders.InspirePeopleOrderHandler",
+                "Siege.Gameplay.Orders.OfferTributeOrderHandler",
+                "Siege.Gameplay.Orders.PublicConfessionOrderHandler",
+                "Siege.Gameplay.Orders.PublicTrialOrderHandler",
+                "Siege.Gameplay.Orders.QuarantineDistrictOrderHandler",
+                "Siege.Gameplay.Orders.RallyGuardsOrderHandler",
+                "Siege.Gameplay.Orders.RationMedicineOrderHandler",
+                "Siege.Gameplay.Orders.ReinforceWallsOrderHandler",
+                "Siege.Gameplay.Orders.SacrificeSickOrderHandler",
+                "Siege.Gameplay.Orders.ScavengeMedicineOrderHandler",
+                "Siege.Gameplay.Orders.SecretCorrespondenceOrderHandler",
+                "Siege.Gameplay.Orders.StorytellingNightOrderHandler",
+                "Siege.Gameplay.Orders.VoluntaryEvacuationOrderHandler"
+            ]
+        }
+    ]
 }

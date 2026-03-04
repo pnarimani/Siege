@@ -2,18 +2,28 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class FinalAssaultEventHandler : EventHandler<FinalAssaultEvent>
+    public class FinalAssaultEventHandler : IEventHandler
     {
-        public FinalAssaultEventHandler(FinalAssaultEvent gameEvent) : base(gameEvent) { }
+        const int TriggerDay = 33;
+        const int AssaultUnrest = 15;
 
-        public override bool CanTrigger(GameState state) => state.CurrentDay == 33;
+        readonly FinalAssaultEvent _event;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public string EventId => _event.Id;
+
+        public FinalAssaultEventHandler(FinalAssaultEvent gameEvent)
         {
-            state.Unrest += 15;
-            log.Record("Unrest", 15, Event.Name);
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) => state.CurrentDay == TriggerDay;
+
+        public void Execute(GameState state, ChangeLog log)
+        {
+            state.Unrest += AssaultUnrest;
+            log.Record("Unrest", AssaultUnrest, _event.Name);
             state.FinalAssaultActive = true;
-            log.Record("FinalAssaultActive", 1, Event.Name);
+            log.Record("FinalAssaultActive", 1, _event.Name);
         }
     }
 }

@@ -2,10 +2,17 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class EnemyCommanderLetterEventHandler : EventHandler<EnemyCommanderLetterEvent>
+    public class EnemyCommanderLetterEventHandler : IEventHandler
     {
-        public EnemyCommanderLetterEventHandler(EnemyCommanderLetterEvent gameEvent) : base(gameEvent) { }
+        readonly EnemyCommanderLetterEvent _event;
 
-        public override bool CanTrigger(GameState state) => state.CurrentDay == 15;
+        public string EventId => _event.Id;
+
+        public EnemyCommanderLetterEventHandler(EnemyCommanderLetterEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) => state.CurrentDay == 15;
     }
 }

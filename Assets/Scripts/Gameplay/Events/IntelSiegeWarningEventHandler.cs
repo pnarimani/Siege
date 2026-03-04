@@ -4,22 +4,29 @@ using Random = UnityEngine.Random;
 
 namespace Siege.Gameplay.Events
 {
-    public class IntelSiegeWarningEventHandler : EventHandler<IntelSiegeWarningEvent>
+    public class IntelSiegeWarningEventHandler : IEventHandler
     {
+        readonly IntelSiegeWarningEvent _event;
+
+        public string EventId => _event.Id;
+
         const int MinDay = 15;
         const int MinSiegeIntensity = 4;
         const float TriggerChance = 0.15f;
         const int InterceptGuardCost = 3;
         const double BraceIntegrityBonus = 10.0;
 
-        public IntelSiegeWarningEventHandler(IntelSiegeWarningEvent gameEvent) : base(gameEvent) { }
+        public IntelSiegeWarningEventHandler(IntelSiegeWarningEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
 
-        public override bool CanTrigger(GameState state) =>
+        public bool CanTrigger(GameState state) =>
             state.CurrentDay >= MinDay &&
             state.SiegeIntensity >= MinSiegeIntensity &&
             Random.value < TriggerChance;
 
-        public override void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
+        public void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
         {
             switch (responseIndex)
             {
@@ -29,15 +36,15 @@ namespace Siege.Gameplay.Events
                     state.TotalDeaths += 1;
                     state.DeathsToday += 1;
                     state.SiegeIntensity = Math.Max(1, state.SiegeIntensity - 1);
-                    log.Record("Guards", -lost, Event.Name);
-                    log.Record("TotalDeaths", 1, Event.Name);
-                    log.Record("SiegeIntensity", -1, Event.Name);
+                    log.Record("Guards", -lost, _event.Name);
+                    log.Record("TotalDeaths", 1, _event.Name);
+                    log.Record("SiegeIntensity", -1, _event.Name);
                     break;
                 case 1:
                     ZoneId perimeter = state.ActivePerimeter;
                     double current = state.GetZoneIntegrity(perimeter);
                     state.SetZoneIntegrity(perimeter, Math.Min(100.0, current + BraceIntegrityBonus));
-                    log.Record("ZoneIntegrity", BraceIntegrityBonus, Event.Name);
+                    log.Record("ZoneIntegrity", BraceIntegrityBonus, _event.Name);
                     break;
             }
         }

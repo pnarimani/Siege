@@ -3,14 +3,21 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class HungerRiotEventHandler : EventHandler<HungerRiotEvent>
+    public class HungerRiotEventHandler : IEventHandler
     {
-        public HungerRiotEventHandler(HungerRiotEvent gameEvent) : base(gameEvent) { }
+        readonly HungerRiotEvent _event;
 
-        public override bool CanTrigger(GameState state) =>
+        public string EventId => _event.Id;
+
+        public HungerRiotEventHandler(HungerRiotEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) =>
             state.ConsecutiveFoodDeficitDays >= 2 && state.Unrest > 50;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             state.Food = Math.Max(0, state.Food - 80);
             state.Unrest += 15;
@@ -19,11 +26,11 @@ namespace Siege.Gameplay.Events
             int deaths = guardsLost;
             state.TotalDeaths += deaths;
             state.DeathsToday += deaths;
-            log.Record("Food", -80, Event.Name);
-            log.Record("Unrest", 15, Event.Name);
-            log.Record("Guards", -guardsLost, Event.Name);
-            log.Record("TotalDeaths", deaths, Event.Name);
-            log.Record("DeathsToday", deaths, Event.Name);
+            log.Record("Food", -80, _event.Name);
+            log.Record("Unrest", 15, _event.Name);
+            log.Record("Guards", -guardsLost, _event.Name);
+            log.Record("TotalDeaths", deaths, _event.Name);
+            log.Record("DeathsToday", deaths, _event.Name);
         }
     }
 }

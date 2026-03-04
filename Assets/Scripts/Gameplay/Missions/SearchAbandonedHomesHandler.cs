@@ -5,8 +5,11 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Missions
 {
-    public class SearchAbandonedHomesHandler : MissionHandler<SearchAbandonedHomes>
+    public class SearchAbandonedHomesHandler : IMissionHandler
     {
+        readonly SearchAbandonedHomes _mission;
+        readonly IPopupService _popup;
+
         const int Workers = 4;
         const float ChanceMaterials = 0.45f;
         const float ChanceMedicine = 0.35f;
@@ -16,11 +19,17 @@ namespace Siege.Gameplay.Missions
         const double SicknessMajor = 15;
         const int FailDeaths = 2;
 
-        public SearchAbandonedHomesHandler(SearchAbandonedHomes mission, IPopupService popup) : base(mission, popup) { }
+        public SearchAbandonedHomesHandler(SearchAbandonedHomes mission, IPopupService popup)
+        {
+            _mission = mission;
+            _popup = popup;
+        }
 
-        public override bool CanLaunch(GameState state) => state.HealthyWorkers >= Mission.WorkerCost;
+        public string MissionId => _mission.Id;
 
-        public override MissionOutcome Resolve(GameState state, ChangeLog log)
+        public bool CanLaunch(GameState state) => state.HealthyWorkers >= _mission.WorkerCost;
+
+        public MissionOutcome Resolve(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             float roll = Random.value;
@@ -30,14 +39,14 @@ namespace Siege.Gameplay.Missions
             {
                 state.AddResource(ResourceType.Materials, MaterialsGain);
                 state.Sickness += SicknessMinor;
-                log.Record("Materials", MaterialsGain, Mission.Name);
-                log.Record("Sickness", SicknessMinor, Mission.Name);
+                log.Record("Materials", MaterialsGain, _mission.Name);
+                log.Record("Sickness", SicknessMinor, _mission.Name);
                 outcome = new MissionOutcome
                 {
                     NarrativeText = "Useful materials recovered, but some workers fell ill from the filth.",
                     Success = true
                 };
-                Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+                _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
                 return outcome;
             }
 
@@ -45,22 +54,22 @@ namespace Siege.Gameplay.Missions
             {
                 state.AddResource(ResourceType.Medicine, MedicineGain);
                 state.Sickness += SicknessMinor;
-                log.Record("Medicine", MedicineGain, Mission.Name);
-                log.Record("Sickness", SicknessMinor, Mission.Name);
+                log.Record("Medicine", MedicineGain, _mission.Name);
+                log.Record("Sickness", SicknessMinor, _mission.Name);
                 outcome = new MissionOutcome
                 {
                     NarrativeText = "A hidden apothecary cache. The workers cough but carry on.",
                     Success = true
                 };
-                Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+                _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
                 return outcome;
             }
 
             state.Sickness += SicknessMajor;
             state.TotalDeaths += FailDeaths;
             state.DeathsToday += FailDeaths;
-            log.Record("Sickness", SicknessMajor, Mission.Name);
-            log.Record("Deaths", FailDeaths, Mission.Name);
+            log.Record("Sickness", SicknessMajor, _mission.Name);
+            log.Record("Deaths", FailDeaths, _mission.Name);
 
             outcome = new MissionOutcome
             {
@@ -68,7 +77,7 @@ namespace Siege.Gameplay.Missions
                 Success = false,
                 Deaths = FailDeaths
             };
-            Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+            _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
             return outcome;
         }
     }

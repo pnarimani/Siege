@@ -13,12 +13,14 @@ namespace Siege.Gameplay.Resources
     public class ResourceStorage
     {
         readonly Simulation.GameState _state;
+        readonly StorageBuildingRegistry _storages;
         readonly List<StorageBuilding> _withdrawBuffer = new();
         readonly List<StorageBuilding> _depositBuffer = new();
 
-        public ResourceStorage(Simulation.GameState state)
+        public ResourceStorage(Simulation.GameState state, StorageBuildingRegistry storages)
         {
             _state = state;
+            _storages = storages;
         }
 
         /// <summary>
@@ -27,7 +29,7 @@ namespace Siege.Gameplay.Resources
         public double GetTotal(ResourceType type)
         {
             double total = 0;
-            foreach (var storage in StorageBuilding.All)
+            foreach (var storage in _storages.All)
             {
                 if (storage.Building != null && storage.Building.Zone != null && storage.Building.Zone.IsLost)
                     continue;
@@ -85,7 +87,7 @@ namespace Siege.Gameplay.Resources
         List<StorageBuilding> GetStorageByWithdrawPriority()
         {
             _withdrawBuffer.Clear();
-            foreach (var s in StorageBuilding.All)
+            foreach (var s in _storages.All)
             {
                 if (s.Building == null || s.Building.Zone == null) continue;
                 if (s.Building.Zone.IsLost) continue;
@@ -103,7 +105,7 @@ namespace Siege.Gameplay.Resources
         List<StorageBuilding> GetStorageByDepositPriority()
         {
             _depositBuffer.Clear();
-            foreach (var s in StorageBuilding.All)
+            foreach (var s in _storages.All)
             {
                 if (s.Building == null || s.Building.Zone == null) continue;
                 if (s.Building.Zone.IsLost) continue;

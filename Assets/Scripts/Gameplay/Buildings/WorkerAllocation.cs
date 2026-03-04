@@ -11,10 +11,12 @@ namespace Siege.Gameplay.Buildings
     public class WorkerAllocation
     {
         readonly GameState _state;
+        readonly BuildingRegistry _buildings;
 
-        public WorkerAllocation(GameState state)
+        public WorkerAllocation(GameState state, BuildingRegistry buildings)
         {
             _state = state;
+            _buildings = buildings;
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace Siege.Gameplay.Buildings
             get
             {
                 int total = 0;
-                foreach (var b in Building.All)
+                foreach (var b in _buildings.All)
                     if (b.IsActive && !b.NeedsRepair)
                         total += b.AssignedWorkers;
                 return total;
@@ -65,11 +67,11 @@ namespace Siege.Gameplay.Buildings
         public void AutoAllocate()
         {
             // Clear all assignments
-            foreach (var b in Building.All)
+            foreach (var b in _buildings.All)
                 b.AssignedWorkers = 0;
 
             int available = _state.HealthyWorkers;
-            var buildings = GetBuildingsByPriority();
+            using var buildings = GetBuildingsByPriority();
 
             foreach (var b in buildings)
             {
@@ -96,7 +98,7 @@ namespace Siege.Gameplay.Buildings
 
             int excess = totalAssigned - available;
             // Remove from outermost zones first (most exposed)
-            var buildings = GetBuildingsByPriority();
+            using var buildings = GetBuildingsByPriority();
             for (int i = buildings.Count - 1; i >= 0 && excess > 0; i--)
             {
                 var b = buildings[i];
@@ -110,14 +112,15 @@ namespace Siege.Gameplay.Buildings
         /// <summary>
         /// Returns buildings sorted by priority: innermost (Keep) first, outermost last.
         /// </summary>
-        List<Building> GetBuildingsByPriority()
+        TempList<Building> GetBuildingsByPriority()
         {
-            var list = new List<Building>(Building.All);
+            var list = TempList<Building>.Get();
+            list.AddRange(_buildings.All);
             list.Sort((a, b) =>
             {
                 int zoneCompare = GetZonePriority(b).CompareTo(GetZonePriority(a));
                 if (zoneCompare != 0) return zoneCompare;
-                return b.MaxWorkers.CompareTo(a.MaxWorkers); // larger buildings first within zone
+                return b.MaxWorkers.CompareTo(a.MaxWorkers);
             });
             return list;
         }

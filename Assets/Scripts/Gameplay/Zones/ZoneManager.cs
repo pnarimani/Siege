@@ -12,6 +12,7 @@ namespace Siege.Gameplay.Zones
     {
         readonly GameState _state;
         readonly ChangeLog _changeLog;
+        readonly ZoneRegistry _zones;
 
         // ── Configuration ─────────────────────────────────────────────
         const double SalvagePercentage = 0.6;  // 60% of resources transferred on evacuation
@@ -30,10 +31,11 @@ namespace Siege.Gameplay.Zones
         public event Action<ZoneId> ZoneLost;
         public event Action<ZoneId> ZoneEvacuated;
 
-        public ZoneManager(GameState state, ChangeLog changeLog)
+        public ZoneManager(GameState state, ChangeLog changeLog, ZoneRegistry zones)
         {
             _state = state;
             _changeLog = changeLog;
+            _zones = zones;
         }
 
         // ── Zone Queries ──────────────────────────────────────────────
@@ -108,7 +110,7 @@ namespace Siege.Gameplay.Zones
             zone.Integrity = 0;
 
             // Find the Zone MonoBehaviour and deactivate its buildings
-            foreach (var z in Zone.All)
+            foreach (var z in _zones.All)
             {
                 if (z.Id == id)
                 {
@@ -128,7 +130,7 @@ namespace Siege.Gameplay.Zones
                 _changeLog.Record("Sickness", NaturalFallSickness, $"{id} fell");
 
                 // Lose all resources stored in this zone
-                foreach (var z in Zone.All)
+                foreach (var z in _zones.All)
                 {
                     if (z.Id != id) continue;
                     foreach (var storage in z.GetStorageBuildings())
@@ -216,7 +218,7 @@ namespace Siege.Gameplay.Zones
             // Collect all resources from storage buildings in the zone
             var salvaged = new Dictionary<ResourceType, double>();
 
-            foreach (var z in Zone.All)
+            foreach (var z in _zones.All)
             {
                 if (z.Id != fromZone) continue;
                 foreach (var storage in z.GetStorageBuildings())
@@ -237,7 +239,7 @@ namespace Siege.Gameplay.Zones
             foreach (var kv in salvaged)
             {
                 double toDeposit = kv.Value;
-                foreach (var z in Zone.All)
+                foreach (var z in _zones.All)
                 {
                     if (z.IsLost || z.Id == fromZone) continue;
                     foreach (var storage in z.GetStorageBuildings())

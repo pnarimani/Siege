@@ -3,30 +3,39 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
-    public class RationMedicineOrderHandler : OrderHandler<RationMedicineOrder>
+    public class RationMedicineOrderHandler : IOrderHandler
     {
         const double MedicineCost = 8;
         const double SicknessReduction = 15;
         const double UnrestIncrease = 5;
         const double SicknessThreshold = 20;
 
-        public RationMedicineOrderHandler(RationMedicineOrder order, IPopupService popup) : base(order, popup) { }
+        readonly RationMedicineOrder _order;
+        readonly IPopupService _popup;
 
-        public override bool CanIssue(GameState state) =>
+        public RationMedicineOrderHandler(RationMedicineOrder order, IPopupService popup)
+        {
+            _order = order;
+            _popup = popup;
+        }
+
+        public string OrderId => _order.Id;
+
+        public bool CanIssue(GameState state) =>
             state.Sickness > SicknessThreshold && state.Medicine >= MedicineCost;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Medicine -= MedicineCost;
-            log.Record("Medicine", -MedicineCost, Order.Id);
+            log.Record("Medicine", -MedicineCost, _order.Id);
 
             state.Sickness -= SicknessReduction;
-            log.Record("Sickness", -SicknessReduction, Order.Id);
+            log.Record("Sickness", -SicknessReduction, _order.Id);
 
             state.Unrest += UnrestIncrease;
-            log.Record("Unrest", UnrestIncrease, Order.Id);
-            Popup.Open(Order.Name, Order.NarrativeText, log.SliceSince(before));
+            log.Record("Unrest", UnrestIncrease, _order.Id);
+            _popup.Open(_order.Name, _order.NarrativeText, log.SliceSince(before));
         }
     }
 }

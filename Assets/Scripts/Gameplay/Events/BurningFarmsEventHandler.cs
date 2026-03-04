@@ -2,10 +2,17 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class BurningFarmsEventHandler : EventHandler<BurningFarmsEvent>
+    public class BurningFarmsEventHandler : IEventHandler
     {
-        public BurningFarmsEventHandler(BurningFarmsEvent gameEvent) : base(gameEvent) { }
+        readonly BurningFarmsEvent _event;
 
-        public override bool CanTrigger(GameState state) => state.CurrentDay == 25;
+        public string EventId => _event.Id;
+
+        public BurningFarmsEventHandler(BurningFarmsEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) => state.CurrentDay == 25;
     }
 }

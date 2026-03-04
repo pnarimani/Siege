@@ -3,23 +3,32 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
-    public class StorytellingNightOrderHandler : OrderHandler<StorytellingNightOrder>
+    public class StorytellingNightOrderHandler : IOrderHandler
     {
         const double MoraleGain = 8;
         const double MoraleMin = 20;
         const double MoraleMax = 50;
 
-        public StorytellingNightOrderHandler(StorytellingNightOrder order, IPopupService popup) : base(order, popup) { }
+        readonly StorytellingNightOrder _order;
+        readonly IPopupService _popup;
 
-        public override bool CanIssue(GameState state) =>
+        public StorytellingNightOrderHandler(StorytellingNightOrder order, IPopupService popup)
+        {
+            _order = order;
+            _popup = popup;
+        }
+
+        public string OrderId => _order.Id;
+
+        public bool CanIssue(GameState state) =>
             state.Morale >= MoraleMin && state.Morale <= MoraleMax;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Morale += MoraleGain;
-            log.Record("Morale", MoraleGain, Order.Id);
-            Popup.Open(Order.Name, Order.NarrativeText, log.SliceSince(before));
+            log.Record("Morale", MoraleGain, _order.Id);
+            _popup.Open(_order.Name, _order.NarrativeText, log.SliceSince(before));
         }
     }
 }

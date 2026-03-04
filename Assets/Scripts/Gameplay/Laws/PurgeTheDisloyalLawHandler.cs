@@ -4,23 +4,29 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
-    public class PurgeTheDisloyalLawHandler : LawHandler<PurgeTheDisloyalLaw>
+    public class PurgeTheDisloyalLawHandler : ILawHandler
     {
+        readonly PurgeTheDisloyalLaw _law;
+        readonly IPopupService _popup;
+        readonly PoliticalState _political;
+
         const double ImmediateUnrest = -30;
         const double ImmediateMorale = -15;
         const int ImmediateDeaths = 8;
 
-        readonly PoliticalState _political;
-
-        public PurgeTheDisloyalLawHandler(PurgeTheDisloyalLaw law, IPopupService popup, PoliticalState political) : base(law, popup)
+        public PurgeTheDisloyalLawHandler(PurgeTheDisloyalLaw law, IPopupService popup, PoliticalState political)
         {
+            _law = law;
+            _popup = popup;
             _political = political;
         }
 
-        public override bool CanEnact(GameState state) =>
+        public string LawId => _law.Id;
+
+        public bool CanEnact(GameState state) =>
             _political.Tyranny.Value >= 6;
 
-        public override void ApplyImmediate(GameState state, ChangeLog log)
+        public void ApplyImmediate(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Unrest += ImmediateUnrest;
@@ -33,7 +39,7 @@ namespace Siege.Gameplay.Laws
             state.TotalDeaths += ImmediateDeaths;
             state.DeathsToday += ImmediateDeaths;
             log.Record("HealthyWorkers", -ImmediateDeaths, "Purge the Disloyal");
-            Popup.Open(Law.Name, Law.NarrativeText, log.SliceSince(before));
+            _popup.Open(_law.Name, _law.NarrativeText, log.SliceSince(before));
         }
     }
 }

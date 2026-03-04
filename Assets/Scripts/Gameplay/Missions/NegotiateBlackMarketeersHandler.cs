@@ -5,8 +5,11 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Missions
 {
-    public class NegotiateBlackMarketeersHandler : MissionHandler<NegotiateBlackMarketeers>
+    public class NegotiateBlackMarketeersHandler : IMissionHandler
     {
+        readonly NegotiateBlackMarketeers _mission;
+        readonly IPopupService _popup;
+
         const int Workers = 2;
         const float ChanceWater = 0.45f;
         const float ChanceFood = 0.30f;
@@ -16,11 +19,17 @@ namespace Siege.Gameplay.Missions
         const int BetrayalDeaths = 2;
         const double BetrayalUnrest = 25;
 
-        public NegotiateBlackMarketeersHandler(NegotiateBlackMarketeers mission, IPopupService popup) : base(mission, popup) { }
+        public NegotiateBlackMarketeersHandler(NegotiateBlackMarketeers mission, IPopupService popup)
+        {
+            _mission = mission;
+            _popup = popup;
+        }
 
-        public override bool CanLaunch(GameState state) => state.HealthyWorkers >= Mission.WorkerCost;
+        public string MissionId => _mission.Id;
 
-        public override MissionOutcome Resolve(GameState state, ChangeLog log)
+        public bool CanLaunch(GameState state) => state.HealthyWorkers >= _mission.WorkerCost;
+
+        public MissionOutcome Resolve(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             float roll = Random.value;
@@ -30,14 +39,14 @@ namespace Siege.Gameplay.Missions
             {
                 state.AddResource(ResourceType.Water, WaterGain);
                 state.Unrest += DealUnrest;
-                log.Record("Water", WaterGain, Mission.Name);
-                log.Record("Unrest", DealUnrest, Mission.Name);
+                log.Record("Water", WaterGain, _mission.Name);
+                log.Record("Unrest", DealUnrest, _mission.Name);
                 outcome = new MissionOutcome
                 {
                     NarrativeText = "The smugglers delivered water barrels. The people mutter about favoritism.",
                     Success = true
                 };
-                Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+                _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
                 return outcome;
             }
 
@@ -45,22 +54,22 @@ namespace Siege.Gameplay.Missions
             {
                 state.AddResource(ResourceType.Food, FoodGain);
                 state.Unrest += DealUnrest;
-                log.Record("Food", FoodGain, Mission.Name);
-                log.Record("Unrest", DealUnrest, Mission.Name);
+                log.Record("Food", FoodGain, _mission.Name);
+                log.Record("Unrest", DealUnrest, _mission.Name);
                 outcome = new MissionOutcome
                 {
                     NarrativeText = "Grain sacks arrived in the night. Whispers spread about where they came from.",
                     Success = true
                 };
-                Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+                _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
                 return outcome;
             }
 
             state.Unrest += BetrayalUnrest;
             state.TotalDeaths += BetrayalDeaths;
             state.DeathsToday += BetrayalDeaths;
-            log.Record("Unrest", BetrayalUnrest, Mission.Name);
-            log.Record("Deaths", BetrayalDeaths, Mission.Name);
+            log.Record("Unrest", BetrayalUnrest, _mission.Name);
+            log.Record("Deaths", BetrayalDeaths, _mission.Name);
 
             outcome = new MissionOutcome
             {
@@ -68,7 +77,7 @@ namespace Siege.Gameplay.Missions
                 Success = false,
                 Deaths = BetrayalDeaths
             };
-            Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+            _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
             return outcome;
         }
     }

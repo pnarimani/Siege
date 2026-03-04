@@ -5,8 +5,11 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Missions
 {
-    public class ForageBeyondWallsHandler : MissionHandler<ForageBeyondWalls>
+    public class ForageBeyondWallsHandler : IMissionHandler
     {
+        readonly ForageBeyondWalls _mission;
+        readonly IPopupService _popup;
+
         const int Workers = 5;
         const float ChanceGreatSuccess = 0.50f;
         const float ChancePartialSuccess = 0.25f;
@@ -16,11 +19,17 @@ namespace Siege.Gameplay.Missions
         const int AmbushWounded = 3;
         const double AmbushUnrest = 10;
 
-        public ForageBeyondWallsHandler(ForageBeyondWalls mission, IPopupService popup) : base(mission, popup) { }
+        public ForageBeyondWallsHandler(ForageBeyondWalls mission, IPopupService popup)
+        {
+            _mission = mission;
+            _popup = popup;
+        }
 
-        public override bool CanLaunch(GameState state) => state.HealthyWorkers >= Mission.WorkerCost;
+        public string MissionId => _mission.Id;
 
-        public override MissionOutcome Resolve(GameState state, ChangeLog log)
+        public bool CanLaunch(GameState state) => state.HealthyWorkers >= _mission.WorkerCost;
+
+        public MissionOutcome Resolve(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             float roll = Random.value;
@@ -29,34 +38,34 @@ namespace Siege.Gameplay.Missions
             if (roll < ChanceGreatSuccess)
             {
                 state.AddResource(ResourceType.Food, GreatFood);
-                log.Record("Food", GreatFood, Mission.Name);
+                log.Record("Food", GreatFood, _mission.Name);
                 outcome = new MissionOutcome
                 {
                     NarrativeText = "The foragers found a hidden storehouse. A bounty of food returns to the city.",
                     Success = true
                 };
-                Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+                _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
                 return outcome;
             }
 
             if (roll < ChanceGreatSuccess + ChancePartialSuccess)
             {
                 state.AddResource(ResourceType.Food, PartialFood);
-                log.Record("Food", PartialFood, Mission.Name);
+                log.Record("Food", PartialFood, _mission.Name);
                 outcome = new MissionOutcome
                 {
                     NarrativeText = "Slim pickings, but the foragers return with what they could carry.",
                     Success = true
                 };
-                Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+                _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
                 return outcome;
             }
 
             state.Unrest += AmbushUnrest;
             state.TotalDeaths += AmbushDeaths;
             state.DeathsToday += AmbushDeaths;
-            log.Record("Unrest", AmbushUnrest, Mission.Name);
-            log.Record("Deaths", AmbushDeaths, Mission.Name);
+            log.Record("Unrest", AmbushUnrest, _mission.Name);
+            log.Record("Deaths", AmbushDeaths, _mission.Name);
 
             outcome = new MissionOutcome
             {
@@ -65,7 +74,7 @@ namespace Siege.Gameplay.Missions
                 Deaths = AmbushDeaths,
                 Wounded = AmbushWounded
             };
-            Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+            _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
             return outcome;
         }
     }

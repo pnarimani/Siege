@@ -2,10 +2,17 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class SiegeTowersSpottedEventHandler : EventHandler<SiegeTowersSpottedEvent>
+    public class SiegeTowersSpottedEventHandler : IEventHandler
     {
-        public SiegeTowersSpottedEventHandler(SiegeTowersSpottedEvent gameEvent) : base(gameEvent) { }
+        readonly SiegeTowersSpottedEvent _event;
 
-        public override bool CanTrigger(GameState state) => state.CurrentDay == 7;
+        public string EventId => _event.Id;
+
+        public SiegeTowersSpottedEventHandler(SiegeTowersSpottedEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) => state.CurrentDay == 7;
     }
 }

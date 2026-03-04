@@ -4,26 +4,35 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
-    public class ExtendedShiftsLawHandler : LawHandler<ExtendedShiftsLaw>
+    public class ExtendedShiftsLawHandler : ILawHandler
     {
+        readonly ExtendedShiftsLaw _law;
+        readonly IPopupService _popup;
+
         const double ImmediateMorale = -15;
         const double DailySickness = 2;
         const float DeathChance = 0.3f;
         const int DeathCount = 1;
 
-        public ExtendedShiftsLawHandler(ExtendedShiftsLaw law, IPopupService popup) : base(law, popup) { }
+        public ExtendedShiftsLawHandler(ExtendedShiftsLaw law, IPopupService popup)
+        {
+            _law = law;
+            _popup = popup;
+        }
 
-        public override bool CanEnact(GameState state) => true;
+        public string LawId => _law.Id;
 
-        public override void ApplyImmediate(GameState state, ChangeLog log)
+        public bool CanEnact(GameState state) => true;
+
+        public void ApplyImmediate(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Morale += ImmediateMorale;
             log.Record("Morale", ImmediateMorale, "Extended Shifts");
-            Popup.Open(Law.Name, Law.NarrativeText, log.SliceSince(before));
+            _popup.Open(_law.Name, _law.NarrativeText, log.SliceSince(before));
         }
 
-        public override void OnDayTick(GameState state, ChangeLog log)
+        public void OnDayTick(GameState state, ChangeLog log)
         {
             state.Sickness += DailySickness;
             log.Record("Sickness", DailySickness, "Extended Shifts");

@@ -3,7 +3,7 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
-    public class HostageExchangeOrderHandler : OrderHandler<HostageExchangeOrder>
+    public class HostageExchangeOrderHandler : IOrderHandler
     {
         const double DailyFoodCost = 4;
         const double DailyMedicineCost = 2;
@@ -11,37 +11,45 @@ namespace Siege.Gameplay.Orders
         const int WorkerGainInterval = 2;
         const int WorkerGain = 1;
 
+        readonly HostageExchangeOrder _order;
+        readonly IPopupService _popup;
         int _dayCounter;
 
-        public HostageExchangeOrderHandler(HostageExchangeOrder order, IPopupService popup) : base(order, popup) { }
+        public HostageExchangeOrderHandler(HostageExchangeOrder order, IPopupService popup)
+        {
+            _order = order;
+            _popup = popup;
+        }
 
-        public override bool CanIssue(GameState state) =>
+        public string OrderId => _order.Id;
+
+        public bool CanIssue(GameState state) =>
             state.ZonesLostCount >= 1;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             _dayCounter = 0;
-            Popup.Open(Order.Name, Order.NarrativeText, log.SliceSince(before));
+            _popup.Open(_order.Name, _order.NarrativeText, log.SliceSince(before));
         }
 
-        public override void OnDayTick(GameState state, ChangeLog log)
+        public void OnDayTick(GameState state, ChangeLog log)
         {
             state.Food -= DailyFoodCost;
-            log.Record("Food", -DailyFoodCost, Order.Id);
+            log.Record("Food", -DailyFoodCost, _order.Id);
 
             state.Medicine -= DailyMedicineCost;
-            log.Record("Medicine", -DailyMedicineCost, Order.Id);
+            log.Record("Medicine", -DailyMedicineCost, _order.Id);
 
             state.Morale -= DailyMoraleLoss;
-            log.Record("Morale", -DailyMoraleLoss, Order.Id);
+            log.Record("Morale", -DailyMoraleLoss, _order.Id);
 
             _dayCounter++;
             if (_dayCounter >= WorkerGainInterval)
             {
                 _dayCounter = 0;
                 state.HealthyWorkers += WorkerGain;
-                log.Record("HealthyWorkers", WorkerGain, Order.Id);
+                log.Record("HealthyWorkers", WorkerGain, _order.Id);
             }
         }
     }

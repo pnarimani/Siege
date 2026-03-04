@@ -1,8 +1,10 @@
 using JetBrains.Annotations;
+using TypeRegistry;
 
 namespace Siege.Gameplay.Laws
 {
     [UsedImplicitly]
+    [RegisterTypeLookup]
     public interface ILaw
     {
         string Id { get; }

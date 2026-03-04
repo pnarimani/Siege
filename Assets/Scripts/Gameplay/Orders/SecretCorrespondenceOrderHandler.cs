@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Orders
 {
-    public class SecretCorrespondenceOrderHandler : OrderHandler<SecretCorrespondenceOrder>
+    public class SecretCorrespondenceOrderHandler : IOrderHandler
     {
         const double DailyMaterialsCost = 4;
         const double DailyMoraleGain = 1;
@@ -23,41 +23,47 @@ namespace Siege.Gameplay.Orders
             ResourceType.Materials
         };
 
+        readonly SecretCorrespondenceOrder _order;
+        readonly IPopupService _popup;
         readonly PoliticalState _political;
 
-        public SecretCorrespondenceOrderHandler(SecretCorrespondenceOrder order, IPopupService popup, PoliticalState political) : base(order, popup)
+        public SecretCorrespondenceOrderHandler(SecretCorrespondenceOrder order, IPopupService popup, PoliticalState political)
         {
+            _order = order;
+            _popup = popup;
             _political = political;
         }
 
-        public override bool CanIssue(GameState state) =>
+        public string OrderId => _order.Id;
+
+        public bool CanIssue(GameState state) =>
             _political.Faith.Value >= 4;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
-            Popup.Open(Order.Name, Order.NarrativeText, log.SliceSince(before));
+            _popup.Open(_order.Name, _order.NarrativeText, log.SliceSince(before));
         }
 
-        public override void OnDayTick(GameState state, ChangeLog log)
+        public void OnDayTick(GameState state, ChangeLog log)
         {
             state.Materials -= DailyMaterialsCost;
-            log.Record("Materials", -DailyMaterialsCost, Order.Id);
+            log.Record("Materials", -DailyMaterialsCost, _order.Id);
 
             state.Morale += DailyMoraleGain;
-            log.Record("Morale", DailyMoraleGain, Order.Id);
+            log.Record("Morale", DailyMoraleGain, _order.Id);
 
             if (Random.value < ResourceBonusChance)
             {
                 var type = Resources[Random.Range(0, Resources.Length)];
                 state.AddResource(type, BonusResourceAmount);
-                log.Record(type.ToString(), BonusResourceAmount, Order.Id + "_bonus");
+                log.Record(type.ToString(), BonusResourceAmount, _order.Id + "_bonus");
             }
 
             if (Random.value < SignalFireChance)
             {
                 state.SignalFireLit = true;
-                log.Record("SignalFireLit", 1, Order.Id);
+                log.Record("SignalFireLit", 1, _order.Id);
             }
         }
     }

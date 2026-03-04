@@ -3,8 +3,11 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
-    public class FaithProcessionsLawHandler : LawHandler<FaithProcessionsLaw>
+    public class FaithProcessionsLawHandler : ILawHandler
     {
+        readonly FaithProcessionsLaw _law;
+        readonly IPopupService _popup;
+
         const double MoraleThreshold = 40;
         const double ImmediateMorale = 15;
         const double ImmediateMaterials = -10;
@@ -12,11 +15,17 @@ namespace Siege.Gameplay.Laws
         const double DailyMorale = 2;
         const double DailySickness = 1;
 
-        public FaithProcessionsLawHandler(FaithProcessionsLaw law, IPopupService popup) : base(law, popup) { }
+        public FaithProcessionsLawHandler(FaithProcessionsLaw law, IPopupService popup)
+        {
+            _law = law;
+            _popup = popup;
+        }
 
-        public override bool CanEnact(GameState state) => state.Morale < MoraleThreshold;
+        public string LawId => _law.Id;
 
-        public override void ApplyImmediate(GameState state, ChangeLog log)
+        public bool CanEnact(GameState state) => state.Morale < MoraleThreshold;
+
+        public void ApplyImmediate(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Morale += ImmediateMorale;
@@ -27,10 +36,10 @@ namespace Siege.Gameplay.Laws
 
             state.Unrest += ImmediateUnrest;
             log.Record("Unrest", ImmediateUnrest, "Faith Processions");
-            Popup.Open(Law.Name, Law.NarrativeText, log.SliceSince(before));
+            _popup.Open(_law.Name, _law.NarrativeText, log.SliceSince(before));
         }
 
-        public override void OnDayTick(GameState state, ChangeLog log)
+        public void OnDayTick(GameState state, ChangeLog log)
         {
             state.Morale += DailyMorale;
             log.Record("Morale", DailyMorale, "Faith Processions");

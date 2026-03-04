@@ -3,30 +3,39 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
-    public class RallyGuardsOrderHandler : OrderHandler<RallyGuardsOrder>
+    public class RallyGuardsOrderHandler : IOrderHandler
     {
         const double FoodCost = 10;
         const double UnrestReduction = 15;
         const double MoraleGain = 5;
         const int MinGuards = 5;
 
-        public RallyGuardsOrderHandler(RallyGuardsOrder order, IPopupService popup) : base(order, popup) { }
+        readonly RallyGuardsOrder _order;
+        readonly IPopupService _popup;
 
-        public override bool CanIssue(GameState state) =>
+        public RallyGuardsOrderHandler(RallyGuardsOrder order, IPopupService popup)
+        {
+            _order = order;
+            _popup = popup;
+        }
+
+        public string OrderId => _order.Id;
+
+        public bool CanIssue(GameState state) =>
             state.Guards >= MinGuards && state.Food >= FoodCost;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Food -= FoodCost;
-            log.Record("Food", -FoodCost, Order.Id);
+            log.Record("Food", -FoodCost, _order.Id);
 
             state.Unrest -= UnrestReduction;
-            log.Record("Unrest", -UnrestReduction, Order.Id);
+            log.Record("Unrest", -UnrestReduction, _order.Id);
 
             state.Morale += MoraleGain;
-            log.Record("Morale", MoraleGain, Order.Id);
-            Popup.Open(Order.Name, Order.NarrativeText, log.SliceSince(before));
+            log.Record("Morale", MoraleGain, _order.Id);
+            _popup.Open(_order.Name, _order.NarrativeText, log.SliceSince(before));
         }
     }
 }

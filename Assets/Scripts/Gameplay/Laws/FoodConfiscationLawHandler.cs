@@ -3,8 +3,11 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
-    public class FoodConfiscationLawHandler : LawHandler<FoodConfiscationLaw>
+    public class FoodConfiscationLawHandler : ILawHandler
     {
+        readonly FoodConfiscationLaw _law;
+        readonly IPopupService _popup;
+
         const double FoodThreshold = 60;
         const double ImmediateFood = 35;
         const double ImmediateUnrest = 25;
@@ -12,11 +15,17 @@ namespace Siege.Gameplay.Laws
         const int ImmediateDeaths = 3;
         const double DailyUnrest = 2;
 
-        public FoodConfiscationLawHandler(FoodConfiscationLaw law, IPopupService popup) : base(law, popup) { }
+        public FoodConfiscationLawHandler(FoodConfiscationLaw law, IPopupService popup)
+        {
+            _law = law;
+            _popup = popup;
+        }
 
-        public override bool CanEnact(GameState state) => state.Food < FoodThreshold;
+        public string LawId => _law.Id;
 
-        public override void ApplyImmediate(GameState state, ChangeLog log)
+        public bool CanEnact(GameState state) => state.Food < FoodThreshold;
+
+        public void ApplyImmediate(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Food += ImmediateFood;
@@ -32,10 +41,10 @@ namespace Siege.Gameplay.Laws
             state.TotalDeaths += ImmediateDeaths;
             state.DeathsToday += ImmediateDeaths;
             log.Record("HealthyWorkers", -ImmediateDeaths, "Food Confiscation (violence)");
-            Popup.Open(Law.Name, Law.NarrativeText, log.SliceSince(before));
+            _popup.Open(_law.Name, _law.NarrativeText, log.SliceSince(before));
         }
 
-        public override void OnDayTick(GameState state, ChangeLog log)
+        public void OnDayTick(GameState state, ChangeLog log)
         {
             state.Unrest += DailyUnrest;
             log.Record("Unrest", DailyUnrest, "Food Confiscation");

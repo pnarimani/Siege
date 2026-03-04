@@ -4,31 +4,37 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
-    public class ReinforceWallsOrderHandler : OrderHandler<ReinforceWallsOrder>
+    public class ReinforceWallsOrderHandler : IOrderHandler
     {
         const double MaterialsCost = 15;
         const double IntegrityGain = 15;
 
+        readonly ReinforceWallsOrder _order;
+        readonly IPopupService _popup;
         readonly PoliticalState _political;
 
-        public ReinforceWallsOrderHandler(ReinforceWallsOrder order, IPopupService popup, PoliticalState political) : base(order, popup)
+        public ReinforceWallsOrderHandler(ReinforceWallsOrder order, IPopupService popup, PoliticalState political)
         {
+            _order = order;
+            _popup = popup;
             _political = political;
         }
 
-        public override bool CanIssue(GameState state) =>
+        public string OrderId => _order.Id;
+
+        public bool CanIssue(GameState state) =>
             state.Materials >= MaterialsCost && _political.Fortification.Value >= 2;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Materials -= MaterialsCost;
-            log.Record("Materials", -MaterialsCost, Order.Id);
+            log.Record("Materials", -MaterialsCost, _order.Id);
 
             var zone = state.Zones[state.ActivePerimeter];
             zone.Integrity += IntegrityGain;
-            log.Record("Integrity", IntegrityGain, Order.Id);
-            Popup.Open(Order.Name, Order.NarrativeText, log.SliceSince(before));
+            log.Record("Integrity", IntegrityGain, _order.Id);
+            _popup.Open(_order.Name, _order.NarrativeText, log.SliceSince(before));
         }
     }
 }

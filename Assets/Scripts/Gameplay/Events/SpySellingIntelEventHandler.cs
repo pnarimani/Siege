@@ -3,8 +3,12 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Events
 {
-    public class SpySellingIntelEventHandler : EventHandler<SpySellingIntelEvent>
+    public class SpySellingIntelEventHandler : IEventHandler
     {
+        readonly SpySellingIntelEvent _event;
+
+        public string EventId => _event.Id;
+
         const int MinDay = 10;
         const int CooldownDays = 7;
         const float TriggerChance = 0.15f;
@@ -13,14 +17,17 @@ namespace Siege.Gameplay.Events
 
         int _lastTriggerDay = int.MinValue;
 
-        public SpySellingIntelEventHandler(SpySellingIntelEvent gameEvent) : base(gameEvent) { }
+        public SpySellingIntelEventHandler(SpySellingIntelEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
 
-        public override bool CanTrigger(GameState state) =>
+        public bool CanTrigger(GameState state) =>
             state.CurrentDay >= MinDay &&
             (state.CurrentDay - _lastTriggerDay) >= CooldownDays &&
             Random.value < TriggerChance;
 
-        public override void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
+        public void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
         {
             _lastTriggerDay = state.CurrentDay;
 
@@ -29,9 +36,9 @@ namespace Siege.Gameplay.Events
                 state.AddResource(ResourceType.Materials, -MaterialsCost);
                 state.AddResource(ResourceType.Food, -FoodCost);
                 state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - 1);
-                log.Record("Materials", -MaterialsCost, Event.Name);
-                log.Record("Food", -FoodCost, Event.Name);
-                log.Record("SiegeIntensity", -1, Event.Name);
+                log.Record("Materials", -MaterialsCost, _event.Name);
+                log.Record("Food", -FoodCost, _event.Name);
+                log.Record("SiegeIntensity", -1, _event.Name);
             }
         }
     }

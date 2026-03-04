@@ -1,5 +1,8 @@
+using TypeRegistry;
+
 namespace Siege.Gameplay.Missions
 {
+    [RegisterTypeLookup]
     public interface IMission
     {
         string Id { get; }

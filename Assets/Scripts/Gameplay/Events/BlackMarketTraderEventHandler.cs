@@ -3,8 +3,12 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Events
 {
-    public class BlackMarketTraderEventHandler : EventHandler<BlackMarketTraderEvent>
+    public class BlackMarketTraderEventHandler : IEventHandler
     {
+        readonly BlackMarketTraderEvent _event;
+
+        public string EventId => _event.Id;
+
         const int MinDay = 8;
         const int CooldownDays = 5;
         const float TriggerChance = 0.20f;
@@ -15,14 +19,17 @@ namespace Siege.Gameplay.Events
 
         int _lastTriggerDay = int.MinValue;
 
-        public BlackMarketTraderEventHandler(BlackMarketTraderEvent gameEvent) : base(gameEvent) { }
+        public BlackMarketTraderEventHandler(BlackMarketTraderEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
 
-        public override bool CanTrigger(GameState state) =>
+        public bool CanTrigger(GameState state) =>
             state.CurrentDay >= MinDay &&
             (state.CurrentDay - _lastTriggerDay) >= CooldownDays &&
             Random.value < TriggerChance;
 
-        public override void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
+        public void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
         {
             _lastTriggerDay = state.CurrentDay;
 
@@ -31,16 +38,16 @@ namespace Siege.Gameplay.Events
                 case 0:
                     state.AddResource(ResourceType.Materials, -MaterialsCostFull);
                     state.AddResource(ResourceType.Food, FoodReward);
-                    log.Record("Materials", -MaterialsCostFull, Event.Name);
-                    log.Record("Food", FoodReward, Event.Name);
+                    log.Record("Materials", -MaterialsCostFull, _event.Name);
+                    log.Record("Food", FoodReward, _event.Name);
                     break;
                 case 1:
                     state.AddResource(ResourceType.Materials, -MaterialsCostHaggle);
                     state.AddResource(ResourceType.Food, FoodReward);
                     state.Unrest += HaggleUnrestPenalty;
-                    log.Record("Materials", -MaterialsCostHaggle, Event.Name);
-                    log.Record("Food", FoodReward, Event.Name);
-                    log.Record("Unrest", HaggleUnrestPenalty, Event.Name);
+                    log.Record("Materials", -MaterialsCostHaggle, _event.Name);
+                    log.Record("Food", FoodReward, _event.Name);
+                    log.Record("Unrest", HaggleUnrestPenalty, _event.Name);
                     break;
             }
         }

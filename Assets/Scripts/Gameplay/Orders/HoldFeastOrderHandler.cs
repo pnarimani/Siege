@@ -3,7 +3,7 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
-    public class HoldFeastOrderHandler : OrderHandler<HoldFeastOrder>
+    public class HoldFeastOrderHandler : IOrderHandler
     {
         const double FoodCost = 20;
         const double FuelCost = 10;
@@ -11,26 +11,35 @@ namespace Siege.Gameplay.Orders
         const double UnrestReduction = 5;
         const double FoodRequired = 30;
 
-        public HoldFeastOrderHandler(HoldFeastOrder order, IPopupService popup) : base(order, popup) { }
+        readonly HoldFeastOrder _order;
+        readonly IPopupService _popup;
 
-        public override bool CanIssue(GameState state) =>
+        public HoldFeastOrderHandler(HoldFeastOrder order, IPopupService popup)
+        {
+            _order = order;
+            _popup = popup;
+        }
+
+        public string OrderId => _order.Id;
+
+        public bool CanIssue(GameState state) =>
             state.Food >= FoodRequired && state.Fuel >= FuelCost;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Food -= FoodCost;
-            log.Record("Food", -FoodCost, Order.Id);
+            log.Record("Food", -FoodCost, _order.Id);
 
             state.Fuel -= FuelCost;
-            log.Record("Fuel", -FuelCost, Order.Id);
+            log.Record("Fuel", -FuelCost, _order.Id);
 
             state.Morale += MoraleGain;
-            log.Record("Morale", MoraleGain, Order.Id);
+            log.Record("Morale", MoraleGain, _order.Id);
 
             state.Unrest -= UnrestReduction;
-            log.Record("Unrest", -UnrestReduction, Order.Id);
-            Popup.Open(Order.Name, Order.NarrativeText, log.SliceSince(before));
+            log.Record("Unrest", -UnrestReduction, _order.Id);
+            _popup.Open(_order.Name, _order.NarrativeText, log.SliceSince(before));
         }
     }
 }

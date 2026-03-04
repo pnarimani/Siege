@@ -2,13 +2,20 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class TotalCollapseEventHandler : EventHandler<TotalCollapseEvent>
+    public class TotalCollapseEventHandler : IEventHandler
     {
+        readonly TotalCollapseEvent _event;
+
+        public string EventId => _event.Id;
+
         const int DeficitDaysThreshold = 3;
 
-        public TotalCollapseEventHandler(TotalCollapseEvent gameEvent) : base(gameEvent) { }
+        public TotalCollapseEventHandler(TotalCollapseEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
 
-        public override bool CanTrigger(GameState state) =>
+        public bool CanTrigger(GameState state) =>
             state.ConsecutiveFoodDeficitDays >= DeficitDaysThreshold &&
             state.ConsecutiveWaterDeficitDays >= DeficitDaysThreshold;
     }

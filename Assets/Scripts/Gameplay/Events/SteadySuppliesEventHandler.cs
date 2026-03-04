@@ -3,25 +3,32 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class SteadySuppliesEventHandler : EventHandler<SteadySuppliesEvent>
+    public class SteadySuppliesEventHandler : IEventHandler
     {
+        readonly SteadySuppliesEvent _event;
+
+        public string EventId => _event.Id;
+
         const int StreakThreshold = 5;
         const double MaxMoraleBoost = 15.0;
 
         int _lastFiredDay = int.MinValue;
 
-        public SteadySuppliesEventHandler(SteadySuppliesEvent gameEvent) : base(gameEvent) { }
+        public SteadySuppliesEventHandler(SteadySuppliesEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
 
-        public override bool CanTrigger(GameState state) =>
+        public bool CanTrigger(GameState state) =>
             state.ConsecutiveNoDeficitDays >= StreakThreshold &&
             state.CurrentDay != _lastFiredDay;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             _lastFiredDay = state.CurrentDay;
             double boost = Math.Min(MaxMoraleBoost, state.ConsecutiveNoDeficitDays);
             state.Morale += boost;
-            log.Record("Morale", boost, Event.Name);
+            log.Record("Morale", boost, _event.Name);
         }
     }
 }

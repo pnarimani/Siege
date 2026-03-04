@@ -4,29 +4,35 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
-    public class ShadowCouncilLawHandler : LawHandler<ShadowCouncilLaw>
+    public class ShadowCouncilLawHandler : ILawHandler
     {
+        readonly ShadowCouncilLaw _law;
+        readonly IPopupService _popup;
+        readonly PoliticalState _political;
+
         const double DailyUnrest = -3;
         const int DailyDeaths = 1;
         const double MoraleCap = 30;
 
-        readonly PoliticalState _political;
-
-        public ShadowCouncilLawHandler(ShadowCouncilLaw law, IPopupService popup, PoliticalState political) : base(law, popup)
+        public ShadowCouncilLawHandler(ShadowCouncilLaw law, IPopupService popup, PoliticalState political)
         {
+            _law = law;
+            _popup = popup;
             _political = political;
         }
 
-        public override bool CanEnact(GameState state) =>
+        public string LawId => _law.Id;
+
+        public bool CanEnact(GameState state) =>
             _political.Tyranny.Value >= 5;
 
-        public override void ApplyImmediate(GameState state, ChangeLog log)
+        public void ApplyImmediate(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
-            Popup.Open(Law.Name, Law.NarrativeText, log.SliceSince(before));
+            _popup.Open(_law.Name, _law.NarrativeText, log.SliceSince(before));
         }
 
-        public override void OnDayTick(GameState state, ChangeLog log)
+        public void OnDayTick(GameState state, ChangeLog log)
         {
             state.Unrest += DailyUnrest;
             log.Record("Unrest", DailyUnrest, "Shadow Council");

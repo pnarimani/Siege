@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using AutofacUnity;
 using Siege.Gameplay.Zones;
 using UnityEngine;
 
@@ -11,9 +11,7 @@ namespace Siege.Gameplay.Buildings
     /// </summary>
     public class Building : MonoBehaviour
     {
-        // ── Static Registry ───────────────────────────────────────────
-        static readonly List<Building> _all = new();
-        public static IReadOnlyList<Building> All => _all;
+        BuildingRegistry _registry;
 
         // ── Runtime State ─────────────────────────────────────────────
         public BuildingType Type { get; private set; }
@@ -38,13 +36,15 @@ namespace Siege.Gameplay.Buildings
 
         // ── Lifecycle ─────────────────────────────────────────────────
 
-        void OnEnable() => _all.Add(this);
-        void OnDisable() => _all.Remove(this);
+        void OnEnable() => _registry?.Register(this);
+        void OnDisable() => _registry?.Unregister(this);
 
         void Awake()
         {
+            _registry = Resolver.Resolve<BuildingRegistry>();
+            var definitions = Resolver.Resolve<BuildingDefinitionService>();
             Type = Enum.Parse<BuildingType>(gameObject.name);
-            Definition = BuildingDefinition.Get(Type);
+            Definition = definitions.Get(Type);
             Zone = GetComponentInParent<Zone>();
             IsActive = !Definition.RequiresRepair;
             NeedsRepair = Definition.RequiresRepair;

@@ -4,18 +4,27 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Missions
 {
-    public class ScoutingMissionHandler : MissionHandler<ScoutingMission>
+    public class ScoutingMissionHandler : IMissionHandler
     {
+        readonly ScoutingMission _mission;
+        readonly IPopupService _popup;
+
         const int Workers = 2;
         const float ChanceSuccess = 0.60f;
         const int FailDeaths = 3;
         const double FailUnrest = 15;
 
-        public ScoutingMissionHandler(ScoutingMission mission, IPopupService popup) : base(mission, popup) { }
+        public ScoutingMissionHandler(ScoutingMission mission, IPopupService popup)
+        {
+            _mission = mission;
+            _popup = popup;
+        }
 
-        public override bool CanLaunch(GameState state) => state.HealthyWorkers >= Mission.WorkerCost;
+        public string MissionId => _mission.Id;
 
-        public override MissionOutcome Resolve(GameState state, ChangeLog log)
+        public bool CanLaunch(GameState state) => state.HealthyWorkers >= _mission.WorkerCost;
+
+        public MissionOutcome Resolve(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             float roll = Random.value;
@@ -25,21 +34,21 @@ namespace Siege.Gameplay.Missions
             {
                 // Intel reveals enemy weak points — reduce siege intensity
                 state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - 1);
-                log.Record("SiegeIntensity", -1, Mission.Name);
+                log.Record("SiegeIntensity", -1, _mission.Name);
                 outcome = new MissionOutcome
                 {
                     NarrativeText = "The scouts mapped the enemy camp. We know where they are weakest.",
                     Success = true
                 };
-                Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+                _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
                 return outcome;
             }
 
             state.Unrest += FailUnrest;
             state.TotalDeaths += FailDeaths;
             state.DeathsToday += FailDeaths;
-            log.Record("Unrest", FailUnrest, Mission.Name);
-            log.Record("Deaths", FailDeaths, Mission.Name);
+            log.Record("Unrest", FailUnrest, _mission.Name);
+            log.Record("Deaths", FailDeaths, _mission.Name);
 
             outcome = new MissionOutcome
             {
@@ -47,7 +56,7 @@ namespace Siege.Gameplay.Missions
                 Success = false,
                 Deaths = FailDeaths
             };
-            Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+            _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
             return outcome;
         }
     }

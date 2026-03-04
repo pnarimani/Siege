@@ -3,18 +3,27 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
-    public class BurnTheDeadLawHandler : LawHandler<BurnTheDeadLaw>
+    public class BurnTheDeadLawHandler : ILawHandler
     {
+        readonly BurnTheDeadLaw _law;
+        readonly IPopupService _popup;
+
         const double SicknessThreshold = 35;
         const double SicknessReduction = -15;
         const double FuelCost = -2;
         const double MoraleCost = -10;
 
-        public BurnTheDeadLawHandler(BurnTheDeadLaw law, IPopupService popup) : base(law, popup) { }
+        public BurnTheDeadLawHandler(BurnTheDeadLaw law, IPopupService popup)
+        {
+            _law = law;
+            _popup = popup;
+        }
 
-        public override bool CanEnact(GameState state) => state.Sickness > SicknessThreshold;
+        public string LawId => _law.Id;
 
-        public override void ApplyImmediate(GameState state, ChangeLog log)
+        public bool CanEnact(GameState state) => state.Sickness > SicknessThreshold;
+
+        public void ApplyImmediate(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Sickness += SicknessReduction;
@@ -25,7 +34,7 @@ namespace Siege.Gameplay.Laws
 
             state.Morale += MoraleCost;
             log.Record("Morale", MoraleCost, "Burn the Dead");
-            Popup.Open(Law.Name, Law.NarrativeText, log.SliceSince(before));
+            _popup.Open(_law.Name, _law.NarrativeText, log.SliceSince(before));
         }
     }
 }

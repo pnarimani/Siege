@@ -4,8 +4,11 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
-    public class GarrisonMandateLawHandler : LawHandler<GarrisonMandateLaw>
+    public class GarrisonMandateLawHandler : ILawHandler
     {
+        readonly GarrisonMandateLaw _law;
+        readonly IPopupService _popup;
+
         const int ImmediateConscripts = 3;
         const double ImmediateMorale = -5;
         const double DailyFoodCost = -5;
@@ -14,14 +17,18 @@ namespace Siege.Gameplay.Laws
 
         int _dayCounter;
 
-        public GarrisonMandateLawHandler(GarrisonMandateLaw law, IPopupService popup) : base(law, popup)
+        public GarrisonMandateLawHandler(GarrisonMandateLaw law, IPopupService popup)
         {
+            _law = law;
+            _popup = popup;
             _dayCounter = 0;
         }
 
-        public override bool CanEnact(GameState state) => true;
+        public string LawId => _law.Id;
 
-        public override void ApplyImmediate(GameState state, ChangeLog log)
+        public bool CanEnact(GameState state) => true;
+
+        public void ApplyImmediate(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             int converted = Math.Min(ImmediateConscripts, state.HealthyWorkers);
@@ -34,10 +41,10 @@ namespace Siege.Gameplay.Laws
             log.Record("Morale", ImmediateMorale, "Garrison Mandate");
 
             _dayCounter = 0;
-            Popup.Open(Law.Name, Law.NarrativeText, log.SliceSince(before));
+            _popup.Open(_law.Name, _law.NarrativeText, log.SliceSince(before));
         }
 
-        public override void OnDayTick(GameState state, ChangeLog log)
+        public void OnDayTick(GameState state, ChangeLog log)
         {
             state.Food += DailyFoodCost;
             log.Record("Food", DailyFoodCost, "Garrison Mandate (upkeep)");

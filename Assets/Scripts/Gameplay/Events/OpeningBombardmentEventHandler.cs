@@ -2,19 +2,30 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class OpeningBombardmentEventHandler : EventHandler<OpeningBombardmentEvent>
+    public class OpeningBombardmentEventHandler : IEventHandler
     {
-        public OpeningBombardmentEventHandler(OpeningBombardmentEvent gameEvent) : base(gameEvent) { }
+        const int TriggerDay = 1;
+        const int IntegrityDamage = 10;
+        const int FoodLoss = 10;
 
-        public override bool CanTrigger(GameState state) => state.CurrentDay == 1;
+        readonly OpeningBombardmentEvent _event;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public string EventId => _event.Id;
+
+        public OpeningBombardmentEventHandler(OpeningBombardmentEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) => state.CurrentDay == TriggerDay;
+
+        public void Execute(GameState state, ChangeLog log)
         {
             var zone = state.Zones[ZoneId.OuterFarms];
-            zone.Integrity -= 10;
-            log.Record("OuterFarms.Integrity", -10, Event.Name);
-            state.AddResource(ResourceType.Food, -10);
-            log.Record("Food", -10, Event.Name);
+            zone.Integrity -= IntegrityDamage;
+            log.Record("OuterFarms.Integrity", -IntegrityDamage, _event.Name);
+            state.AddResource(ResourceType.Food, -FoodLoss);
+            log.Record("Food", -FoodLoss, _event.Name);
         }
     }
 }

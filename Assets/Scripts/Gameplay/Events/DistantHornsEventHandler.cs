@@ -2,10 +2,17 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class DistantHornsEventHandler : EventHandler<DistantHornsEvent>
+    public class DistantHornsEventHandler : IEventHandler
     {
-        public DistantHornsEventHandler(DistantHornsEvent gameEvent) : base(gameEvent) { }
+        readonly DistantHornsEvent _event;
 
-        public override bool CanTrigger(GameState state) => state.CurrentDay == 38;
+        public string EventId => _event.Id;
+
+        public DistantHornsEventHandler(DistantHornsEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) => state.CurrentDay == 38;
     }
 }

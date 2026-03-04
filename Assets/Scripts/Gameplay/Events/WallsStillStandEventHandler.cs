@@ -2,24 +2,31 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class WallsStillStandEventHandler : EventHandler<WallsStillStandEvent>
+    public class WallsStillStandEventHandler : IEventHandler
     {
+        readonly WallsStillStandEvent _event;
+
+        public string EventId => _event.Id;
+
         const int StreakThreshold = 7;
         const double MoraleBoost = 8.0;
 
         int _lastFiredDay = int.MinValue;
 
-        public WallsStillStandEventHandler(WallsStillStandEvent gameEvent) : base(gameEvent) { }
+        public WallsStillStandEventHandler(WallsStillStandEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
 
-        public override bool CanTrigger(GameState state) =>
+        public bool CanTrigger(GameState state) =>
             state.ConsecutiveZoneHeldDays >= StreakThreshold &&
             state.CurrentDay != _lastFiredDay;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             _lastFiredDay = state.CurrentDay;
             state.Morale += MoraleBoost;
-            log.Record("Morale", MoraleBoost, Event.Name);
+            log.Record("Morale", MoraleBoost, _event.Name);
         }
     }
 }

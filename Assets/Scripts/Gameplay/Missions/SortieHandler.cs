@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace Siege.Gameplay.Missions
 {
-    public class SortieHandler : MissionHandler<Sortie>
+    public class SortieHandler : IMissionHandler
     {
+        readonly Sortie _mission;
+        readonly IPopupService _popup;
+
         const int GuardsCost = 8;
         const float ChanceGreatSuccess = 0.40f;
         const float ChancePartialSuccess = 0.30f;
@@ -13,11 +16,17 @@ namespace Siege.Gameplay.Missions
         const int FailDeaths = 4;
         const double FailUnrest = 20;
 
-        public SortieHandler(Sortie mission, IPopupService popup) : base(mission, popup) { }
+        public SortieHandler(Sortie mission, IPopupService popup)
+        {
+            _mission = mission;
+            _popup = popup;
+        }
 
-        public override bool CanLaunch(GameState state) => state.Guards >= Mission.GuardCost;
+        public string MissionId => _mission.Id;
 
-        public override MissionOutcome Resolve(GameState state, ChangeLog log)
+        public bool CanLaunch(GameState state) => state.Guards >= _mission.GuardCost;
+
+        public MissionOutcome Resolve(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             float roll = Random.value;
@@ -28,19 +37,19 @@ namespace Siege.Gameplay.Missions
                 state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - GreatIntensityDrop);
                 state.SiegeDamageReductionDays = 3;
                 state.SiegeDamageReductionMultiplier = 0.7;
-                log.Record("SiegeIntensity", -GreatIntensityDrop, Mission.Name);
+                log.Record("SiegeIntensity", -GreatIntensityDrop, _mission.Name);
                 outcome = new MissionOutcome
                 {
                     NarrativeText = "A glorious charge! The enemy lines buckle and their siege stalls.",
                     Success = true
                 };
-                Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+                _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
                 return outcome;
             }
 
             if (roll < ChanceGreatSuccess + ChancePartialSuccess)
             {
-                log.Record("SiegeIntensity", 0, Mission.Name + " (partial)");
+                log.Record("SiegeIntensity", 0, _mission.Name + " (partial)");
                 state.SiegeDamageReductionDays = 3;
                 state.SiegeDamageReductionMultiplier = 0.8;
                 outcome = new MissionOutcome
@@ -48,15 +57,15 @@ namespace Siege.Gameplay.Missions
                     NarrativeText = "The sortie held them at bay. The enemy regroups cautiously.",
                     Success = true
                 };
-                Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+                _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
                 return outcome;
             }
 
             state.Unrest += FailUnrest;
             state.TotalDeaths += FailDeaths;
             state.DeathsToday += FailDeaths;
-            log.Record("Unrest", FailUnrest, Mission.Name);
-            log.Record("Deaths", FailDeaths, Mission.Name);
+            log.Record("Unrest", FailUnrest, _mission.Name);
+            log.Record("Deaths", FailDeaths, _mission.Name);
 
             outcome = new MissionOutcome
             {
@@ -64,7 +73,7 @@ namespace Siege.Gameplay.Missions
                 Success = false,
                 Deaths = FailDeaths
             };
-            Popup.Open(Mission.Name, outcome.NarrativeText, log.SliceSince(before));
+            _popup.Open(_mission.Name, outcome.NarrativeText, log.SliceSince(before));
             return outcome;
         }
     }

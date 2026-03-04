@@ -3,41 +3,55 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class WallBreachEventHandler : EventHandler<WallBreachEvent>
+    public class WallBreachEventHandler : IEventHandler
     {
-        public WallBreachEventHandler(WallBreachEvent gameEvent) : base(gameEvent) { }
+        const double IntegrityBreachThreshold = 30;
+        const int GuardsToHold = 15;
+        const int FailedDefenseDamage = 8;
+        const int BarricadeMaterialCost = 10;
+        const int BarricadeDamage = 5;
+        const int AbandonDamage = 15;
 
-        public override bool CanTrigger(GameState state) =>
-            state.Zones[state.ActivePerimeter].Integrity < 30;
+        readonly WallBreachEvent _event;
 
-        public override void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
+        public string EventId => _event.Id;
+
+        public WallBreachEventHandler(WallBreachEvent gameEvent)
+        {
+            _event = gameEvent;
+        }
+
+        public bool CanTrigger(GameState state) =>
+            state.Zones[state.ActivePerimeter].Integrity < IntegrityBreachThreshold;
+
+        public void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
         {
             var zone = state.ActivePerimeter;
 
             switch (responseIndex)
             {
                 case 0:
-                    if (state.Guards >= 15)
+                    if (state.Guards >= GuardsToHold)
                     {
-                        log.Record("ZoneIntegrity:" + zone, 0, Event.Name + " (held)");
+                        log.Record("ZoneIntegrity:" + zone, 0, _event.Name + " (held)");
                     }
                     else
                     {
-                        state.Zones[zone].Integrity = Math.Max(0, state.Zones[zone].Integrity - 8);
-                        log.Record("ZoneIntegrity:" + zone, -8, Event.Name);
+                        state.Zones[zone].Integrity = Math.Max(0, state.Zones[zone].Integrity - FailedDefenseDamage);
+                        log.Record("ZoneIntegrity:" + zone, -FailedDefenseDamage, _event.Name);
                     }
                     break;
 
                 case 1:
-                    state.Materials = Math.Max(0, state.Materials - 10);
-                    state.Zones[zone].Integrity = Math.Max(0, state.Zones[zone].Integrity - 5);
-                    log.Record("Materials", -10, Event.Name);
-                    log.Record("ZoneIntegrity:" + zone, -5, Event.Name);
+                    state.Materials = Math.Max(0, state.Materials - BarricadeMaterialCost);
+                    state.Zones[zone].Integrity = Math.Max(0, state.Zones[zone].Integrity - BarricadeDamage);
+                    log.Record("Materials", -BarricadeMaterialCost, _event.Name);
+                    log.Record("ZoneIntegrity:" + zone, -BarricadeDamage, _event.Name);
                     break;
 
                 case 2:
-                    state.Zones[zone].Integrity = Math.Max(0, state.Zones[zone].Integrity - 15);
-                    log.Record("ZoneIntegrity:" + zone, -15, Event.Name);
+                    state.Zones[zone].Integrity = Math.Max(0, state.Zones[zone].Integrity - AbandonDamage);
+                    log.Record("ZoneIntegrity:" + zone, -AbandonDamage, _event.Name);
                     break;
             }
         }

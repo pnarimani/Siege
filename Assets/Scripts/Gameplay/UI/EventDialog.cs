@@ -21,6 +21,7 @@ namespace Siege.Gameplay.UI
         GameState _state;
         GameClock _clock;
         EventDispatcher _eventDispatcher;
+        IPopupService _popupService;
         bool _wasPaused;
 
         bool _isShowing;
@@ -43,15 +44,16 @@ namespace Siege.Gameplay.UI
         {
             _state = Resolver.Resolve<GameState>();
             _clock = Resolver.Resolve<GameClock>();
+            _popupService = Resolver.Resolve<IPopupService>();
             _eventDispatcher = Resolver.Resolve<EventDispatcher>();
             _eventDispatcher.EventTriggered += OnEventTriggered;
-            Popup.Requested += OnPopupRequested;
+            _popupService.Requested += OnPopupRequested;
         }
 
         void OnDestroy()
         {
             if (_eventDispatcher != null) _eventDispatcher.EventTriggered -= OnEventTriggered;
-            Popup.Requested -= OnPopupRequested;
+            if (_popupService != null) _popupService.Requested -= OnPopupRequested;
         }
 
         void OnEventTriggered(IGameEvent evt)

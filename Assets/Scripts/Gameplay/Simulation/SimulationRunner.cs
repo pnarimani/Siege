@@ -1,30 +1,30 @@
 using System.Collections.Generic;
-using AutofacUnity;
-using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Siege.Gameplay.Simulation
 {
     /// <summary>
     /// Orchestrates the simulation tick pipeline. Ticks all registered systems each frame.
-    /// Handles pause input (Space key) and day/night transitions.
+    /// Handles day/night transitions and end-of-day bookkeeping.
     /// </summary>
-    public class SimulationRunner : MonoBehaviour
+    public class SimulationRunner
     {
+        const double LowSicknessThreshold = 20;
+
         readonly List<ISimulationSystem> _systems = new();
         readonly List<string> _cooldownKeysToRemove = new();
+        readonly GameState _state;
+        readonly GameClock _clock;
+        readonly ChangeLog _changeLog;
 
-        GameState _state;
-        GameClock _clock;
-        ChangeLog _changeLog;
-        bool _initialized;
-
-        void Start()
+        public SimulationRunner(GameState state, GameClock clock, ChangeLog changeLog)
         {
-            _state = Resolver.Resolve<GameState>();
-            _clock = Resolver.Resolve<GameClock>();
-            _changeLog = Resolver.Resolve<ChangeLog>();
+            _state = state;
+            _clock = clock;
+            _changeLog = changeLog;
+        }
 
+        public void Initialize()
+        {
             _clock.Initialize();
 
             _clock.DayStarted += OnDayStarted;
@@ -33,17 +33,13 @@ namespace Siege.Gameplay.Simulation
 
             // Fire day 1 start
             OnDayStarted(1);
-            _initialized = true;
         }
 
-        void OnDestroy()
+        public void Dispose()
         {
-            if (_clock != null)
-            {
-                _clock.DayStarted -= OnDayStarted;
-                _clock.NightStarted -= OnNightStarted;
-                _clock.DayEnded -= OnDayEnded;
-            }
+            _clock.DayStarted -= OnDayStarted;
+            _clock.NightStarted -= OnNightStarted;
+            _clock.DayEnded -= OnDayEnded;
         }
 
         public void RegisterSystem(ISimulationSystem system)
@@ -51,34 +47,19 @@ namespace Siege.Gameplay.Simulation
             _systems.Add(system);
         }
 
-        void Update()
+        public void Tick(float deltaTime)
         {
-            if (!_initialized) return;
-
-            HandlePauseInput();
-
-            float dt = Time.deltaTime;
-            _clock.Advance(dt);
+            _clock.Advance(deltaTime);
 
             if (_clock.IsPaused) return;
             if (_state.IsGameOver) return;
 
-            float scaledDt = dt * _clock.TimeScale;
+            float scaledDt = deltaTime * _clock.TimeScale;
 
-            foreach (var system in _systems)
-            {
-                system.Tick(_state, scaledDt);
-            }
+            for (int i = 0; i < _systems.Count; i++)
+                _systems[i].Tick(_state, scaledDt);
 
             _state.ClampValues();
-        }
-
-        void HandlePauseInput()
-        {
-            if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
-            {
-                _clock.TogglePause();
-            }
         }
 
         void OnDayStarted(int day)
@@ -87,14 +68,14 @@ namespace Siege.Gameplay.Simulation
             _state.DeathsToday = 0;
             _state.EventsFiredToday = 0;
 
-            foreach (var system in _systems)
-                system.OnDayStart(_state, day);
+            for (int i = 0; i < _systems.Count; i++)
+                _systems[i].OnDayStart(_state, day);
         }
 
         void OnNightStarted(int day)
         {
-            foreach (var system in _systems)
-                system.OnNightStart(_state, day);
+            for (int i = 0; i < _systems.Count; i++)
+                _systems[i].OnNightStart(_state, day);
         }
 
         void OnDayEnded(int day)
@@ -121,7 +102,7 @@ namespace Siege.Gameplay.Simulation
             else
                 _state.ConsecutiveNoDeficitDays = 0;
 
-            if (_state.Sickness < 20)
+            if (_state.Sickness < LowSicknessThreshold)
                 _state.ConsecutiveLowSicknessDays++;
             else
                 _state.ConsecutiveLowSicknessDays = 0;

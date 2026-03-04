@@ -4,7 +4,7 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
-    public class SacrificeSickOrderHandler : OrderHandler<SacrificeSickOrder>
+    public class SacrificeSickOrderHandler : IOrderHandler
     {
         const int SickRemoved = 3;
         const double SicknessReduction = 8;
@@ -12,35 +12,41 @@ namespace Siege.Gameplay.Orders
         const double MoraleLoss = 10;
         const int MinSick = 5;
 
+        readonly SacrificeSickOrder _order;
+        readonly IPopupService _popup;
         readonly PoliticalState _political;
 
-        public SacrificeSickOrderHandler(SacrificeSickOrder order, IPopupService popup, PoliticalState political) : base(order, popup)
+        public SacrificeSickOrderHandler(SacrificeSickOrder order, IPopupService popup, PoliticalState political)
         {
+            _order = order;
+            _popup = popup;
             _political = political;
         }
 
-        public override bool CanIssue(GameState state) =>
+        public string OrderId => _order.Id;
+
+        public bool CanIssue(GameState state) =>
             state.SickWorkers > MinSick && _political.Tyranny.Value >= 3;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.SickWorkers -= SickRemoved;
-            log.Record("SickWorkers", -SickRemoved, Order.Id);
+            log.Record("SickWorkers", -SickRemoved, _order.Id);
 
             state.Sickness -= SicknessReduction;
-            log.Record("Sickness", -SicknessReduction, Order.Id);
+            log.Record("Sickness", -SicknessReduction, _order.Id);
 
             state.Unrest += UnrestIncrease;
-            log.Record("Unrest", UnrestIncrease, Order.Id);
+            log.Record("Unrest", UnrestIncrease, _order.Id);
 
             state.Morale -= MoraleLoss;
-            log.Record("Morale", -MoraleLoss, Order.Id);
+            log.Record("Morale", -MoraleLoss, _order.Id);
 
             state.TotalDeaths += SickRemoved;
             state.DeathsToday += SickRemoved;
-            log.Record("Deaths", SickRemoved, Order.Id);
-            Popup.Open(Order.Name, Order.NarrativeText, log.SliceSince(before));
+            log.Record("Deaths", SickRemoved, _order.Id);
+            _popup.Open(_order.Name, _order.NarrativeText, log.SliceSince(before));
         }
     }
 }

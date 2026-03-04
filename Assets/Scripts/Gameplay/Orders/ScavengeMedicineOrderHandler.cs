@@ -3,33 +3,42 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
-    public class ScavengeMedicineOrderHandler : OrderHandler<ScavengeMedicineOrder>
+    public class ScavengeMedicineOrderHandler : IOrderHandler
     {
         const double MedicineGain = 20;
         const double SicknessIncrease = 5;
         const double MedicineThreshold = 15;
         const int Deaths = 2;
 
-        public ScavengeMedicineOrderHandler(ScavengeMedicineOrder order, IPopupService popup) : base(order, popup) { }
+        readonly ScavengeMedicineOrder _order;
+        readonly IPopupService _popup;
 
-        public override bool CanIssue(GameState state) =>
+        public ScavengeMedicineOrderHandler(ScavengeMedicineOrder order, IPopupService popup)
+        {
+            _order = order;
+            _popup = popup;
+        }
+
+        public string OrderId => _order.Id;
+
+        public bool CanIssue(GameState state) =>
             state.Medicine < MedicineThreshold;
 
-        public override void Execute(GameState state, ChangeLog log)
+        public void Execute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Medicine += MedicineGain;
-            log.Record("Medicine", MedicineGain, Order.Id);
+            log.Record("Medicine", MedicineGain, _order.Id);
 
             state.Sickness += SicknessIncrease;
-            log.Record("Sickness", SicknessIncrease, Order.Id);
+            log.Record("Sickness", SicknessIncrease, _order.Id);
 
             state.HealthyWorkers -= Deaths;
             state.TotalDeaths += Deaths;
             state.DeathsToday += Deaths;
-            log.Record("HealthyWorkers", -Deaths, Order.Id);
-            log.Record("Deaths", Deaths, Order.Id);
-            Popup.Open(Order.Name, Order.NarrativeText, log.SliceSince(before));
+            log.Record("HealthyWorkers", -Deaths, _order.Id);
+            log.Record("Deaths", Deaths, _order.Id);
+            _popup.Open(_order.Name, _order.NarrativeText, log.SliceSince(before));
         }
     }
 }

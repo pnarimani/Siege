@@ -3,23 +3,32 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
-    public class EmergencySheltersLawHandler : LawHandler<EmergencySheltersLaw>
+    public class EmergencySheltersLawHandler : ILawHandler
     {
+        readonly EmergencySheltersLaw _law;
+        readonly IPopupService _popup;
+
         const int CapacityBonus = 4;
         const double ImmediateUnrest = 8;
         const double DailySickness = 2;
         const double DailyUnrest = 2;
 
-        public EmergencySheltersLawHandler(EmergencySheltersLaw law, IPopupService popup) : base(law, popup) { }
+        public EmergencySheltersLawHandler(EmergencySheltersLaw law, IPopupService popup)
+        {
+            _law = law;
+            _popup = popup;
+        }
 
-        public override bool CanEnact(GameState state)
+        public string LawId => _law.Id;
+
+        public bool CanEnact(GameState state)
         {
             foreach (var zone in state.Zones.Values)
                 if (zone.IsLost) return true;
             return false;
         }
 
-        public override void ApplyImmediate(GameState state, ChangeLog log)
+        public void ApplyImmediate(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             foreach (var zone in state.Zones.Values)
@@ -31,10 +40,10 @@ namespace Siege.Gameplay.Laws
 
             state.Unrest += ImmediateUnrest;
             log.Record("Unrest", ImmediateUnrest, "Emergency Shelters");
-            Popup.Open(Law.Name, Law.NarrativeText, log.SliceSince(before));
+            _popup.Open(_law.Name, _law.NarrativeText, log.SliceSince(before));
         }
 
-        public override void OnDayTick(GameState state, ChangeLog log)
+        public void OnDayTick(GameState state, ChangeLog log)
         {
             state.Sickness += DailySickness;
             log.Record("Sickness", DailySickness, "Emergency Shelters");

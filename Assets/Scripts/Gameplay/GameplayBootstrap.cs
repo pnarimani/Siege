@@ -21,7 +21,7 @@ namespace Siege.Gameplay
             var state = Resolver.Resolve<GameState>();
             state.Initialize();
 
-            _runner = gameObject.AddComponent<SimulationRunner>();
+            _runner = Resolver.Resolve<SimulationRunner>();
 
             var systems = Resolver.Resolve<IEnumerable<ISimulationSystem>>();
             foreach (var system in systems)
@@ -38,6 +38,14 @@ namespace Siege.Gameplay
             workerAllocation.AutoAllocate();
 
             SeedStartingResources();
+
+            _runner.Initialize();
+
+            var tickRunner = gameObject.AddComponent<TickRunner>();
+            tickRunner.Register(_runner);
+
+            // Pause input is handled by TickRunner reading Space key
+            gameObject.AddComponent<PauseInputHandler>();
 
             UISystem.Open<GameplayHUD>(UILayer.Screen);
         }
@@ -56,7 +64,7 @@ namespace Siege.Gameplay
                 zonesRoot = new GameObject("Zones");
             }
 
-            foreach (var def in BuildingDefinition.All.Values)
+            foreach (var def in Resolver.Resolve<BuildingDefinitionService>().All.Values)
             {
                 var zoneName = def.Zone.ToString();
                 var zoneTransform = zonesRoot.transform.Find(zoneName);
@@ -106,7 +114,7 @@ namespace Siege.Gameplay
             }
 
             // Refresh building lists on all zones
-            foreach (var zone in Zone.All)
+            foreach (var zone in Resolver.Resolve<ZoneRegistry>().All)
                 zone.RefreshBuildings();
         }
 
@@ -153,7 +161,7 @@ namespace Siege.Gameplay
         void SeedStartingResources()
         {
             var state = Resolver.Resolve<GameState>();
-            var storages = StorageBuilding.All;
+            var storages = Resolver.Resolve<StorageBuildingRegistry>().All;
             if (storages.Count == 0) return;
 
             DistributeToStorage(storages, ResourceType.Food, state.Food);

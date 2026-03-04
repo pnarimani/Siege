@@ -3,25 +3,34 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
-    public class StrictRationsLawHandler : LawHandler<StrictRationsLaw>
+    public class StrictRationsLawHandler : ILawHandler
     {
+        readonly StrictRationsLaw _law;
+        readonly IPopupService _popup;
+
         const double ImmediateMorale = -10;
         const double DailyUnrest = 3;
         const double DailySickness = 1;
 
-        public StrictRationsLawHandler(StrictRationsLaw law, IPopupService popup) : base(law, popup) { }
+        public StrictRationsLawHandler(StrictRationsLaw law, IPopupService popup)
+        {
+            _law = law;
+            _popup = popup;
+        }
 
-        public override bool CanEnact(GameState state) => true;
+        public string LawId => _law.Id;
 
-        public override void ApplyImmediate(GameState state, ChangeLog log)
+        public bool CanEnact(GameState state) => true;
+
+        public void ApplyImmediate(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
             state.Morale += ImmediateMorale;
             log.Record("Morale", ImmediateMorale, "Strict Rations");
-            Popup.Open(Law.Name, Law.NarrativeText, log.SliceSince(before));
+            _popup.Open(_law.Name, _law.NarrativeText, log.SliceSince(before));
         }
 
-        public override void OnDayTick(GameState state, ChangeLog log)
+        public void OnDayTick(GameState state, ChangeLog log)
         {
             state.Unrest += DailyUnrest;
             log.Record("Unrest", DailyUnrest, "Strict Rations");

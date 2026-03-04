@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class ReliefBannersEvent : GameEvent
+    public class ReliefBannersEvent : IGameEvent
     {
 
         public bool HasTriggered { get; set; }

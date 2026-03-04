@@ -3,7 +3,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class PlagueRatsEvent : GameEvent
+    public class PlagueRatsEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "plague_rats";

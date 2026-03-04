@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class DesertionWaveEvent : GameEvent
+    public class DesertionWaveEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "desertion_wave";

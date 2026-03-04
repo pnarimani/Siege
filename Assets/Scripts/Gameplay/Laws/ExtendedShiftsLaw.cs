@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class ExtendedShiftsLaw : Law
+    public class ExtendedShiftsLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "extended_shifts";

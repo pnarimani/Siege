@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class OfferTributeOrder : Order
+    public class OfferTributeOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "offer_tribute";

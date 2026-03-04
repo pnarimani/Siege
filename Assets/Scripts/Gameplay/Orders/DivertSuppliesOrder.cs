@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class DivertSuppliesOrder : Order
+    public class DivertSuppliesOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "divert_supplies";

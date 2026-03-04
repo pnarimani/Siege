@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class StorytellingNightOrder : Order
+    public class StorytellingNightOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "storytelling_night";

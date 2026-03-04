@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class DespairEvent : GameEvent
+    public class DespairEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "despair";

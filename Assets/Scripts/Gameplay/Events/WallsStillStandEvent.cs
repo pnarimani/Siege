@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class WallsStillStandEvent : GameEvent
+    public class WallsStillStandEvent : IGameEvent
     {
 
         public bool HasTriggered { get; set; }

@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class CurfewLaw : Law
+    public class CurfewLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "curfew";

@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class FoodConfiscationLaw : Law
+    public class FoodConfiscationLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "food_confiscation";

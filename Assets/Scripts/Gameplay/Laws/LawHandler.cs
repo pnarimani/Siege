@@ -3,7 +3,7 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Laws
 {
-    public abstract class LawHandler<T> : ILawHandler where T : Law
+    public abstract class LawHandler<T> : ILawHandler where T : ILaw
     {
         protected readonly T Law;
         protected readonly IPopupService Popup;

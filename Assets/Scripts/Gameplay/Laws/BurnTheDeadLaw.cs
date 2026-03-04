@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class BurnTheDeadLaw : Law
+    public class BurnTheDeadLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "burn_the_dead";

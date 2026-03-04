@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class WallBreachEvent : GameEvent
+    public class WallBreachEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "wall_breach";

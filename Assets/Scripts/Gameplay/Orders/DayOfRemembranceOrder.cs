@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class DayOfRemembranceOrder : Order
+    public class DayOfRemembranceOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "day_of_remembrance";

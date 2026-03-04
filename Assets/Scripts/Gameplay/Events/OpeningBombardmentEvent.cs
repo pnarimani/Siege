@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Events
 {
-    public class OpeningBombardmentEvent : GameEvent
+    public class OpeningBombardmentEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "opening_bombardment";

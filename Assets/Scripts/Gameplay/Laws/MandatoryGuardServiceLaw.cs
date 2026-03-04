@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class MandatoryGuardServiceLaw : Law
+    public class MandatoryGuardServiceLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "mandatory_guard_service";

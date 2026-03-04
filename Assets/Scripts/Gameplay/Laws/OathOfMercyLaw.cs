@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class OathOfMercyLaw : Law
+    public class OathOfMercyLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "oath_of_mercy";

@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Missions
 {
-    public class SearchAbandonedHomes : Mission
+    public class SearchAbandonedHomes : IMission
     {
         public bool IsActive { get; set; }
         public int DaysRemaining { get; set; }

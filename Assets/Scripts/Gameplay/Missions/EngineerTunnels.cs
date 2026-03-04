@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Missions
 {
-    public class EngineerTunnels : Mission
+    public class EngineerTunnels : IMission
     {
         public bool IsActive { get; set; }
         public int DaysRemaining { get; set; }

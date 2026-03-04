@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class CrisisOfFaithEvent : GameEvent
+    public class CrisisOfFaithEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "crisis_of_faith";

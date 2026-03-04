@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class InspirePeopleOrder : Order
+    public class InspirePeopleOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "inspire_people";

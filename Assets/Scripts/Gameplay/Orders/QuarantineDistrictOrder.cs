@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class QuarantineDistrictOrder : Order
+    public class QuarantineDistrictOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "quarantine_district";

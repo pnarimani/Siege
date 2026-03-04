@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Missions
 {
-    public interface Mission
+    public interface IMission
     {
         string Id { get; }
         string Name { get; }

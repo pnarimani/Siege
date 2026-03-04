@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class ReinforceWallsOrder : Order
+    public class ReinforceWallsOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "reinforce_walls";

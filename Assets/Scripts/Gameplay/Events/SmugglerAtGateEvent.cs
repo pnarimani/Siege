@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class SmugglerAtGateEvent : GameEvent
+    public class SmugglerAtGateEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "smuggler_at_gate";

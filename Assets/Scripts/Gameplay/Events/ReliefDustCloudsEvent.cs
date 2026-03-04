@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class ReliefDustCloudsEvent : GameEvent
+    public class ReliefDustCloudsEvent : IGameEvent
     {
 
         public bool HasTriggered { get; set; }

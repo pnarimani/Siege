@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Events
 {
-    public class DistantHornsEvent : GameEvent
+    public class DistantHornsEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "distant_horns";

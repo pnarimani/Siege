@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class IntelSiegeWarningEvent : GameEvent
+    public class IntelSiegeWarningEvent : IGameEvent
     {
 
         public bool HasTriggered { get; set; }

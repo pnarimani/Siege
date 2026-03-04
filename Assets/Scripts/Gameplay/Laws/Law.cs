@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public interface Law
+    public interface ILaw
     {
         string Id { get; }
         string Name { get; }

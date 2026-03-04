@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Missions
 {
-    public class NightRaid : Mission
+    public class NightRaid : IMission
     {
         public bool IsActive { get; set; }
         public int DaysRemaining { get; set; }

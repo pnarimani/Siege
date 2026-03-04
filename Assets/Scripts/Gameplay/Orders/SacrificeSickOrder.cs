@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class SacrificeSickOrder : Order
+    public class SacrificeSickOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "sacrifice_sick";

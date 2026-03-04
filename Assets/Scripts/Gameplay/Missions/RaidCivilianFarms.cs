@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Missions
 {
-    public class RaidCivilianFarms : Mission
+    public class RaidCivilianFarms : IMission
     {
         public bool IsActive { get; set; }
         public int DaysRemaining { get; set; }

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using AutofacUnity;
+using Siege.Gameplay.Events;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 using UnityEngine.UIElements;
 using EventDispatcher = Siege.Gameplay.Events.EventDispatcher;
-using GameEvent = Siege.Gameplay.Events.GameEvent;
 
 namespace Siege.Gameplay.UI
 {
@@ -39,7 +39,7 @@ namespace Siege.Gameplay.UI
             if (_eventDispatcher != null) _eventDispatcher.EventTriggered -= OnEventTriggered;
         }
 
-        void OnEventTriggered(GameEvent evt)
+        void OnEventTriggered(IGameEvent evt)
         {
             string narrative = evt.GetNarrativeText(_state);
             if (!string.IsNullOrEmpty(narrative))

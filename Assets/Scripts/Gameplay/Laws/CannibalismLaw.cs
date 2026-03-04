@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class CannibalismLaw : Law
+    public class CannibalismLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "cannibalism";

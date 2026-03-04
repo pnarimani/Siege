@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class ReliefHornsEvent : GameEvent
+    public class ReliefHornsEvent : IGameEvent
     {
 
         public bool HasTriggered { get; set; }

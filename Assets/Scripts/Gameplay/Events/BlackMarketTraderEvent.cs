@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class BlackMarketTraderEvent : GameEvent
+    public class BlackMarketTraderEvent : IGameEvent
     {
 
         const double MaterialsCostFull = 15.0;

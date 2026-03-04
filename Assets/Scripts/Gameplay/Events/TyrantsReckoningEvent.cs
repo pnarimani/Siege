@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class TyrantsReckoningEvent : GameEvent
+    public class TyrantsReckoningEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "tyrants_reckoning";

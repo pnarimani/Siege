@@ -9,16 +9,16 @@ namespace Siege.Gameplay.Laws
     /// </summary>
     public class LawDispatcher
     {
-        readonly List<Law> _laws;
+        readonly List<ILaw> _laws;
         readonly Dictionary<string, ILawHandler> _handlers;
         readonly GameState _state;
         readonly ChangeLog _changeLog;
 
-        public IReadOnlyList<Law> AllLaws => _laws;
+        public IReadOnlyList<ILaw> AllLaws => _laws;
 
-        public LawDispatcher(IEnumerable<Law> laws, IEnumerable<ILawHandler> handlers, GameState state, ChangeLog changeLog)
+        public LawDispatcher(IEnumerable<ILaw> laws, IEnumerable<ILawHandler> handlers, GameState state, ChangeLog changeLog)
         {
-            _laws = new List<Law>(laws);
+            _laws = new List<ILaw>(laws);
             _handlers = new Dictionary<string, ILawHandler>();
             foreach (var h in handlers)
                 _handlers[h.LawId] = h;
@@ -26,7 +26,7 @@ namespace Siege.Gameplay.Laws
             _changeLog = changeLog;
         }
 
-        public Law GetLaw(string id)
+        public ILaw GetLaw(string id)
         {
             foreach (var law in _laws)
                 if (law.Id == id) return law;

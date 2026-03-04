@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class SignalFireEvent : GameEvent
+    public class SignalFireEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "signal_fire";

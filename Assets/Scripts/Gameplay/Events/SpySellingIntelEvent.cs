@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class SpySellingIntelEvent : GameEvent
+    public class SpySellingIntelEvent : IGameEvent
     {
 
         const double MaterialsCost = 10.0;

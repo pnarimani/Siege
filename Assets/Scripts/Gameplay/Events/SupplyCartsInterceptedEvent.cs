@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class SupplyCartsInterceptedEvent : GameEvent
+    public class SupplyCartsInterceptedEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "supply_carts_intercepted";

@@ -10,16 +10,16 @@ namespace Siege.Gameplay.Orders
     /// </summary>
     public class OrderDispatcher
     {
-        readonly List<Order> _orders;
+        readonly List<IOrder> _orders;
         readonly Dictionary<string, IOrderHandler> _handlers;
         readonly GameState _state;
         readonly ChangeLog _changeLog;
 
-        public IReadOnlyList<Order> AllOrders => _orders;
+        public IReadOnlyList<IOrder> AllOrders => _orders;
 
-        public OrderDispatcher(IEnumerable<Order> orders, IEnumerable<IOrderHandler> handlers, GameState state, ChangeLog changeLog)
+        public OrderDispatcher(IEnumerable<IOrder> orders, IEnumerable<IOrderHandler> handlers, GameState state, ChangeLog changeLog)
         {
-            _orders = new List<Order>(orders);
+            _orders = new List<IOrder>(orders);
             _handlers = new Dictionary<string, IOrderHandler>();
             foreach (var h in handlers)
                 _handlers[h.OrderId] = h;
@@ -27,7 +27,7 @@ namespace Siege.Gameplay.Orders
             _changeLog = changeLog;
         }
 
-        public Order GetOrder(string id)
+        public IOrder GetOrder(string id)
         {
             foreach (var order in _orders)
                 if (order.Id == id) return order;

@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class RationMedicineOrder : Order
+    public class RationMedicineOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "ration_medicine";

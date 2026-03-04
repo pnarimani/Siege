@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Missions
 {
-    public class NegotiateBlackMarketeers : Mission
+    public class NegotiateBlackMarketeers : IMission
     {
         public bool IsActive { get; set; }
         public int DaysRemaining { get; set; }

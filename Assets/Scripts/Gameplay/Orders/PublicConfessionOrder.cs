@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class PublicConfessionOrder : Order
+    public class PublicConfessionOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "public_confession";

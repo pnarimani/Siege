@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Events
 {
-    public class EnemyCommanderLetterEvent : GameEvent
+    public class EnemyCommanderLetterEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "enemy_commander_letter";

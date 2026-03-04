@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class BurnSurplusOrder : Order
+    public class BurnSurplusOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "burn_surplus";

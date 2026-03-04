@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Missions
 {
-    public class ForageBeyondWalls : Mission
+    public class ForageBeyondWalls : IMission
     {
         public bool IsActive { get; set; }
         public int DaysRemaining { get; set; }

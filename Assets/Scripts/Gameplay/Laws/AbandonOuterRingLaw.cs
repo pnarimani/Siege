@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class AbandonOuterRingLaw : Law
+    public class AbandonOuterRingLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "abandon_outer_ring";

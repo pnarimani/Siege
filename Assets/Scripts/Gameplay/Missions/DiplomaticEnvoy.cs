@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Missions
 {
-    public class DiplomaticEnvoy : Mission
+    public class DiplomaticEnvoy : IMission
     {
         public bool IsActive { get; set; }
         public int DaysRemaining { get; set; }

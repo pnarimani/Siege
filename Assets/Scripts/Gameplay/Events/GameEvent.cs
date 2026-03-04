@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public interface GameEvent
+    public interface IGameEvent
     {
         string Id { get; }
         string Name { get; }

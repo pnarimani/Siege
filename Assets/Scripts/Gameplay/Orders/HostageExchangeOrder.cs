@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class HostageExchangeOrder : Order
+    public class HostageExchangeOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "hostage_exchange";

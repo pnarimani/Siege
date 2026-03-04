@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class PurgeTheDisloyalLaw : Law
+    public class PurgeTheDisloyalLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "purge_disloyal";

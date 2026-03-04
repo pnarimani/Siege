@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class FortifyGateOrder : Order
+    public class FortifyGateOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "fortify_gate";

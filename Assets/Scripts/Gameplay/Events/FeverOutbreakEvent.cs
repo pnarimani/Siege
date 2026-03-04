@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class FeverOutbreakEvent : GameEvent
+    public class FeverOutbreakEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "fever_outbreak";

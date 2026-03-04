@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class SecretCorrespondenceOrder : Order
+    public class SecretCorrespondenceOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "secret_correspondence";

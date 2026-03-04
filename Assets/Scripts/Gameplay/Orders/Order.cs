@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public interface Order
+    public interface IOrder
     {
         string Id { get; }
         string Name { get; }

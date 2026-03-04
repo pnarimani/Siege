@@ -10,18 +10,18 @@ namespace Siege.Gameplay.Events
     /// </summary>
     public class EventDispatcher
     {
-        readonly List<GameEvent> _events;
+        readonly List<IGameEvent> _events;
         readonly Dictionary<string, IEventHandler> _handlers;
         readonly ChangeLog _changeLog;
 
-        public GameEvent PendingEvent { get; private set; }
-        public event Action<GameEvent> EventTriggered;
+        public IGameEvent PendingEvent { get; private set; }
+        public event Action<IGameEvent> EventTriggered;
 
-        public IReadOnlyList<GameEvent> AllEvents => _events;
+        public IReadOnlyList<IGameEvent> AllEvents => _events;
 
-        public EventDispatcher(IEnumerable<GameEvent> events, IEnumerable<IEventHandler> handlers, ChangeLog changeLog)
+        public EventDispatcher(IEnumerable<IGameEvent> events, IEnumerable<IEventHandler> handlers, ChangeLog changeLog)
         {
-            _events = new List<GameEvent>(events);
+            _events = new List<IGameEvent>(events);
             _handlers = new Dictionary<string, IEventHandler>();
             foreach (var h in handlers) _handlers[h.EventId] = h;
             _changeLog = changeLog;
@@ -31,7 +31,7 @@ namespace Siege.Gameplay.Events
         {
             if (PendingEvent != null) return;
 
-            GameEvent best = null;
+            IGameEvent best = null;
             foreach (var e in _events)
             {
                 if (e.IsOneTime && e.HasTriggered) continue;

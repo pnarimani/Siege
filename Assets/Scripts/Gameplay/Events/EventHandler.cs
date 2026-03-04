@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public abstract class EventHandler<T> : IEventHandler where T : GameEvent
+    public abstract class EventHandler<T> : IEventHandler where T : IGameEvent
     {
         protected readonly T Event;
 

@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class WellContaminationScareEvent : GameEvent
+    public class WellContaminationScareEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "well_contamination_scare";

@@ -10,19 +10,19 @@ namespace Siege.Gameplay.Missions
     /// </summary>
     public class MissionDispatcher
     {
-        readonly Dictionary<string, Mission> _missions;
+        readonly Dictionary<string, IMission> _missions;
         readonly Dictionary<string, IMissionHandler> _handlers;
-        readonly List<Mission> _active = new();
+        readonly List<IMission> _active = new();
         readonly ChangeLog _changeLog;
 
-        public IReadOnlyList<Mission> ActiveMissions => _active;
-        public IReadOnlyDictionary<string, Mission> AllMissions => _missions;
+        public IReadOnlyList<IMission> ActiveMissions => _active;
+        public IReadOnlyDictionary<string, IMission> AllMissions => _missions;
 
-        public event Action<Mission, MissionOutcome> MissionCompleted;
+        public event Action<IMission, MissionOutcome> MissionCompleted;
 
-        public MissionDispatcher(IEnumerable<Mission> missions, IEnumerable<IMissionHandler> handlers, ChangeLog changeLog)
+        public MissionDispatcher(IEnumerable<IMission> missions, IEnumerable<IMissionHandler> handlers, ChangeLog changeLog)
         {
-            _missions = new Dictionary<string, Mission>();
+            _missions = new Dictionary<string, IMission>();
             foreach (var m in missions) _missions[m.Id] = m;
             _handlers = new Dictionary<string, IMissionHandler>();
             foreach (var h in handlers) _handlers[h.MissionId] = h;
@@ -87,7 +87,7 @@ namespace Siege.Gameplay.Missions
             }
         }
 
-        void ReturnSurvivors(Mission mission, MissionOutcome outcome, GameState state)
+        void ReturnSurvivors(IMission mission, MissionOutcome outcome, GameState state)
         {
             if (mission.WorkerCost > 0)
             {

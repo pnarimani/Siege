@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class BetrayalFromWithinEvent : GameEvent
+    public class BetrayalFromWithinEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "betrayal_from_within";

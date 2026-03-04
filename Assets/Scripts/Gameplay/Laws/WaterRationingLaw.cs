@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class WaterRationingLaw : Law
+    public class WaterRationingLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "water_rationing";

@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class TotalCollapseEvent : GameEvent
+    public class TotalCollapseEvent : IGameEvent
     {
 
         public bool HasTriggered { get; set; }

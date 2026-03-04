@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class HealthImprovingEvent : GameEvent
+    public class HealthImprovingEvent : IGameEvent
     {
 
         public bool HasTriggered { get; set; }

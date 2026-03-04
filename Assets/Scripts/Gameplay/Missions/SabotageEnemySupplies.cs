@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Missions
 {
-    public class SabotageEnemySupplies : Mission
+    public class SabotageEnemySupplies : IMission
     {
         public bool IsActive { get; set; }
         public int DaysRemaining { get; set; }

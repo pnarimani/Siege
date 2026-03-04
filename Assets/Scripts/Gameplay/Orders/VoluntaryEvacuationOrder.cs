@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class VoluntaryEvacuationOrder : Order
+    public class VoluntaryEvacuationOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "voluntary_evacuation";

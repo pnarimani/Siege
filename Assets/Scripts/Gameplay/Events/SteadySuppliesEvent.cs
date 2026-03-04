@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class SteadySuppliesEvent : GameEvent
+    public class SteadySuppliesEvent : IGameEvent
     {
 
         public bool HasTriggered { get; set; }

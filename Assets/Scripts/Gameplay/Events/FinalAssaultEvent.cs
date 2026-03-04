@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Events
 {
-    public class FinalAssaultEvent : GameEvent
+    public class FinalAssaultEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "final_assault";

@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class StrictRationsLaw : Law
+    public class StrictRationsLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "strict_rations";

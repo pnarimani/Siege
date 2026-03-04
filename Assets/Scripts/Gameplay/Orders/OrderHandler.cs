@@ -3,7 +3,7 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Orders
 {
-    public abstract class OrderHandler<T> : IOrderHandler where T : Order
+    public abstract class OrderHandler<T> : IOrderHandler where T : IOrder
     {
         protected readonly T Order;
         protected readonly IPopupService Popup;

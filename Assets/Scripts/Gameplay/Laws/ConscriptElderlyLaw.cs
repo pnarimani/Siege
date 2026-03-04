@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class ConscriptElderlyLaw : Law
+    public class ConscriptElderlyLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "conscript_elderly";

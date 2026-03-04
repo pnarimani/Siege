@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Events
 {
-    public class BurningFarmsEvent : GameEvent
+    public class BurningFarmsEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "burning_farms";

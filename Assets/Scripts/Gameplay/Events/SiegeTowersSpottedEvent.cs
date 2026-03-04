@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Events
 {
-    public class SiegeTowersSpottedEvent : GameEvent
+    public class SiegeTowersSpottedEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "siege_towers_spotted";

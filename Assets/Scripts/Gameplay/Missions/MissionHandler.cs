@@ -3,7 +3,7 @@ using Siege.Gameplay.UI;
 
 namespace Siege.Gameplay.Missions
 {
-    public abstract class MissionHandler<T> : IMissionHandler where T : Mission
+    public abstract class MissionHandler<T> : IMissionHandler where T : IMission
     {
         protected readonly T Mission;
         protected readonly IPopupService Popup;

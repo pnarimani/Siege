@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class BribeEnemyOfficerOrder : Order
+    public class BribeEnemyOfficerOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "bribe_enemy_officer";

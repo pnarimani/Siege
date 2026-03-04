@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class DistributeLuxuriesOrder : Order
+    public class DistributeLuxuriesOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "distribute_luxuries";

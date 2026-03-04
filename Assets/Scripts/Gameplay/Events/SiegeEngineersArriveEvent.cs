@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class SiegeEngineersArriveEvent : GameEvent
+    public class SiegeEngineersArriveEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "siege_engineers_arrive";

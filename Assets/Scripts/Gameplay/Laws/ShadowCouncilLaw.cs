@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class ShadowCouncilLaw : Law
+    public class ShadowCouncilLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "shadow_council";

@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class RallyGuardsOrder : Order
+    public class RallyGuardsOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "rally_guards";

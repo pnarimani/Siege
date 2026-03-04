@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class MartialLawLaw : Law
+    public class MartialLawLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "martial_law";

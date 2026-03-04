@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class ForcedLaborOrder : Order
+    public class ForcedLaborOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "forced_labor";

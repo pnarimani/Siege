@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class BetrayAlliesOrder : Order
+    public class BetrayAlliesOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "betray_allies";

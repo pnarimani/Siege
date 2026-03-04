@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class HoldFeastOrder : Order
+    public class HoldFeastOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "hold_a_feast";

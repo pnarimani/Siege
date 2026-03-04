@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class ChildrensPleaEvent : GameEvent
+    public class ChildrensPleaEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "childrens_plea";

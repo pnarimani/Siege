@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class MedicalTriageLaw : Law
+    public class MedicalTriageLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "medical_triage";

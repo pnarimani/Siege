@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class CollectiveFarmsLaw : Law
+    public class CollectiveFarmsLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "collective_farms";

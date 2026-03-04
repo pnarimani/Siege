@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class EnemyUltimatumEvent : GameEvent
+    public class EnemyUltimatumEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "enemy_ultimatum";

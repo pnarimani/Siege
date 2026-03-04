@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class PublicTrialOrder : Order
+    public class PublicTrialOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "public_trial";

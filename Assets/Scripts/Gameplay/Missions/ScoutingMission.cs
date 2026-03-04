@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Missions
 {
-    public class ScoutingMission : Mission
+    public class ScoutingMission : IMission
     {
         public bool IsActive { get; set; }
         public int DaysRemaining { get; set; }

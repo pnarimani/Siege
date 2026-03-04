@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Events
 {
-    public class TaintedWellEvent : GameEvent
+    public class TaintedWellEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "tainted_well";

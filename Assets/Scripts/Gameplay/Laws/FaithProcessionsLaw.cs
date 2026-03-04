@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class FaithProcessionsLaw : Law
+    public class FaithProcessionsLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "faith_processions";

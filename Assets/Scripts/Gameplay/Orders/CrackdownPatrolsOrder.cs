@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Orders
 {
-    public class CrackdownPatrolsOrder : Order
+    public class CrackdownPatrolsOrder : IOrder
     {
         public bool IsActive { get; set; }
         public string Id => "crackdown_patrols";

@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class WorkerTakesLifeEvent : GameEvent
+    public class WorkerTakesLifeEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "worker_takes_life";

@@ -1,6 +1,6 @@
 namespace Siege.Gameplay.Laws
 {
-    public class PublicExecutionsLaw : Law
+    public class PublicExecutionsLaw : ILaw
     {
         public bool IsEnacted { get; set; }
         public string Id => "public_executions";

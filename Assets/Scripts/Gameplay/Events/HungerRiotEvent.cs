@@ -2,7 +2,7 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    public class HungerRiotEvent : GameEvent
+    public class HungerRiotEvent : IGameEvent
     {
         public bool HasTriggered { get; set; }
         public string Id => "hunger_riot";

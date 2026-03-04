@@ -21,8 +21,26 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 492ed644121da2341bf8d6b7ffc47d6c
+    m_Address: Events_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83fe918e16dfd0b4aa925ea3aa855759
+    m_Address: Orders_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9269c3a6ad1874e85a680fee555502d2
     m_Address: Laws_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd1b26c47eb0451498c7daeaad52cb6b
+    m_Address: Missions_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

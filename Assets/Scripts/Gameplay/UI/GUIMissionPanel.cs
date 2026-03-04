@@ -29,7 +29,7 @@ namespace Siege.Gameplay.UI
             _root = root.Q("Overlay");
             _availableScroll = root.Q<ScrollView>("AvailableScroll");
             _activeScroll = root.Q<ScrollView>("ActiveScroll");
-            root.Q<SiegeButton>("CloseBtn").Clicked += Hide;
+            root.Q<SiegeButton>("CloseBtn").Clicked += OnBackButtonPressed;
             _backButtonManager = Resolver.Resolve<BackButtonManager>();
         }
 

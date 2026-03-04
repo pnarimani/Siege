@@ -17,6 +17,7 @@ namespace Siege.Gameplay.Buildings
         ResourceStorage _storage;
         GameState _state;
         LawDispatcher _lawDispatcher;
+        GameClock _clock;
 
         int _selectedRecipeIndex;
         float _elapsed;
@@ -77,6 +78,7 @@ namespace Siege.Gameplay.Buildings
             _storage = Resolver.Resolve<ResourceStorage>();
             _state = Resolver.Resolve<GameState>();
             _lawDispatcher = Resolver.Resolve<LawDispatcher>();
+            _clock = Resolver.Resolve<GameClock>();
         }
 
         void Update()
@@ -86,7 +88,7 @@ namespace Siege.Gameplay.Buildings
             var recipe = SelectedRecipe;
             if (recipe == null) return;
 
-            _elapsed += Time.deltaTime;
+            _elapsed += Time.deltaTime * _clock.TimeScale;
 
             if (_elapsed >= recipe.DurationSeconds)
             {
@@ -98,6 +100,7 @@ namespace Siege.Gameplay.Buildings
         bool CanProduce()
         {
             if (_building == null) return false;
+            if (_clock != null && _clock.IsPaused) return false;
             if (!_building.IsActive) return false;
             if (_building.NeedsRepair) return false;
             if (_building.Zone != null && _building.Zone.IsLost) return false;

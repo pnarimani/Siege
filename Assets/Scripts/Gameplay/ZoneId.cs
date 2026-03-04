@@ -1,3 +1,5 @@
+using System;
+
 namespace Siege.Gameplay
 {
     public enum ZoneId
@@ -7,5 +9,10 @@ namespace Siege.Gameplay
         ArtisanQuarter = 3,
         InnerDistrict = 4,
         Keep = 5,
+    }
+
+    public static class ZoneIds
+    {
+        public static readonly ZoneId[] All = (ZoneId[])Enum.GetValues(typeof(ZoneId));
     }
 }

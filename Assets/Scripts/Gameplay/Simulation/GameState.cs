@@ -109,7 +109,6 @@ namespace Siege.Gameplay.Simulation
         public bool FinalAssaultActive;
         public bool PlagueRatsActive;
         public int TaintedWellDays;
-        public int ReliefArmyDay;
 
         // Temporal modifiers from missions (days remaining, multiplier)
         public int SiegeDamageReductionDays;
@@ -166,7 +165,6 @@ namespace Siege.Gameplay.Simulation
             FinalAssaultActive = false;
             PlagueRatsActive = false;
             TaintedWellDays = 0;
-            ReliefArmyDay = UnityEngine.Random.Range(35, 46);
 
             TotalDeaths = 0;
             DeathsToday = 0;
@@ -183,7 +181,7 @@ namespace Siege.Gameplay.Simulation
         void InitializeZones()
         {
             Zones.Clear();
-            foreach (ZoneId id in Enum.GetValues(typeof(ZoneId)))
+            foreach (ZoneId id in ZoneIds.All)
             {
                 Zones[id] = new ZoneState(id);
             }
@@ -196,7 +194,7 @@ namespace Siege.Gameplay.Simulation
         {
             get
             {
-                foreach (ZoneId id in Enum.GetValues(typeof(ZoneId)))
+                foreach (ZoneId id in ZoneIds.All)
                 {
                     if (!Zones[id].IsLost) return id;
                 }

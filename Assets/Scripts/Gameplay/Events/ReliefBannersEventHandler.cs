@@ -1,3 +1,4 @@
+using Siege.Gameplay.Siege;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
@@ -5,10 +6,14 @@ namespace Siege.Gameplay.Events
     public class ReliefBannersEventHandler : EventHandler<ReliefBannersEvent>
     {
         const int DaysBeforeRelief = 1;
+        readonly ReliefArmy _reliefArmy;
 
-        public ReliefBannersEventHandler(ReliefBannersEvent gameEvent) : base(gameEvent) { }
+        public ReliefBannersEventHandler(ReliefBannersEvent gameEvent, ReliefArmy reliefArmy) : base(gameEvent)
+        {
+            _reliefArmy = reliefArmy;
+        }
 
         public override bool CanTrigger(GameState state) =>
-            state.ReliefArmyDay > 0 && state.CurrentDay == state.ReliefArmyDay - DaysBeforeRelief;
+            _reliefArmy.ArrivalDay > 0 && state.CurrentDay == _reliefArmy.ArrivalDay - DaysBeforeRelief;
     }
 }

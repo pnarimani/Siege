@@ -1,4 +1,5 @@
 using System;
+using Siege.Gameplay.Siege;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.LossConditions
@@ -8,10 +9,17 @@ namespace Siege.Gameplay.LossConditions
         const double UnrestRevoltThreshold = 90;
         const int BothDeficitDaysThreshold = 3;
 
+        readonly ReliefArmy _reliefArmy;
+
         public GameOverReason Result { get; private set; } = GameOverReason.None;
         public GameEndState EndState { get; private set; }
 
         public event Action<GameEndState> GameOver;
+
+        public LossConditionSystem(ReliefArmy reliefArmy)
+        {
+            _reliefArmy = reliefArmy;
+        }
 
         public void Tick(GameState state, float deltaTime) { }
 
@@ -41,7 +49,7 @@ namespace Siege.Gameplay.LossConditions
             }
 
             // Victory: relief army arrival
-            if (state.ReliefArmyDay > 0 && day >= state.ReliefArmyDay)
+            if (_reliefArmy.ShouldArrive(day))
             {
                 Trigger(state, GameOverReason.Victory);
             }

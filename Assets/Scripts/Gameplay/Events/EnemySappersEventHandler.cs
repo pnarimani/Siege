@@ -11,7 +11,7 @@ namespace Siege.Gameplay.Events
 
         public override void Execute(GameState state, ChangeLog log)
         {
-            foreach (ZoneId id in Enum.GetValues(typeof(ZoneId)))
+            foreach (ZoneId id in ZoneIds.All)
             {
                 var zone = state.Zones[id];
                 if (!zone.IsLost)

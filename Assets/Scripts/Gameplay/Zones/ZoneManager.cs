@@ -57,7 +57,7 @@ namespace Siege.Gameplay.Zones
 
             // Check eligibility conditions
             bool allOuterLost = true;
-            foreach (ZoneId outerId in Enum.GetValues(typeof(ZoneId)))
+            foreach (ZoneId outerId in ZoneIds.All)
             {
                 if ((int)outerId < (int)id && !_state.Zones[outerId].IsLost)
                 {
@@ -153,7 +153,7 @@ namespace Siege.Gameplay.Zones
             zone.Population = 0;
 
             int remaining = population;
-            foreach (ZoneId id in Enum.GetValues(typeof(ZoneId)))
+            foreach (ZoneId id in ZoneIds.All)
             {
                 if ((int)id <= (int)lostZone) continue;
                 var target = _state.Zones[id];
@@ -173,14 +173,14 @@ namespace Siege.Gameplay.Zones
         {
             int totalPop = _state.TotalPopulation;
 
-            foreach (ZoneId id in Enum.GetValues(typeof(ZoneId)))
+            foreach (ZoneId id in ZoneIds.All)
             {
                 var zone = _state.Zones[id];
                 zone.Population = 0;
             }
 
             int remaining = totalPop;
-            foreach (ZoneId id in Enum.GetValues(typeof(ZoneId)))
+            foreach (ZoneId id in ZoneIds.All)
             {
                 var zone = _state.Zones[id];
                 if (zone.IsLost) continue;
@@ -196,9 +196,10 @@ namespace Siege.Gameplay.Zones
             // Any remaining overflow goes to the last surviving zone
             if (remaining > 0)
             {
-                for (int i = 4; i >= 0; i--)
+                var zones = ZoneIds.All;
+                for (int i = zones.Length - 1; i >= 0; i--)
                 {
-                    var id = (ZoneId)(i + 1);
+                    var id = zones[i];
                     if (!_state.Zones[id].IsLost)
                     {
                         _state.Zones[id].Population += remaining;

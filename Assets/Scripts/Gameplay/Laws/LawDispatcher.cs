@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Siege.Gameplay.Simulation;
 
@@ -15,6 +16,8 @@ namespace Siege.Gameplay.Laws
         readonly ChangeLog _changeLog;
 
         public IReadOnlyList<ILaw> AllLaws => _laws;
+
+        public event Action<string> LawEnacted;
 
         public LawDispatcher(IEnumerable<ILaw> laws, IEnumerable<ILawHandler> handlers, GameState state, ChangeLog changeLog)
         {
@@ -51,6 +54,7 @@ namespace Siege.Gameplay.Laws
             law.IsEnacted = true;
             _state.EnactedLawIds.Add(id);
             handler.ApplyImmediate(_state, _changeLog);
+            LawEnacted?.Invoke(id);
             return true;
         }
 

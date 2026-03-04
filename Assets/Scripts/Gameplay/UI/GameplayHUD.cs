@@ -91,13 +91,22 @@ namespace Siege.Gameplay.UI
             UpdateActionBar();
         }
 
+        int _prevFood, _prevWater, _prevFuel, _prevMaterials, _prevMeds;
+
         void UpdateResources()
         {
-            if (_food != null) _food.Text = ((int)_state.Food).ToString();
-            if (_water != null) _water.Text = ((int)_state.Water).ToString();
-            if (_fuel != null) _fuel.Text = ((int)_state.Fuel).ToString();
-            if (_materials != null) _materials.Text = ((int)_state.Materials).ToString();
-            if (_meds != null) _meds.Text = ((int)_state.Medicine).ToString();
+            UpdateResource(_food, ref _prevFood, (int)_state.Food);
+            UpdateResource(_water, ref _prevWater, (int)_state.Water);
+            UpdateResource(_fuel, ref _prevFuel, (int)_state.Fuel);
+            UpdateResource(_materials, ref _prevMaterials, (int)_state.Materials);
+            UpdateResource(_meds, ref _prevMeds, (int)_state.Medicine);
+        }
+
+        static void UpdateResource(ResourceWidget widget, ref int prev, int current)
+        {
+            if (widget == null || prev == current) return;
+            prev = current;
+            widget.Text = current.ToString();
         }
 
         void UpdateStatusBars()

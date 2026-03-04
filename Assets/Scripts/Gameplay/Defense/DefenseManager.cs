@@ -1,4 +1,5 @@
 using System;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.Zones;
 
@@ -23,11 +24,13 @@ namespace Siege.Gameplay.Defense
 
         readonly GameState _state;
         readonly ChangeLog _changeLog;
+        readonly ResourceStorage _storage;
 
-        public DefenseManager(GameState state, ChangeLog changeLog)
+        public DefenseManager(GameState state, ChangeLog changeLog, ResourceStorage storage)
         {
             _state = state;
             _changeLog = changeLog;
+            _storage = storage;
         }
 
         // ── Barricade ─────────────────────────────────────────────────
@@ -42,6 +45,7 @@ namespace Siege.Gameplay.Defense
         {
             if (!CanBuildBarricade(zone)) return;
 
+            _storage.Withdraw(ResourceType.Materials, BarricadeMaterialCost);
             _state.Materials -= BarricadeMaterialCost;
             _state.Zones[zone].BarricadeBuffer += BarricadeBuffer;
             _changeLog.Record("Materials", -BarricadeMaterialCost, "Build barricade");
@@ -62,6 +66,8 @@ namespace Siege.Gameplay.Defense
         {
             if (!CanBuildOilCauldron(zone)) return;
 
+            _storage.Withdraw(ResourceType.Fuel, CauldronFuelCost);
+            _storage.Withdraw(ResourceType.Materials, CauldronMaterialCost);
             _state.Fuel -= CauldronFuelCost;
             _state.Materials -= CauldronMaterialCost;
             _state.Zones[zone].HasOilCauldron = true;
@@ -83,6 +89,7 @@ namespace Siege.Gameplay.Defense
         {
             if (!CanBuildArcherPost(zone)) return;
 
+            _storage.Withdraw(ResourceType.Materials, ArcherPostMaterialCost);
             _state.Materials -= ArcherPostMaterialCost;
             _state.Zones[zone].HasArcherPost = true;
             _changeLog.Record("Materials", -ArcherPostMaterialCost, "Build archer post");

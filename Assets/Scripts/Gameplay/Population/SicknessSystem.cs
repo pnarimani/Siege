@@ -48,11 +48,10 @@ namespace Siege.Gameplay.Population
             if (state.PlagueRatsActive)
                 sicknessGain += PlagueRatsPenalty;
 
-            // Tainted well
+            // Tainted well (countdown managed by SimulationRunner.OnDayEnded)
             if (state.TaintedWellDays > 0)
             {
                 sicknessGain += TaintedWellPenalty;
-                state.TaintedWellDays--;
             }
 
             state.Sickness += sicknessGain;

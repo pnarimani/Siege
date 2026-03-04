@@ -13,6 +13,8 @@ namespace Siege.Gameplay.Resources
     public class ResourceStorage
     {
         readonly Simulation.GameState _state;
+        readonly List<StorageBuilding> _withdrawBuffer = new();
+        readonly List<StorageBuilding> _depositBuffer = new();
 
         public ResourceStorage(Simulation.GameState state)
         {
@@ -82,17 +84,17 @@ namespace Siege.Gameplay.Resources
         /// </summary>
         List<StorageBuilding> GetStorageByWithdrawPriority()
         {
-            var list = new List<StorageBuilding>();
+            _withdrawBuffer.Clear();
             foreach (var s in StorageBuilding.All)
             {
                 if (s.Building == null || s.Building.Zone == null) continue;
                 if (s.Building.Zone.IsLost) continue;
-                list.Add(s);
+                _withdrawBuffer.Add(s);
             }
 
             // Sort by zone: outermost first (lower ZoneId = more exposed)
-            list.Sort((a, b) => ((int)a.Building.Zone.Id).CompareTo((int)b.Building.Zone.Id));
-            return list;
+            _withdrawBuffer.Sort((a, b) => ((int)a.Building.Zone.Id).CompareTo((int)b.Building.Zone.Id));
+            return _withdrawBuffer;
         }
 
         /// <summary>
@@ -100,17 +102,17 @@ namespace Siege.Gameplay.Resources
         /// </summary>
         List<StorageBuilding> GetStorageByDepositPriority()
         {
-            var list = new List<StorageBuilding>();
+            _depositBuffer.Clear();
             foreach (var s in StorageBuilding.All)
             {
                 if (s.Building == null || s.Building.Zone == null) continue;
                 if (s.Building.Zone.IsLost) continue;
-                list.Add(s);
+                _depositBuffer.Add(s);
             }
 
             // Sort by zone: innermost first (higher ZoneId = safer)
-            list.Sort((a, b) => ((int)b.Building.Zone.Id).CompareTo((int)a.Building.Zone.Id));
-            return list;
+            _depositBuffer.Sort((a, b) => ((int)b.Building.Zone.Id).CompareTo((int)a.Building.Zone.Id));
+            return _depositBuffer;
         }
     }
 }

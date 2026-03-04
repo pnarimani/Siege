@@ -19,6 +19,7 @@ namespace Siege.Gameplay.UI
         GameState _state;
         GameClock _clock;
         MissionDispatcher _missionDispatcher;
+        bool _dirty = true;
 
         void Awake()
         {
@@ -35,12 +36,17 @@ namespace Siege.Gameplay.UI
             _state = Resolver.Resolve<GameState>();
             _clock = Resolver.Resolve<GameClock>();
             _missionDispatcher = Resolver.Resolve<MissionDispatcher>();
+            _missionDispatcher.MissionLaunched += _ => _dirty = true;
+            _missionDispatcher.MissionCompleted += (_, _) => _dirty = true;
+            _clock.DayStarted += _ => _dirty = true;
         }
 
         void Update()
         {
             if (_state == null || _missionDispatcher == null) return;
             if (_root.style.display == DisplayStyle.None) return;
+            if (!_dirty) return;
+            _dirty = false;
 
             RebuildAvailable();
             RebuildActive();
@@ -102,7 +108,7 @@ namespace Siege.Gameplay.UI
         }
 
         public bool IsShown => _root.style.display == DisplayStyle.Flex;
-        public void Show() => _root.style.display = DisplayStyle.Flex;
+        public void Show() { _root.style.display = DisplayStyle.Flex; _dirty = true; }
         public void Hide() => _root.style.display = DisplayStyle.None;
     }
 }

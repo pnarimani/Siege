@@ -16,6 +16,8 @@ namespace Siege.Gameplay.UI
 
         GameState _state;
         OrderDispatcher _orderDispatcher;
+        GameClock _clock;
+        bool _dirty = true;
 
         void Awake()
         {
@@ -30,12 +32,17 @@ namespace Siege.Gameplay.UI
         {
             _state = Resolver.Resolve<GameState>();
             _orderDispatcher = Resolver.Resolve<OrderDispatcher>();
+            _clock = Resolver.Resolve<GameClock>();
+            _orderDispatcher.OrderExecuted += _ => _dirty = true;
+            _clock.DayStarted += _ => _dirty = true;
         }
 
         void Update()
         {
             if (_state == null || _orderDispatcher == null) return;
             if (_root.style.display == DisplayStyle.None) return;
+            if (!_dirty) return;
+            _dirty = false;
 
             _scrollView.Clear();
 
@@ -65,7 +72,7 @@ namespace Siege.Gameplay.UI
                     deactivateBtn.style.display = DisplayStyle.Flex;
                     deactivateBtn.SetEnabled(order.CanDeactivate);
                     string orderId = order.Id;
-                    deactivateBtn.Clicked += () => _orderDispatcher.TryDeactivate(orderId);
+                    deactivateBtn.Clicked += () => { _orderDispatcher.TryDeactivate(orderId); _dirty = true; };
                 }
                 else
                 {
@@ -74,7 +81,7 @@ namespace Siege.Gameplay.UI
                     executeBtn.SetEnabled(canIssue);
                     if (!canIssue) executeBtn.AddToClassList("order-panel__execute-btn--disabled");
                     string orderId = order.Id;
-                    executeBtn.Clicked += () => _orderDispatcher.TryExecute(orderId);
+                    executeBtn.Clicked += () => { _orderDispatcher.TryExecute(orderId); _dirty = true; };
                 }
 
                 _scrollView.Add(row);
@@ -82,7 +89,7 @@ namespace Siege.Gameplay.UI
         }
 
         public bool IsShown => _root.style.display == DisplayStyle.Flex;
-        public void Show() => _root.style.display = DisplayStyle.Flex;
+        public void Show() { _root.style.display = DisplayStyle.Flex; _dirty = true; }
         public void Hide() => _root.style.display = DisplayStyle.None;
     }
 }

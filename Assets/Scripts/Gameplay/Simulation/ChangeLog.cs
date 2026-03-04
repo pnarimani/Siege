@@ -6,6 +6,7 @@ namespace Siege.Gameplay.Simulation
     {
         readonly List<StateChange> _current = new();
         readonly List<StateChange> _lastDay = new();
+        readonly List<StateChange> _reusableBuffer = new();
 
         public IReadOnlyList<StateChange> CurrentChanges => _current;
         public IReadOnlyList<StateChange> LastDayChanges => _lastDay;
@@ -31,15 +32,16 @@ namespace Siege.Gameplay.Simulation
         }
 
         /// <summary>
-        /// Returns all current changes for a specific field (e.g., "Food", "Morale").
+        /// Returns all current changes for a specific field into a reusable buffer.
+        /// Warning: buffer is reused — do not cache the returned list.
         /// </summary>
         public List<StateChange> GetChangesForField(string field)
         {
-            var result = new List<StateChange>();
+            _reusableBuffer.Clear();
             foreach (var c in _current)
                 if (c.Field == field)
-                    result.Add(c);
-            return result;
+                    _reusableBuffer.Add(c);
+            return _reusableBuffer;
         }
 
         /// <summary>
@@ -55,15 +57,15 @@ namespace Siege.Gameplay.Simulation
         }
 
         /// <summary>
-        /// Returns all changes recorded since the given index (exclusive snapshot point).
-        /// Use before/after pattern: int before = log.CurrentChanges.Count; ... log.SliceSince(before)
+        /// Returns all changes recorded since the given index into a reusable buffer.
+        /// Warning: buffer is reused — do not cache the returned list.
         /// </summary>
         public List<StateChange> SliceSince(int fromIndex)
         {
-            var result = new List<StateChange>();
+            _reusableBuffer.Clear();
             for (int i = fromIndex; i < _current.Count; i++)
-                result.Add(_current[i]);
-            return result;
+                _reusableBuffer.Add(_current[i]);
+            return _reusableBuffer;
         }
     }
 }

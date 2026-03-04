@@ -12,6 +12,7 @@ namespace Siege.Gameplay.Simulation
     public class SimulationRunner : MonoBehaviour
     {
         readonly List<ISimulationSystem> _systems = new();
+        readonly List<string> _cooldownKeysToRemove = new();
 
         GameState _state;
         GameClock _clock;
@@ -136,9 +137,11 @@ namespace Siege.Gameplay.Simulation
             if (_state.TaintedWellDays > 0)
                 _state.TaintedWellDays--;
 
-            // Decrement order cooldowns
-            var keys = new List<string>(_state.OrderCooldowns.Keys);
-            foreach (var key in keys)
+            // Decrement order cooldowns (copy keys to avoid allocation from dict.Keys)
+            _cooldownKeysToRemove.Clear();
+            foreach (var kvp in _state.OrderCooldowns)
+                _cooldownKeysToRemove.Add(kvp.Key);
+            foreach (var key in _cooldownKeysToRemove)
             {
                 _state.OrderCooldowns[key]--;
                 if (_state.OrderCooldowns[key] <= 0)

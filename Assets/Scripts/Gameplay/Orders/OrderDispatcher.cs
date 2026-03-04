@@ -17,6 +17,8 @@ namespace Siege.Gameplay.Orders
 
         public IReadOnlyList<IOrder> AllOrders => _orders;
 
+        public event Action<string> OrderExecuted;
+
         public OrderDispatcher(IEnumerable<IOrder> orders, IEnumerable<IOrderHandler> handlers, GameState state, ChangeLog changeLog)
         {
             _orders = new List<IOrder>(orders);
@@ -48,6 +50,7 @@ namespace Siege.Gameplay.Orders
 
             var order = GetOrder(id);
             handler.Execute(_state, _changeLog);
+            OrderExecuted?.Invoke(id);
 
             if (order != null && order.CooldownDays > 0)
                 _state.OrderCooldowns[id] = order.CooldownDays;

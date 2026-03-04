@@ -19,6 +19,7 @@ namespace Siege.Gameplay.Missions
         public IReadOnlyDictionary<string, IMission> AllMissions => _missions;
 
         public event Action<IMission, MissionOutcome> MissionCompleted;
+        public event Action<string> MissionLaunched;
 
         public MissionDispatcher(IEnumerable<IMission> missions, IEnumerable<IMissionHandler> handlers, ChangeLog changeLog)
         {
@@ -58,6 +59,7 @@ namespace Siege.Gameplay.Missions
             mission.IsActive = true;
             mission.DaysRemaining = mission.DurationDays;
             _active.Add(mission);
+            MissionLaunched?.Invoke(id);
             return true;
         }
 

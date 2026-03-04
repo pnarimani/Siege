@@ -16,6 +16,7 @@ namespace Siege.Gameplay.UI
 
         GameState _state;
         LawDispatcher _lawDispatcher;
+        bool _dirty = true;
 
         void Awake()
         {
@@ -30,12 +31,15 @@ namespace Siege.Gameplay.UI
         {
             _state = Resolver.Resolve<GameState>();
             _lawDispatcher = Resolver.Resolve<LawDispatcher>();
+            _lawDispatcher.LawEnacted += _ => _dirty = true;
         }
 
         void Update()
         {
             if (_state == null || _lawDispatcher == null) return;
             if (_root.style.display == DisplayStyle.None) return;
+            if (!_dirty) return;
+            _dirty = false;
 
             _scrollView.Clear();
 
@@ -57,7 +61,7 @@ namespace Siege.Gameplay.UI
                     enactBtn.SetEnabled(canEnact);
                     if (!canEnact) enactBtn.AddToClassList("law-panel__enact-btn--disabled");
                     string lawId = law.Id;
-                    enactBtn.Clicked += () => _lawDispatcher.TryEnact(lawId);
+                    enactBtn.Clicked += () => { _lawDispatcher.TryEnact(lawId); _dirty = true; };
                 }
 
                 _scrollView.Add(row);
@@ -65,7 +69,7 @@ namespace Siege.Gameplay.UI
         }
 
         public bool IsShown => _root.style.display == DisplayStyle.Flex;
-        public void Show() => _root.style.display = DisplayStyle.Flex;
+        public void Show() { _root.style.display = DisplayStyle.Flex; _dirty = true; }
         public void Hide() => _root.style.display = DisplayStyle.None;
     }
 }

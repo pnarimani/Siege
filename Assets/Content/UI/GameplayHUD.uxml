@@ -19,7 +19,6 @@
         <ui:VisualElement picking-mode="Ignore" class="gameplay-hud__mid">
             <ui:VisualElement name="NotificationList" picking-mode="Ignore" class="notification-panel"/>
             <ui:VisualElement name="Root" class="building-panel" style="bottom: 0; top: 0; right: 0;">
-                <Siege.Gameplay.UI.SiegeButton text="✕" name="CloseButton" class="building-panel__close-btn"/>
                 <ui:Label text="Label" name="Title" class="text building-panel__title"/>
                 <ui:VisualElement name="ProductionBuilding">
                     <ui:Label text="Workers: 0 / 0" name="WorkersLabel" class="text building-panel__workers"/>
@@ -55,6 +54,7 @@
                     </Siege.Gameplay.UI.ResourceWidget>
                 </ui:VisualElement>
                 <Siege.Gameplay.UI.SiegeButton text="Destroy" name="DestroyBuilding"/>
+                <Siege.Gameplay.UI.SiegeButton text="✕" name="CloseButton" class="building-panel__close-btn"/>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement class="gameplay-hud__bottom">

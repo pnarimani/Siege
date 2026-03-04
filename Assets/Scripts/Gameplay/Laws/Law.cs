@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
+
 namespace Siege.Gameplay.Laws
 {
+    [UsedImplicitly]
     public interface ILaw
     {
         string Id { get; }

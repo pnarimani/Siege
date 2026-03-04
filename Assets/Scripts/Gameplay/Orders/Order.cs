@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
+
 namespace Siege.Gameplay.Orders
 {
+    [UsedImplicitly]
     public interface IOrder
     {
         string Id { get; }

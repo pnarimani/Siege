@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AutofacUnity;
+using Siege.Gameplay.Resources;
 
 namespace Siege.Gameplay.Simulation
 {
@@ -17,12 +18,14 @@ namespace Siege.Gameplay.Simulation
         readonly GameState _state;
         readonly GameClock _clock;
         readonly ChangeLog _changeLog;
+        readonly ResourceLedger _ledger;
 
-        public SimulationRunner(GameState state, GameClock clock, ChangeLog changeLog)
+        public SimulationRunner(GameState state, GameClock clock, ChangeLog changeLog, ResourceLedger ledger)
         {
             _state = state;
             _clock = clock;
             _changeLog = changeLog;
+            _ledger = ledger;
         }
 
         public void Initialize()
@@ -86,23 +89,26 @@ namespace Siege.Gameplay.Simulation
         void OnDayEnded(int day)
         {
             // Update deficit tracking
-            if (_state.Food <= 0)
+            double food = _ledger.GetTotal(ResourceType.Food);
+            double water = _ledger.GetTotal(ResourceType.Water);
+
+            if (food <= 0)
                 _state.ConsecutiveFoodDeficitDays++;
             else
                 _state.ConsecutiveFoodDeficitDays = 0;
 
-            if (_state.Water <= 0)
+            if (water <= 0)
                 _state.ConsecutiveWaterDeficitDays++;
             else
                 _state.ConsecutiveWaterDeficitDays = 0;
 
-            if (_state.Food <= 0 && _state.Water <= 0)
+            if (food <= 0 && water <= 0)
                 _state.ConsecutiveBothDeficitDays++;
             else
                 _state.ConsecutiveBothDeficitDays = 0;
 
             // Streak tracking
-            if (_state.Food > 0 && _state.Water > 0)
+            if (food > 0 && water > 0)
                 _state.ConsecutiveNoDeficitDays++;
             else
                 _state.ConsecutiveNoDeficitDays = 0;

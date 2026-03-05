@@ -1,4 +1,5 @@
 using Siege.Gameplay.Political;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 using TypeRegistry;
@@ -27,11 +28,13 @@ namespace Siege.Gameplay.Orders
 
         readonly IPopupService _popup;
         readonly PoliticalState _political;
+        readonly ResourceLedger _ledger;
 
-        public SecretCorrespondenceOrder(IPopupService popup, PoliticalState political)
+        public SecretCorrespondenceOrder(IPopupService popup, PoliticalState political, ResourceLedger ledger)
         {
             _popup = popup;
             _political = political;
+            _ledger = ledger;
         }
 
         public string Id => "secret_correspondence";
@@ -51,7 +54,7 @@ namespace Siege.Gameplay.Orders
 
         public void ApplyDailyEffect(GameState state, ChangeLog log)
         {
-            state.Materials -= DailyMaterialsCost;
+            _ledger.Withdraw(ResourceType.Materials, DailyMaterialsCost);
             log.Record("Materials", -DailyMaterialsCost, Id);
 
             state.Morale += DailyMoraleGain;
@@ -60,7 +63,7 @@ namespace Siege.Gameplay.Orders
             if (Random.value < ResourceBonusChance)
             {
                 var type = Resources[Random.Range(0, Resources.Length)];
-                state.AddResource(type, BonusResourceAmount);
+                _ledger.Deposit(type, BonusResourceAmount);
                 log.Record(type.ToString(), BonusResourceAmount, Id + "_bonus");
             }
 
@@ -71,6 +74,6 @@ namespace Siege.Gameplay.Orders
             }
         }
 
-        public IOrder Clone() => new SecretCorrespondenceOrder(_popup, _political);
+        public IOrder Clone() => new SecretCorrespondenceOrder(_popup, _political, _ledger);
     }
 }

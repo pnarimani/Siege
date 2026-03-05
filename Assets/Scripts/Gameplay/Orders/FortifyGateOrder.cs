@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -6,6 +7,7 @@ namespace Siege.Gameplay.Orders
     public class FortifyGateOrder : IOrder
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const string Narrative = "Iron and timber are hammered into the gate. It groans but holds.";
         const double MaterialsCost = 8;
@@ -13,7 +15,11 @@ namespace Siege.Gameplay.Orders
         const double UnrestIncrease = 3;
         const double IntegrityThreshold = 70;
 
-        public FortifyGateOrder(IPopupService popup) => _popup = popup;
+        public FortifyGateOrder(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "fortify_gate";
         public string Name => "Fortify Gate";
@@ -21,13 +27,13 @@ namespace Siege.Gameplay.Orders
         public int CooldownDays => 3;
 
         public bool CanIssue(GameState state) =>
-            state.Materials >= MaterialsCost
+            _ledger.Has(ResourceType.Materials, MaterialsCost)
             && state.Zones[state.ActivePerimeter].Integrity < IntegrityThreshold;
 
         public void OnExecute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
-            state.Materials -= MaterialsCost;
+            _ledger.Withdraw(ResourceType.Materials, MaterialsCost);
             log.Record("Materials", -MaterialsCost, Id);
 
             var zone = state.Zones[state.ActivePerimeter];
@@ -39,6 +45,6 @@ namespace Siege.Gameplay.Orders
             _popup.Open(Name, Narrative, log.SliceSince(before));
         }
 
-        public IOrder Clone() => new FortifyGateOrder(_popup);
+        public IOrder Clone() => new FortifyGateOrder(_popup, _ledger);
     }
 }

@@ -10,13 +10,13 @@ namespace Siege.Gameplay.Resources
     public class ResourceProductionSystem : ISimulationSystem
     {
         readonly ChangeLog _changeLog;
-        readonly ResourceStorage _storage;
+        readonly ResourceLedger _ledger;
         readonly BuildingRegistry _buildings;
 
-        public ResourceProductionSystem(ChangeLog changeLog, ResourceStorage storage, BuildingRegistry buildings)
+        public ResourceProductionSystem(ChangeLog changeLog, ResourceLedger ledger, BuildingRegistry buildings)
         {
             _changeLog = changeLog;
-            _storage = storage;
+            _ledger = ledger;
             _buildings = buildings;
         }
 
@@ -43,8 +43,7 @@ namespace Siege.Gameplay.Resources
                         continue;
 
                     double needed = input.Quantity * workers * dayFraction;
-                    double available = _storage.GetTotal(input.Resource);
-                    if (available < needed)
+                    if (_ledger.GetTotal(input.Resource) < needed)
                     {
                         canProduce = false;
                         break;
@@ -60,8 +59,7 @@ namespace Siege.Gameplay.Resources
                         continue;
 
                     double amount = input.Quantity * workers * dayFraction;
-                    _storage.Withdraw(input.Resource, amount);
-                    state.AddResource(input.Resource, -amount);
+                    _ledger.Withdraw(input.Resource, amount);
                     _changeLog.Record(input.Resource.ToString(), -amount, building.Definition.Name);
                 }
 
@@ -72,7 +70,6 @@ namespace Siege.Gameplay.Resources
 
                     if (output.Resource == ResourceType.Integrity)
                     {
-                        // Integrity goes to the building's zone
                         if (building.Zone != null)
                         {
                             var zoneState = state.Zones[building.Zone.Id];
@@ -84,14 +81,12 @@ namespace Siege.Gameplay.Resources
 
                     if (output.Resource == ResourceType.Care)
                     {
-                        // Care is handled by CareSystem, just track production
-                        state.AddResource(ResourceType.Care, amount);
+                        state.Care += amount;
                         _changeLog.Record("Care", amount, building.Definition.Name);
                         continue;
                     }
 
-                    _storage.Deposit(output.Resource, amount);
-                    state.AddResource(output.Resource, amount);
+                    _ledger.Deposit(output.Resource, amount);
                     _changeLog.Record(output.Resource.ToString(), amount, building.Definition.Name);
                 }
             }

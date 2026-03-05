@@ -14,7 +14,7 @@ namespace Siege.Gameplay.Buildings
     public class ProductionCycleState : MonoBehaviour
     {
         Building _building;
-        ResourceStorage _storage;
+        ResourceLedger _storage;
         GameState _state;
         LawDispatcher _lawDispatcher;
         GameClock _clock;
@@ -75,7 +75,7 @@ namespace Siege.Gameplay.Buildings
 
         void Start()
         {
-            _storage = Resolver.Resolve<ResourceStorage>();
+            _storage = Resolver.Resolve<ResourceLedger>();
             _state = Resolver.Resolve<GameState>();
             _lawDispatcher = Resolver.Resolve<LawDispatcher>();
             _clock = Resolver.Resolve<GameClock>();
@@ -125,7 +125,6 @@ namespace Siege.Gameplay.Buildings
                 if (input.Resource == ResourceType.Integrity || input.Resource == ResourceType.Care)
                     continue;
                 _storage.Withdraw(input.Resource, input.Quantity);
-                _state.AddResource(input.Resource, -input.Quantity);
             }
 
             // Produce outputs
@@ -143,12 +142,11 @@ namespace Siege.Gameplay.Buildings
 
                 if (output.Resource == ResourceType.Care)
                 {
-                    _state.AddResource(ResourceType.Care, output.Quantity);
+                    _state.Care += output.Quantity;
                     continue;
                 }
 
                 _storage.Deposit(output.Resource, output.Quantity);
-                _state.AddResource(output.Resource, output.Quantity);
             }
         }
     }

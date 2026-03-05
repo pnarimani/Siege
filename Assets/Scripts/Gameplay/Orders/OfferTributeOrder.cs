@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -6,13 +7,18 @@ namespace Siege.Gameplay.Orders
     public class OfferTributeOrder : IOrder
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const string Narrative = "Carts of provisions roll out the gate. The enemy takes them without a word. The people watch in silence.";
         const double DailyFoodCost = 12;
         const double DailyWaterCost = 12;
         const double DailyMoraleLoss = 6;
 
-        public OfferTributeOrder(IPopupService popup) => _popup = popup;
+        public OfferTributeOrder(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "offer_tribute";
         public string Name => "Offer Tribute";
@@ -32,16 +38,16 @@ namespace Siege.Gameplay.Orders
 
         public void ApplyDailyEffect(GameState state, ChangeLog log)
         {
-            state.Food -= DailyFoodCost;
+            _ledger.Withdraw(ResourceType.Food, DailyFoodCost);
             log.Record("Food", -DailyFoodCost, Id);
 
-            state.Water -= DailyWaterCost;
+            _ledger.Withdraw(ResourceType.Water, DailyWaterCost);
             log.Record("Water", -DailyWaterCost, Id);
 
             state.Morale -= DailyMoraleLoss;
             log.Record("Morale", -DailyMoraleLoss, Id);
         }
 
-        public IOrder Clone() => new OfferTributeOrder(_popup);
+        public IOrder Clone() => new OfferTributeOrder(_popup, _ledger);
     }
 }

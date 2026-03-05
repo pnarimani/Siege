@@ -1,4 +1,5 @@
 using System;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -7,6 +8,7 @@ namespace Siege.Gameplay.Laws
     public class MandatoryGuardServiceLaw : ILaw
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const string Narrative = "They were given spears and told to stand. Most had never held a weapon.";
         const double UnrestThreshold = 40;
@@ -14,7 +16,11 @@ namespace Siege.Gameplay.Laws
         const double ImmediateMorale = -10;
         const double DailyFoodCost = -4;
 
-        public MandatoryGuardServiceLaw(IPopupService popup) => _popup = popup;
+        public MandatoryGuardServiceLaw(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "mandatory_guard_service";
         public string Name => "Mandatory Guard Service";
@@ -38,10 +44,10 @@ namespace Siege.Gameplay.Laws
 
         public void ApplyDailyEffect(GameState state, ChangeLog log)
         {
-            state.Food += DailyFoodCost;
+            _ledger.Withdraw(ResourceType.Food, 4);
             log.Record("Food", DailyFoodCost, "Mandatory Guard Service (upkeep)");
         }
 
-        public ILaw Clone() => new MandatoryGuardServiceLaw(_popup);
+        public ILaw Clone() => new MandatoryGuardServiceLaw(_popup, _ledger);
     }
 }

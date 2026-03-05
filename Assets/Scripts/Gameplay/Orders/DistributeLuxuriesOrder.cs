@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -15,10 +16,12 @@ namespace Siege.Gameplay.Orders
         const double FuelRequired = 20;
 
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
-        public DistributeLuxuriesOrder(IPopupService popup)
+        public DistributeLuxuriesOrder(IPopupService popup, ResourceLedger ledger)
         {
             _popup = popup;
+            _ledger = ledger;
         }
 
         public string Id => "distribute_luxuries";
@@ -27,15 +30,15 @@ namespace Siege.Gameplay.Orders
         public int CooldownDays => 6;
 
         public bool CanIssue(GameState state) =>
-            state.Materials >= MaterialsRequired && state.Fuel >= FuelRequired;
+            _ledger.Has(ResourceType.Materials, MaterialsRequired) && _ledger.Has(ResourceType.Fuel, FuelRequired);
 
         public void OnExecute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
-            state.Fuel -= FuelCost;
+            _ledger.Withdraw(ResourceType.Fuel, FuelCost);
             log.Record("Fuel", -FuelCost, Id);
 
-            state.Materials -= MaterialsCost;
+            _ledger.Withdraw(ResourceType.Materials, MaterialsCost);
             log.Record("Materials", -MaterialsCost, Id);
 
             state.Morale += MoraleGain;
@@ -49,6 +52,6 @@ namespace Siege.Gameplay.Orders
             _popup.Open(Name, Narrative, log.SliceSince(before));
         }
 
-        public IOrder Clone() => new DistributeLuxuriesOrder(_popup);
+        public IOrder Clone() => new DistributeLuxuriesOrder(_popup, _ledger);
     }
 }

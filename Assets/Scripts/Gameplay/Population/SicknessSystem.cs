@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Population
@@ -16,11 +17,13 @@ namespace Siege.Gameplay.Population
         const double WorkerSicknessRate = 0.03; // 3% of healthy workers get sick per day above threshold
 
         readonly ChangeLog _changeLog;
+        readonly ResourceLedger _ledger;
         bool _processedToday;
 
-        public SicknessSystem(ChangeLog changeLog)
+        public SicknessSystem(ChangeLog changeLog, ResourceLedger ledger)
         {
             _changeLog = changeLog;
+            _ledger = ledger;
         }
 
         public void OnDayStart(GameState state, int day)
@@ -39,9 +42,10 @@ namespace Siege.Gameplay.Population
         void ProcessDailySickness(GameState state)
         {
             double sicknessGain = BaseSicknessRate;
+            double medicine = _ledger.GetTotal(ResourceType.Medicine);
 
             // No medicine amplifies sickness
-            if (state.Medicine <= 0)
+            if (medicine <= 0)
                 sicknessGain += NoMedicinePenalty;
 
             // Active plague events
@@ -74,9 +78,9 @@ namespace Siege.Gameplay.Population
             }
 
             // Natural sickness recovery when sickness is low
-            if (state.Sickness > 0 && state.Medicine > 0)
+            if (state.Sickness > 0 && medicine > 0)
             {
-                double recovery = System.Math.Min(1.0, state.Medicine * 0.1);
+                double recovery = System.Math.Min(1.0, medicine * 0.1);
                 state.Sickness -= recovery;
                 _changeLog.Record("Sickness", -recovery, "Natural recovery");
             }

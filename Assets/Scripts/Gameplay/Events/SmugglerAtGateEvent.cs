@@ -1,10 +1,17 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
     public class SmugglerAtGateEvent : IGameEvent
     {
+        readonly ResourceLedger _ledger;
         bool _hasTriggered;
+
+        public SmugglerAtGateEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "smuggler_at_gate";
         public string Name => "Smuggler at the Gate";
@@ -24,14 +31,14 @@ namespace Siege.Gameplay.Events
             switch (responseIndex)
             {
                 case 0:
-                    state.AddResource(ResourceType.Food, 20);
-                    state.AddResource(ResourceType.Materials, -15);
+                    _ledger.Deposit(ResourceType.Food, 20);
+                    _ledger.Withdraw(ResourceType.Materials, 15);
                     log.Record("Food", 20, Name);
                     log.Record("Materials", -15, Name);
                     break;
                 case 1:
-                    state.AddResource(ResourceType.Food, 30);
-                    state.AddResource(ResourceType.Materials, -15);
+                    _ledger.Deposit(ResourceType.Food, 30);
+                    _ledger.Withdraw(ResourceType.Materials, 15);
                     state.Unrest += 5;
                     log.Record("Food", 30, Name);
                     log.Record("Materials", -15, Name);
@@ -47,6 +54,6 @@ namespace Siege.Gameplay.Events
             new EventResponse("Turn him away", "No trade")
         };
 
-        public IGameEvent Clone() => new SmugglerAtGateEvent();
+        public IGameEvent Clone() => new SmugglerAtGateEvent(_ledger);
     }
 }

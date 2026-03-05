@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -6,6 +7,7 @@ namespace Siege.Gameplay.Orders
     public class HostageExchangeOrder : IOrder
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const string Narrative = "A figure stumbles through the gate, gaunt and shaking. One more mouth to feed. One more soul saved.";
         const double DailyFoodCost = 4;
@@ -16,7 +18,11 @@ namespace Siege.Gameplay.Orders
 
         int _dayCounter;
 
-        public HostageExchangeOrder(IPopupService popup) => _popup = popup;
+        public HostageExchangeOrder(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "hostage_exchange";
         public string Name => "Hostage Exchange";
@@ -36,10 +42,10 @@ namespace Siege.Gameplay.Orders
 
         public void ApplyDailyEffect(GameState state, ChangeLog log)
         {
-            state.Food -= DailyFoodCost;
+            _ledger.Withdraw(ResourceType.Food, DailyFoodCost);
             log.Record("Food", -DailyFoodCost, Id);
 
-            state.Medicine -= DailyMedicineCost;
+            _ledger.Withdraw(ResourceType.Medicine, DailyMedicineCost);
             log.Record("Medicine", -DailyMedicineCost, Id);
 
             state.Morale -= DailyMoraleLoss;
@@ -54,6 +60,6 @@ namespace Siege.Gameplay.Orders
             }
         }
 
-        public IOrder Clone() => new HostageExchangeOrder(_popup);
+        public IOrder Clone() => new HostageExchangeOrder(_popup, _ledger);
     }
 }

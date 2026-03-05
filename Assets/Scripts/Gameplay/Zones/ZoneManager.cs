@@ -250,10 +250,7 @@ namespace Siege.Gameplay.Zones
                     }
                     if (toDeposit <= 0) break;
                 }
-
-                // Also add to flat GameState as fallback
-                if (toDeposit > 0)
-                    _state.AddResource(kv.Key, toDeposit);
+                // Resources that don't fit anywhere are lost — no global pool fallback
             }
         }
     }

@@ -1,4 +1,5 @@
 using Siege.Gameplay.Political;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 using TypeRegistry;
@@ -14,11 +15,13 @@ namespace Siege.Gameplay.Orders
 
         readonly IPopupService _popup;
         readonly PoliticalState _political;
+        readonly ResourceLedger _ledger;
 
-        public ReinforceWallsOrder(IPopupService popup, PoliticalState political)
+        public ReinforceWallsOrder(IPopupService popup, PoliticalState political, ResourceLedger ledger)
         {
             _popup = popup;
             _political = political;
+            _ledger = ledger;
         }
 
         public string Id => "reinforce_walls";
@@ -27,12 +30,12 @@ namespace Siege.Gameplay.Orders
         public int CooldownDays => 3;
 
         public bool CanIssue(GameState state) =>
-            state.Materials >= MaterialsCost && _political.Fortification.Value >= 2;
+            _ledger.Has(ResourceType.Materials, MaterialsCost) && _political.Fortification.Value >= 2;
 
         public void OnExecute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
-            state.Materials -= MaterialsCost;
+            _ledger.Withdraw(ResourceType.Materials, MaterialsCost);
             log.Record("Materials", -MaterialsCost, Id);
 
             var zone = state.Zones[state.ActivePerimeter];
@@ -41,6 +44,6 @@ namespace Siege.Gameplay.Orders
             _popup.Open(Name, Narrative, log.SliceSince(before));
         }
 
-        public IOrder Clone() => new ReinforceWallsOrder(_popup, _political);
+        public IOrder Clone() => new ReinforceWallsOrder(_popup, _political, _ledger);
     }
 }

@@ -1,4 +1,5 @@
 using AutofacUnity;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -30,6 +31,7 @@ namespace Siege.Gameplay.UI
 
         GameState _state;
         GameClock _clock;
+        ResourceLedger _ledger;
         NotificationPanel _notificationPanel;
 
         void Awake()
@@ -74,6 +76,7 @@ namespace Siege.Gameplay.UI
         {
             _state = Resolver.Resolve<GameState>();
             _clock = Resolver.Resolve<GameClock>();
+            _ledger = Resolver.Resolve<ResourceLedger>();
 
             var notificationList = this.FindElement<VisualElement>("NotificationList");
             var notificationService = Resolver.Resolve<NotificationService>();
@@ -87,7 +90,7 @@ namespace Siege.Gameplay.UI
 
         void Update()
         {
-            if (_state == null) return;
+            if (_state == null || _ledger == null) return;
             UpdateResources();
             UpdateStatusBars();
             UpdateActionBar();
@@ -98,11 +101,11 @@ namespace Siege.Gameplay.UI
 
         void UpdateResources()
         {
-            UpdateResource(_food, ref _prevFood, (int)_state.Food);
-            UpdateResource(_water, ref _prevWater, (int)_state.Water);
-            UpdateResource(_fuel, ref _prevFuel, (int)_state.Fuel);
-            UpdateResource(_materials, ref _prevMaterials, (int)_state.Materials);
-            UpdateResource(_meds, ref _prevMeds, (int)_state.Medicine);
+            UpdateResource(_food, ref _prevFood, (int)_ledger.GetTotal(ResourceType.Food));
+            UpdateResource(_water, ref _prevWater, (int)_ledger.GetTotal(ResourceType.Water));
+            UpdateResource(_fuel, ref _prevFuel, (int)_ledger.GetTotal(ResourceType.Fuel));
+            UpdateResource(_materials, ref _prevMaterials, (int)_ledger.GetTotal(ResourceType.Materials));
+            UpdateResource(_meds, ref _prevMeds, (int)_ledger.GetTotal(ResourceType.Medicine));
         }
 
         static void UpdateResource(ResourceWidget widget, ref int prev, int current)

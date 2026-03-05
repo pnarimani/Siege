@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 
@@ -5,7 +6,13 @@ namespace Siege.Gameplay.Events
 {
     public class FireArtisanQuarterEvent : IGameEvent
     {
+        readonly ResourceLedger _ledger;
         bool _hasTriggered;
+
+        public FireArtisanQuarterEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "fire_artisan_quarter";
         public string Name => "Fire in the Artisan Quarter";
@@ -26,7 +33,7 @@ namespace Siege.Gameplay.Events
 
         public void Execute(GameState state, ChangeLog log)
         {
-            state.Materials = System.Math.Max(0, state.Materials - 40);
+            _ledger.Withdraw(ResourceType.Materials, 40);
             state.Zones[ZoneId.ArtisanQuarter].Integrity =
                 System.Math.Max(0, state.Zones[ZoneId.ArtisanQuarter].Integrity - 12);
             state.TotalDeaths += 1;
@@ -37,6 +44,6 @@ namespace Siege.Gameplay.Events
             log.Record("DeathsToday", 1, Name);
         }
 
-        public IGameEvent Clone() => new FireArtisanQuarterEvent();
+        public IGameEvent Clone() => new FireArtisanQuarterEvent(_ledger);
     }
 }

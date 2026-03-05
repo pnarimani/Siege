@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
@@ -10,7 +11,13 @@ namespace Siege.Gameplay.Events
         const int MaterialCost = 15;
         const int LightingUnrest = 5;
 
+        readonly ResourceLedger _ledger;
         bool _hasTriggered;
+
+        public SignalFireEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "signal_fire";
         public string Name => "Light the Signal Fire";
@@ -22,8 +29,8 @@ namespace Siege.Gameplay.Events
             if (state.CurrentDay >= StartDay
                 && state.Zones[ZoneId.Keep].Integrity >= MinKeepIntegrity
                 && !state.SignalFireLit
-                && state.Fuel >= FuelCost
-                && state.Materials >= MaterialCost)
+                && _ledger.Has(ResourceType.Fuel, FuelCost)
+                && _ledger.Has(ResourceType.Materials, MaterialCost))
             {
                 _hasTriggered = true;
                 return true;
@@ -49,8 +56,8 @@ namespace Siege.Gameplay.Events
             switch (responseIndex)
             {
                 case 0:
-                    state.Fuel = System.Math.Max(0, state.Fuel - FuelCost);
-                    state.Materials = System.Math.Max(0, state.Materials - MaterialCost);
+                    _ledger.Withdraw(ResourceType.Fuel, FuelCost);
+                    _ledger.Withdraw(ResourceType.Materials, MaterialCost);
                     state.Unrest += LightingUnrest;
                     state.SignalFireLit = true;
                     log.Record("Fuel", -FuelCost, Name);
@@ -60,6 +67,6 @@ namespace Siege.Gameplay.Events
             }
         }
 
-        public IGameEvent Clone() => new SignalFireEvent();
+        public IGameEvent Clone() => new SignalFireEvent(_ledger);
     }
 }

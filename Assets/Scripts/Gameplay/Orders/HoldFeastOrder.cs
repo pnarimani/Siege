@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -6,6 +7,7 @@ namespace Siege.Gameplay.Orders
     public class HoldFeastOrder : IOrder
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const string Narrative = "For one night, the hall glows warm. Children eat until they are full. Tomorrow the cost will be counted.";
         const double FoodCost = 20;
@@ -14,7 +16,11 @@ namespace Siege.Gameplay.Orders
         const double UnrestReduction = 5;
         const double FoodRequired = 30;
 
-        public HoldFeastOrder(IPopupService popup) => _popup = popup;
+        public HoldFeastOrder(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "hold_a_feast";
         public string Name => "Hold a Feast";
@@ -22,15 +28,15 @@ namespace Siege.Gameplay.Orders
         public int CooldownDays => 6;
 
         public bool CanIssue(GameState state) =>
-            state.Food >= FoodRequired && state.Fuel >= FuelCost;
+            _ledger.Has(ResourceType.Food, FoodRequired) && _ledger.Has(ResourceType.Fuel, FuelCost);
 
         public void OnExecute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
-            state.Food -= FoodCost;
+            _ledger.Withdraw(ResourceType.Food, FoodCost);
             log.Record("Food", -FoodCost, Id);
 
-            state.Fuel -= FuelCost;
+            _ledger.Withdraw(ResourceType.Fuel, FuelCost);
             log.Record("Fuel", -FuelCost, Id);
 
             state.Morale += MoraleGain;
@@ -41,6 +47,6 @@ namespace Siege.Gameplay.Orders
             _popup.Open(Name, Narrative, log.SliceSince(before));
         }
 
-        public IOrder Clone() => new HoldFeastOrder(_popup);
+        public IOrder Clone() => new HoldFeastOrder(_popup, _ledger);
     }
 }

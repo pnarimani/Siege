@@ -31,7 +31,7 @@ namespace Siege.Gameplay.Resources
 
         void ApplyCare(GameState state)
         {
-            double care = state.GetResource(ResourceType.Care);
+            double care = state.Care;
             if (care < 1.0) return;
 
             int careUnits = (int)care;
@@ -59,7 +59,7 @@ namespace Siege.Gameplay.Resources
             }
 
             // Care is consumed; set remaining (fractional) amount
-            state.SetResource(ResourceType.Care, care - (int)care);
+            state.Care = care - (int)care;
         }
     }
 }

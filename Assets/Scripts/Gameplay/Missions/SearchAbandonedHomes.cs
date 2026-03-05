@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 using UnityEngine;
@@ -7,6 +8,7 @@ namespace Siege.Gameplay.Missions
     public class SearchAbandonedHomes : IMission
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const int DurationDays = 2;
         const int Workers = 4;
@@ -25,7 +27,11 @@ namespace Siege.Gameplay.Missions
         int _daysRemaining;
         int _workersSent;
 
-        public SearchAbandonedHomes(IPopupService popup) => _popup = popup;
+        public SearchAbandonedHomes(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "search_abandoned_homes";
         public string Name => "Search Abandoned Homes";
@@ -53,7 +59,7 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceMaterials)
             {
-                state.AddResource(ResourceType.Materials, MaterialsGain);
+                _ledger.Deposit(ResourceType.Materials, MaterialsGain);
                 state.Sickness += SicknessMinor;
                 log.Record("Materials", MaterialsGain, Name);
                 log.Record("Sickness", SicknessMinor, Name);
@@ -65,7 +71,7 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceMaterials + ChanceMedicine)
             {
-                state.AddResource(ResourceType.Medicine, MedicineGain);
+                _ledger.Deposit(ResourceType.Medicine, MedicineGain);
                 state.Sickness += SicknessMinor;
                 log.Record("Medicine", MedicineGain, Name);
                 log.Record("Sickness", SicknessMinor, Name);
@@ -92,7 +98,7 @@ namespace Siege.Gameplay.Missions
             log.Record("HealthyWorkers", _workersSent, Name + " (cancelled)");
         }
 
-        public IMission Clone() => new SearchAbandonedHomes(_popup);
+        public IMission Clone() => new SearchAbandonedHomes(_popup, _ledger);
 
         void ReturnSurvivors(GameState state, ChangeLog log, MissionOutcome outcome)
         {

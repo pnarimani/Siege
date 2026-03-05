@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 using UnityEngine;
@@ -13,10 +14,12 @@ namespace Siege.Gameplay.Orders
         const double InterceptUnrest = 12;
 
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
-        public BribeEnemyOfficerOrder(IPopupService popup)
+        public BribeEnemyOfficerOrder(IPopupService popup, ResourceLedger ledger)
         {
             _popup = popup;
+            _ledger = ledger;
         }
 
         public string Id => "bribe_enemy_officer";
@@ -35,10 +38,10 @@ namespace Siege.Gameplay.Orders
 
         public void ApplyDailyEffect(GameState state, ChangeLog log)
         {
-            state.Food -= DailyFoodCost;
+            _ledger.Withdraw(ResourceType.Food, DailyFoodCost);
             log.Record("Food", -DailyFoodCost, Id);
 
-            state.Materials -= DailyMaterialsCost;
+            _ledger.Withdraw(ResourceType.Materials, DailyMaterialsCost);
             log.Record("Materials", -DailyMaterialsCost, Id);
 
             state.SiegeDamageReductionDays = 1;
@@ -51,6 +54,6 @@ namespace Siege.Gameplay.Orders
             }
         }
 
-        public IOrder Clone() => new BribeEnemyOfficerOrder(_popup);
+        public IOrder Clone() => new BribeEnemyOfficerOrder(_popup, _ledger);
     }
 }

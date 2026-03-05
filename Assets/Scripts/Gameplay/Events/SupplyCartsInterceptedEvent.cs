@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 
@@ -5,7 +6,13 @@ namespace Siege.Gameplay.Events
 {
     public class SupplyCartsInterceptedEvent : IGameEvent
     {
+        readonly ResourceLedger _ledger;
         bool _lostFood;
+
+        public SupplyCartsInterceptedEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "supply_carts_intercepted";
         public string Name => "Supply Carts Intercepted";
@@ -22,16 +29,16 @@ namespace Siege.Gameplay.Events
 
             if (_lostFood)
             {
-                state.AddResource(ResourceType.Food, -15);
+                _ledger.Withdraw(ResourceType.Food, 15);
                 log.Record("Food", -15, Name);
             }
             else
             {
-                state.AddResource(ResourceType.Water, -15);
+                _ledger.Withdraw(ResourceType.Water, 15);
                 log.Record("Water", -15, Name);
             }
         }
 
-        public IGameEvent Clone() => new SupplyCartsInterceptedEvent();
+        public IGameEvent Clone() => new SupplyCartsInterceptedEvent(_ledger);
     }
 }

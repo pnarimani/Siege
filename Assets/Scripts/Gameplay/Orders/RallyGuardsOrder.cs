@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 using TypeRegistry;
@@ -14,8 +15,13 @@ namespace Siege.Gameplay.Orders
         const int MinGuards = 5;
 
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
-        public RallyGuardsOrder(IPopupService popup) => _popup = popup;
+        public RallyGuardsOrder(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "rally_guards";
         public string Name => "Rally Guards";
@@ -23,12 +29,12 @@ namespace Siege.Gameplay.Orders
         public int CooldownDays => 3;
 
         public bool CanIssue(GameState state) =>
-            state.Guards >= MinGuards && state.Food >= FoodCost;
+            state.Guards >= MinGuards && _ledger.Has(ResourceType.Food, FoodCost);
 
         public void OnExecute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
-            state.Food -= FoodCost;
+            _ledger.Withdraw(ResourceType.Food, FoodCost);
             log.Record("Food", -FoodCost, Id);
 
             state.Unrest -= UnrestReduction;
@@ -39,6 +45,6 @@ namespace Siege.Gameplay.Orders
             _popup.Open(Name, Narrative, log.SliceSince(before));
         }
 
-        public IOrder Clone() => new RallyGuardsOrder(_popup);
+        public IOrder Clone() => new RallyGuardsOrder(_popup, _ledger);
     }
 }

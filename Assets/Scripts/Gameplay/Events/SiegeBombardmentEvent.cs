@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 
@@ -12,6 +13,13 @@ namespace Siege.Gameplay.Events
         const int BaseFoodLoss = 5;
         const int FoodLossPerIntensity = 3;
         const int WoundedGuardsPerBombardment = 2;
+
+        readonly ResourceLedger _ledger;
+
+        public SiegeBombardmentEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "siege_bombardment";
         public string Name => "Siege Bombardment";
@@ -36,7 +44,7 @@ namespace Siege.Gameplay.Events
                 log.Record("ZoneIntegrity:" + target, -damage, Name);
             }
             double foodLoss = BaseFoodLoss + state.SiegeIntensity * FoodLossPerIntensity;
-            state.Food = System.Math.Max(0, state.Food - foodLoss);
+            _ledger.Withdraw(ResourceType.Food, foodLoss);
             state.TotalDeaths += 1;
             state.DeathsToday += 1;
             state.WoundedGuards += WoundedGuardsPerBombardment;
@@ -46,6 +54,6 @@ namespace Siege.Gameplay.Events
             log.Record("WoundedGuards", WoundedGuardsPerBombardment, Name);
         }
 
-        public IGameEvent Clone() => new SiegeBombardmentEvent();
+        public IGameEvent Clone() => new SiegeBombardmentEvent(_ledger);
     }
 }

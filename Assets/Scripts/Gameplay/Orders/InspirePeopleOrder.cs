@@ -1,4 +1,5 @@
 using Siege.Gameplay.Political;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -8,16 +9,18 @@ namespace Siege.Gameplay.Orders
     {
         readonly IPopupService _popup;
         readonly PoliticalState _political;
+        readonly ResourceLedger _ledger;
 
         const string Narrative = "A leader climbs the barricade and speaks. For the first time in days, people cheer.";
         const double MoraleGain = 15;
         const double FoodCost = 5;
         const double WaterCost = 5;
 
-        public InspirePeopleOrder(IPopupService popup, PoliticalState political)
+        public InspirePeopleOrder(IPopupService popup, PoliticalState political, ResourceLedger ledger)
         {
             _popup = popup;
             _political = political;
+            _ledger = ledger;
         }
 
         public string Id => "inspire_people";
@@ -26,7 +29,7 @@ namespace Siege.Gameplay.Orders
         public int CooldownDays => 4;
 
         public bool CanIssue(GameState state) =>
-            state.Food >= FoodCost && state.Water >= WaterCost && _political.Faith.Value >= 2;
+            _ledger.Has(ResourceType.Food, FoodCost) && _ledger.Has(ResourceType.Water, WaterCost) && _political.Faith.Value >= 2;
 
         public void OnExecute(GameState state, ChangeLog log)
         {
@@ -34,14 +37,14 @@ namespace Siege.Gameplay.Orders
             state.Morale += MoraleGain;
             log.Record("Morale", MoraleGain, Id);
 
-            state.Food -= FoodCost;
+            _ledger.Withdraw(ResourceType.Food, FoodCost);
             log.Record("Food", -FoodCost, Id);
 
-            state.Water -= WaterCost;
+            _ledger.Withdraw(ResourceType.Water, WaterCost);
             log.Record("Water", -WaterCost, Id);
             _popup.Open(Name, Narrative, log.SliceSince(before));
         }
 
-        public IOrder Clone() => new InspirePeopleOrder(_popup, _political);
+        public IOrder Clone() => new InspirePeopleOrder(_popup, _political, _ledger);
     }
 }

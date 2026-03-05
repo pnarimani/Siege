@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
@@ -8,7 +9,13 @@ namespace Siege.Gameplay.Events
         const int UnrestIncrease = 15;
         const int MaxGuardsLost = 5;
 
+        readonly ResourceLedger _ledger;
         bool _hasTriggered;
+
+        public HungerRiotEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "hunger_riot";
         public string Name => "Hunger Riot";
@@ -24,7 +31,7 @@ namespace Siege.Gameplay.Events
 
         public void Execute(GameState state, ChangeLog log)
         {
-            state.Food = System.Math.Max(0, state.Food - FoodLoss);
+            _ledger.Withdraw(ResourceType.Food, FoodLoss);
             state.Unrest += UnrestIncrease;
             int guardsLost = System.Math.Min(MaxGuardsLost, state.Guards);
             state.Guards -= guardsLost;
@@ -37,6 +44,6 @@ namespace Siege.Gameplay.Events
             log.Record("DeathsToday", guardsLost, Name);
         }
 
-        public IGameEvent Clone() => new HungerRiotEvent();
+        public IGameEvent Clone() => new HungerRiotEvent(_ledger);
     }
 }

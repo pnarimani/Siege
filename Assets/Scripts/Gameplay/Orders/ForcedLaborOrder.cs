@@ -1,4 +1,5 @@
 using Siege.Gameplay.Political;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -13,11 +14,13 @@ namespace Siege.Gameplay.Orders
 
         readonly IPopupService _popup;
         readonly PoliticalState _political;
+        readonly ResourceLedger _ledger;
 
-        public ForcedLaborOrder(IPopupService popup, PoliticalState political)
+        public ForcedLaborOrder(IPopupService popup, PoliticalState political, ResourceLedger ledger)
         {
             _popup = popup;
             _political = political;
+            _ledger = ledger;
         }
 
         public string Id => "forced_labor";
@@ -31,7 +34,7 @@ namespace Siege.Gameplay.Orders
         public void OnExecute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
-            state.Materials += MaterialsGain;
+            _ledger.Deposit(ResourceType.Materials, MaterialsGain);
             log.Record("Materials", MaterialsGain, Id);
 
             state.Unrest += UnrestIncrease;
@@ -45,6 +48,6 @@ namespace Siege.Gameplay.Orders
             _popup.Open(Name, Narrative, log.SliceSince(before));
         }
 
-        public IOrder Clone() => new ForcedLaborOrder(_popup, _political);
+        public IOrder Clone() => new ForcedLaborOrder(_popup, _political, _ledger);
     }
 }

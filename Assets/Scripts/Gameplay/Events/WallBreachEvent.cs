@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
@@ -10,6 +11,13 @@ namespace Siege.Gameplay.Events
         const int BarricadeMaterialCost = 10;
         const int BarricadeDamage = 5;
         const int AbandonDamage = 15;
+
+        readonly ResourceLedger _ledger;
+
+        public WallBreachEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "wall_breach";
         public string Name => "Wall Breach";
@@ -55,7 +63,7 @@ namespace Siege.Gameplay.Events
                     break;
 
                 case 1:
-                    state.Materials = System.Math.Max(0, state.Materials - BarricadeMaterialCost);
+                    _ledger.Withdraw(ResourceType.Materials, BarricadeMaterialCost);
                     state.Zones[zone].Integrity = System.Math.Max(0, state.Zones[zone].Integrity - BarricadeDamage);
                     log.Record("Materials", -BarricadeMaterialCost, Name);
                     log.Record("ZoneIntegrity:" + zone, -BarricadeDamage, Name);
@@ -68,6 +76,6 @@ namespace Siege.Gameplay.Events
             }
         }
 
-        public IGameEvent Clone() => new WallBreachEvent();
+        public IGameEvent Clone() => new WallBreachEvent(_ledger);
     }
 }

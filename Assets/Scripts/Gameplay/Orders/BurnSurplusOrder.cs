@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -11,10 +12,12 @@ namespace Siege.Gameplay.Orders
         const double MoraleGain = 8;
 
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
-        public BurnSurplusOrder(IPopupService popup)
+        public BurnSurplusOrder(IPopupService popup, ResourceLedger ledger)
         {
             _popup = popup;
+            _ledger = ledger;
         }
 
         public string Id => "burn_surplus";
@@ -23,12 +26,12 @@ namespace Siege.Gameplay.Orders
         public int CooldownDays => 3;
 
         public bool CanIssue(GameState state) =>
-            state.Materials >= MaterialsCost;
+            _ledger.Has(ResourceType.Materials, MaterialsCost);
 
         public void OnExecute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
-            state.Materials -= MaterialsCost;
+            _ledger.Withdraw(ResourceType.Materials, MaterialsCost);
             log.Record("Materials", -MaterialsCost, Id);
 
             state.Sickness -= SicknessReduction;
@@ -39,6 +42,6 @@ namespace Siege.Gameplay.Orders
             _popup.Open(Name, Narrative, log.SliceSince(before));
         }
 
-        public IOrder Clone() => new BurnSurplusOrder(_popup);
+        public IOrder Clone() => new BurnSurplusOrder(_popup, _ledger);
     }
 }

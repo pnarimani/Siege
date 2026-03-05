@@ -5,14 +5,12 @@ namespace Siege.Gameplay.Buildings
 {
     public class BuildingService
     {
-        readonly StorageBuildingRegistry _storageBuildings;
-        readonly ResourceStorage _resourceStorage;
+        readonly ResourceLedger _ledger;
         readonly GameState _gameState;
 
-        public BuildingService(StorageBuildingRegistry storageBuildings, ResourceStorage resourceStorage, GameState gameState)
+        public BuildingService(ResourceLedger ledger, GameState gameState)
         {
-            _storageBuildings = storageBuildings;
-            _resourceStorage = resourceStorage;
+            _ledger = ledger;
             _gameState = gameState;
         }
 
@@ -31,32 +29,21 @@ namespace Siege.Gameplay.Buildings
 
         void RedistributeStorage(StorageBuilding storage)
         {
-            var stored = storage.GetAllStored();
+            var snapshot = storage.Inventory.GetSnapshot();
+
+            // Unregister first so redistributed resources don't flow back into this inventory
+            _ledger.Unregister(storage.Inventory);
+
+            foreach (var (resource, amount) in snapshot)
+                _ledger.Deposit(resource, amount);
+
             storage.ClearAll();
-
-            foreach (var (resource, amount) in stored)
-            {
-                double deposited = 0;
-                foreach (var other in _storageBuildings.All)
-                {
-                    if (other == storage) continue;
-                    deposited += other.Deposit(resource, amount - deposited);
-                    if (deposited >= amount) break;
-                }
-
-                var lost = amount - deposited;
-                if (lost > 0)
-                    _gameState.AddResource(resource, -lost);
-            }
         }
 
         void GrantSalvageMaterials(Building building)
         {
             foreach (var salvage in building.Definition.SalvageMaterials)
-            {
-                _resourceStorage.Deposit(salvage.Resource, salvage.Quantity);
-                _gameState.AddResource(salvage.Resource, salvage.Quantity);
-            }
+                _ledger.Deposit(salvage.Resource, salvage.Quantity);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -7,6 +8,7 @@ namespace Siege.Gameplay.Laws
     public class CannibalismLaw : ILaw
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const string Narrative = "No one speaks of where the meat comes from. No one asks.";
         const double FoodThreshold = 40;
@@ -19,14 +21,18 @@ namespace Siege.Gameplay.Laws
         const double DailySickness = 3;
         const double DailyUnrest = -3;
 
-        public CannibalismLaw(IPopupService popup) => _popup = popup;
+        public CannibalismLaw(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "cannibalism";
         public string Name => "Cannibalism";
         public string Description => "The dead shall feed the living. Generates food from deaths but devastates morale and spreads sickness.";
 
         public bool CanEnact(GameState state) =>
-            state.Food <= FoodThreshold && state.ConsecutiveFoodDeficitDays >= MinDeficitDays;
+            _ledger.GetTotal(ResourceType.Food) <= FoodThreshold && state.ConsecutiveFoodDeficitDays >= MinDeficitDays;
 
         public void OnEnact(GameState state, ChangeLog log)
         {
@@ -44,7 +50,7 @@ namespace Siege.Gameplay.Laws
         public void ApplyDailyEffect(GameState state, ChangeLog log)
         {
             int foodGain = Math.Clamp(state.DeathsToday, MinFoodFromDead, MaxFoodFromDead);
-            state.Food += foodGain;
+            _ledger.Deposit(ResourceType.Food, foodGain);
             log.Record("Food", foodGain, "Cannibalism");
 
             state.Morale += DailyMorale;
@@ -57,6 +63,6 @@ namespace Siege.Gameplay.Laws
             log.Record("Unrest", DailyUnrest, "Cannibalism");
         }
 
-        public ILaw Clone() => new CannibalismLaw(_popup);
+        public ILaw Clone() => new CannibalismLaw(_popup, _ledger);
     }
 }

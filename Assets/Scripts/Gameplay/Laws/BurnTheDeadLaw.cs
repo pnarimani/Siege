@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -6,6 +7,7 @@ namespace Siege.Gameplay.Laws
     public class BurnTheDeadLaw : ILaw
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const string Narrative = "The pyres burn day and night. The smoke chokes the living, but the plague recedes.";
         const double SicknessThreshold = 35;
@@ -13,7 +15,11 @@ namespace Siege.Gameplay.Laws
         const double FuelCost = -2;
         const double MoraleCost = -10;
 
-        public BurnTheDeadLaw(IPopupService popup) => _popup = popup;
+        public BurnTheDeadLaw(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "burn_the_dead";
         public string Name => "Burn the Dead";
@@ -27,7 +33,7 @@ namespace Siege.Gameplay.Laws
             state.Sickness += SicknessReduction;
             log.Record("Sickness", SicknessReduction, "Burn the Dead");
 
-            state.Fuel += FuelCost;
+            _ledger.Withdraw(ResourceType.Fuel, 2);
             log.Record("Fuel", FuelCost, "Burn the Dead");
 
             state.Morale += MoraleCost;
@@ -35,6 +41,6 @@ namespace Siege.Gameplay.Laws
             _popup.Open(Name, Narrative, log.SliceSince(before));
         }
 
-        public ILaw Clone() => new BurnTheDeadLaw(_popup);
+        public ILaw Clone() => new BurnTheDeadLaw(_popup, _ledger);
     }
 }

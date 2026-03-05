@@ -14,13 +14,13 @@ namespace Siege.Gameplay.Resources
         const double FuelPerPersonNight = 0.3; // only consumed at night for warmth
 
         readonly ChangeLog _changeLog;
-        readonly ResourceStorage _storage;
+        readonly ResourceLedger _ledger;
         readonly GameClock _clock;
 
-        public ResourceConsumptionSystem(ChangeLog changeLog, ResourceStorage storage, GameClock clock)
+        public ResourceConsumptionSystem(ChangeLog changeLog, ResourceLedger ledger, GameClock clock)
         {
             _changeLog = changeLog;
-            _storage = storage;
+            _ledger = ledger;
             _clock = clock;
         }
 
@@ -32,15 +32,13 @@ namespace Siege.Gameplay.Resources
 
             // Food consumption
             double foodNeeded = FoodPerPerson * consumers * dayFraction * state.FoodConsumptionMultiplier;
-            double foodConsumed = _storage.Withdraw(ResourceType.Food, foodNeeded);
-            state.AddResource(ResourceType.Food, -foodConsumed);
+            double foodConsumed = _ledger.Withdraw(ResourceType.Food, foodNeeded);
             if (foodConsumed > 0)
                 _changeLog.Record("Food", -foodConsumed, "Population consumption");
 
             // Water consumption
             double waterNeeded = WaterPerPerson * consumers * dayFraction * state.WaterConsumptionMultiplier;
-            double waterConsumed = _storage.Withdraw(ResourceType.Water, waterNeeded);
-            state.AddResource(ResourceType.Water, -waterConsumed);
+            double waterConsumed = _ledger.Withdraw(ResourceType.Water, waterNeeded);
             if (waterConsumed > 0)
                 _changeLog.Record("Water", -waterConsumed, "Population consumption");
 
@@ -48,8 +46,7 @@ namespace Siege.Gameplay.Resources
             if (_clock.IsNight)
             {
                 double fuelNeeded = FuelPerPersonNight * consumers * dayFraction;
-                double fuelConsumed = _storage.Withdraw(ResourceType.Fuel, fuelNeeded);
-                state.AddResource(ResourceType.Fuel, -fuelConsumed);
+                double fuelConsumed = _ledger.Withdraw(ResourceType.Fuel, fuelNeeded);
                 if (fuelConsumed > 0)
                     _changeLog.Record("Fuel", -fuelConsumed, "Night warmth");
 
@@ -63,7 +60,7 @@ namespace Siege.Gameplay.Resources
             }
 
             // Hunger/thirst morale effects
-            if (state.Food <= 0)
+            if (_ledger.GetTotal(ResourceType.Food) <= 0)
             {
                 double penalty = 5.0 * dayFraction;
                 state.Morale -= penalty;
@@ -72,7 +69,7 @@ namespace Siege.Gameplay.Resources
                 _changeLog.Record("Unrest", penalty * 0.5, "Starvation");
             }
 
-            if (state.Water <= 0)
+            if (_ledger.GetTotal(ResourceType.Water) <= 0)
             {
                 double penalty = 6.0 * dayFraction;
                 state.Morale -= penalty;

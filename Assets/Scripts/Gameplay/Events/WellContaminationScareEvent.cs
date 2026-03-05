@@ -1,10 +1,17 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
     public class WellContaminationScareEvent : IGameEvent
     {
+        readonly ResourceLedger _ledger;
         bool _hasTriggered;
+
+        public WellContaminationScareEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "well_contamination_scare";
         public string Name => "Well Contamination Scare";
@@ -14,7 +21,7 @@ namespace Siege.Gameplay.Events
         {
             new EventResponse(
                 "Treat with medicine",
-                state.Medicine >= 5 ? "Medicine -5" : "(Requires 5 Medicine)"),
+                _ledger.GetTotal(ResourceType.Medicine) >= 5 ? "Medicine -5" : "(Requires 5 Medicine)"),
             new EventResponse("Boil all water", "Sickness +1"),
             new EventResponse("Ignore the rumours", "Sickness +5")
         };
@@ -32,9 +39,9 @@ namespace Siege.Gameplay.Events
             switch (responseIndex)
             {
                 case 0:
-                    if (state.Medicine >= 5)
+                    if (_ledger.GetTotal(ResourceType.Medicine) >= 5)
                     {
-                        state.AddResource(ResourceType.Medicine, -5);
+                        _ledger.Withdraw(ResourceType.Medicine, 5);
                         log.Record("Medicine", -5, Name);
                     }
                     break;
@@ -49,6 +56,6 @@ namespace Siege.Gameplay.Events
             }
         }
 
-        public IGameEvent Clone() => new WellContaminationScareEvent();
+        public IGameEvent Clone() => new WellContaminationScareEvent(_ledger);
     }
 }

@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
@@ -8,7 +9,13 @@ namespace Siege.Gameplay.Events
         const int IntegrityDamage = 10;
         const int FoodLoss = 10;
 
+        readonly ResourceLedger _ledger;
         bool _hasTriggered;
+
+        public OpeningBombardmentEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "opening_bombardment";
         public string Name => "Opening Bombardment";
@@ -27,10 +34,10 @@ namespace Siege.Gameplay.Events
             var zone = state.Zones[ZoneId.OuterFarms];
             zone.Integrity -= IntegrityDamage;
             log.Record("OuterFarms.Integrity", -IntegrityDamage, Name);
-            state.AddResource(ResourceType.Food, -FoodLoss);
+            _ledger.Withdraw(ResourceType.Food, FoodLoss);
             log.Record("Food", -FoodLoss, Name);
         }
 
-        public IGameEvent Clone() => new OpeningBombardmentEvent();
+        public IGameEvent Clone() => new OpeningBombardmentEvent(_ledger);
     }
 }

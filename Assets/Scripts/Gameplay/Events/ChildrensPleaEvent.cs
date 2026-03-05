@@ -1,4 +1,5 @@
 using Siege.Gameplay.Political;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 
@@ -7,15 +8,17 @@ namespace Siege.Gameplay.Events
     public class ChildrensPleaEvent : IGameEvent
     {
         readonly PoliticalState _political;
+        readonly ResourceLedger _ledger;
         bool _hasTriggered;
 
         public string Id => "childrens_plea";
         public string Name => "Children's Plea";
         public string Description => "A group of orphaned children approaches the council, begging for shelter and food.";
 
-        public ChildrensPleaEvent(PoliticalState political)
+        public ChildrensPleaEvent(PoliticalState political, ResourceLedger ledger)
         {
             _political = political;
+            _ledger = ledger;
         }
 
         public bool CanTrigger(GameState state)
@@ -47,7 +50,7 @@ namespace Siege.Gameplay.Events
             switch (responseIndex)
             {
                 case 0:
-                    state.Materials = System.Math.Max(0, state.Materials - 10);
+                    _ledger.Withdraw(ResourceType.Materials, 10);
                     state.Morale += 10;
                     state.Sickness += 3;
                     _political.Faith.Add(1);
@@ -66,6 +69,6 @@ namespace Siege.Gameplay.Events
             }
         }
 
-        public IGameEvent Clone() => new ChildrensPleaEvent(_political);
+        public IGameEvent Clone() => new ChildrensPleaEvent(_political, _ledger);
     }
 }

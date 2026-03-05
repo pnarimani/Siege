@@ -1,96 +1,49 @@
-using System.Collections.Generic;
 using AutofacUnity;
+using Siege.Gameplay.Resources;
 using UnityEngine;
 
 namespace Siege.Gameplay.Buildings
 {
     /// <summary>
-    /// Component on buildings that store resources. Resources are physically located
-    /// in storage buildings. Losing a zone without evacuating loses stored resources.
+    /// Component on buildings that store resources. Owns a ResourceInventory and registers it
+    /// with ResourceLedger when active. All storage logic lives in ResourceInventory.
     /// </summary>
     public class StorageBuilding : MonoBehaviour
     {
         public const double DefaultMaxCapacityPerResource = 200;
 
-        StorageBuildingRegistry _registry;
-
-        // ── Configuration ─────────────────────────────────────────────
         [SerializeField] double _maxCapacityPerResource = DefaultMaxCapacityPerResource;
 
-        // ── State ─────────────────────────────────────────────────────
-        readonly Dictionary<ResourceType, double> _stored = new();
-        public Building Building { get; private set; }
+        ResourceLedger _ledger;
 
-        public double MaxCapacityPerResource => _maxCapacityPerResource;
+        public ResourceInventory Inventory { get; private set; }
+        public Building Building { get; private set; }
 
         // ── Lifecycle ─────────────────────────────────────────────────
 
-        void OnEnable() => _registry?.Register(this);
-        void OnDisable() => _registry?.Unregister(this);
-
         void Awake()
         {
-            _registry = Resolver.Resolve<StorageBuildingRegistry>();
             Building = GetComponent<Building>();
+            Inventory = new ResourceInventory { MaxPerResource = _maxCapacityPerResource };
+            _ledger = Resolver.Resolve<ResourceLedger>();
         }
 
-        // ── Storage Operations ────────────────────────────────────────
-
-        public double GetStored(ResourceType type)
+        void OnEnable()
         {
-            return _stored.TryGetValue(type, out var amount) ? amount : 0;
+            if (Building?.Zone != null)
+                _ledger?.Register(Inventory, Building.Zone);
         }
 
-        /// <summary>
-        /// Deposit resources. Returns the amount actually deposited (may be less if at capacity).
-        /// </summary>
-        public double Deposit(ResourceType type, double amount)
-        {
-            double current = GetStored(type);
-            double space = _maxCapacityPerResource - current;
-            double deposited = System.Math.Min(amount, space);
-            if (deposited > 0)
-                _stored[type] = current + deposited;
-            return deposited;
-        }
+        void OnDisable() => _ledger?.Unregister(Inventory);
 
-        /// <summary>
-        /// Withdraw resources. Returns the amount actually withdrawn (may be less if insufficient).
-        /// </summary>
-        public double Withdraw(ResourceType type, double amount)
-        {
-            double current = GetStored(type);
-            double withdrawn = System.Math.Min(amount, current);
-            if (withdrawn > 0)
-                _stored[type] = current - withdrawn;
-            return withdrawn;
-        }
+        // ── Convenience Accessors (delegate to Inventory) ─────────────
 
-        /// <summary>
-        /// Returns total stored across all resource types.
-        /// </summary>
-        public double TotalStored()
-        {
-            double total = 0;
-            foreach (var kv in _stored)
-                total += kv.Value;
-            return total;
-        }
+        public double GetStored(ResourceType type) => Inventory.GetStored(type);
+        public double Deposit(ResourceType type, double amount) => Inventory.Deposit(type, amount);
+        public double Withdraw(ResourceType type, double amount) => Inventory.Withdraw(type, amount);
+        public void ClearAll() => Inventory.ClearAll();
 
-        /// <summary>
-        /// Clears all stored resources (e.g., when zone is lost without evacuation).
-        /// </summary>
-        public void ClearAll()
-        {
-            _stored.Clear();
-        }
-
-        /// <summary>
-        /// Returns all stored resources as a snapshot.
-        /// </summary>
-        public Dictionary<ResourceType, double> GetAllStored()
-        {
-            return new Dictionary<ResourceType, double>(_stored);
-        }
+        public System.Collections.Generic.Dictionary<ResourceType, double> GetAllStored() =>
+            new(Inventory.GetSnapshot());
     }
 }

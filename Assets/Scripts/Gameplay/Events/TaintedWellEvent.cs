@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
@@ -8,7 +9,13 @@ namespace Siege.Gameplay.Events
         const int WaterLoss = 20;
         const int SicknessIncrease = 10;
 
+        readonly ResourceLedger _ledger;
         bool _hasTriggered;
+
+        public TaintedWellEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "tainted_well";
         public string Name => "Tainted Well";
@@ -24,12 +31,12 @@ namespace Siege.Gameplay.Events
 
         public void Execute(GameState state, ChangeLog log)
         {
-            state.AddResource(ResourceType.Water, -WaterLoss);
+            _ledger.Withdraw(ResourceType.Water, WaterLoss);
             log.Record("Water", -WaterLoss, Name);
             state.Sickness += SicknessIncrease;
             log.Record("Sickness", SicknessIncrease, Name);
         }
 
-        public IGameEvent Clone() => new TaintedWellEvent();
+        public IGameEvent Clone() => new TaintedWellEvent(_ledger);
     }
 }

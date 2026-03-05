@@ -1,4 +1,5 @@
 using System;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -9,8 +10,13 @@ namespace Siege.Gameplay.Laws
         const string Narrative = "The council chamber is empty. The gallows are not.";
 
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
-        public MartialLawLaw(IPopupService popup) => _popup = popup;
+        public MartialLawLaw(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "martial_law";
         public string Name => "Martial Law";
@@ -51,10 +57,10 @@ namespace Siege.Gameplay.Laws
                 log.Record("Deaths", executions, Name);
             }
 
-            state.Food -= 10;
+            _ledger.Withdraw(ResourceType.Food, 10);
             log.Record("Food", -10, Name);
         }
 
-        public ILaw Clone() => new MartialLawLaw(_popup);
+        public ILaw Clone() => new MartialLawLaw(_popup, _ledger);
     }
 }

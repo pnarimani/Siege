@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 using UnityEngine;
@@ -7,6 +8,7 @@ namespace Siege.Gameplay.Missions
     public class RaidCivilianFarms : IMission
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const int DurationDays = 2;
         const int Workers = 4;
@@ -22,7 +24,11 @@ namespace Siege.Gameplay.Missions
         int _daysRemaining;
         int _workersSent;
 
-        public RaidCivilianFarms(IPopupService popup) => _popup = popup;
+        public RaidCivilianFarms(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "raid_civilian_farms";
         public string Name => "Raid Civilian Farms";
@@ -50,7 +56,7 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceCleanSuccess)
             {
-                state.AddResource(ResourceType.Food, CleanFood);
+                _ledger.Deposit(ResourceType.Food, CleanFood);
                 log.Record("Food", CleanFood, Name);
                 outcome = new MissionOutcome { NarrativeText = CleanText, Success = true };
                 ReturnSurvivors(state, log, outcome);
@@ -58,7 +64,7 @@ namespace Siege.Gameplay.Missions
                 return outcome;
             }
 
-            state.AddResource(ResourceType.Food, DirtyFood);
+            _ledger.Deposit(ResourceType.Food, DirtyFood);
             state.Unrest += DirtyUnrest;
             state.TotalDeaths += DirtyDeaths;
             state.DeathsToday += DirtyDeaths;
@@ -77,7 +83,7 @@ namespace Siege.Gameplay.Missions
             log.Record("HealthyWorkers", _workersSent, Name + " (cancelled)");
         }
 
-        public IMission Clone() => new RaidCivilianFarms(_popup);
+        public IMission Clone() => new RaidCivilianFarms(_popup, _ledger);
 
         void ReturnSurvivors(GameState state, ChangeLog log, MissionOutcome outcome)
         {

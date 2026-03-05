@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 
@@ -10,13 +11,15 @@ namespace Siege.Gameplay.Missions
         const int TemplateCount = 8;
 
         readonly ChangeLog _changeLog;
+        readonly ResourceLedger _ledger;
         readonly List<ScavengingLocation> _available = new();
 
         public IReadOnlyList<ScavengingLocation> AvailableLocations => _available;
 
-        public ScavengingSystem(ChangeLog changeLog)
+        public ScavengingSystem(ChangeLog changeLog, ResourceLedger ledger)
         {
             _changeLog = changeLog;
+            _ledger = ledger;
         }
 
         public void Tick(GameState state, float deltaTime) { }
@@ -207,7 +210,7 @@ namespace Siege.Gameplay.Missions
 
                 double amount = min.Quantity + Random.value * (max.Quantity - min.Quantity);
                 amount = System.Math.Round(amount);
-                state.AddResource(min.Resource, amount);
+                _ledger.Deposit(min.Resource, amount);
                 _changeLog.Record(min.Resource.ToString(), amount, "Scavenging: " + location.Name);
             }
 

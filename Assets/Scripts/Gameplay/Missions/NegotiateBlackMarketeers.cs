@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 using UnityEngine;
@@ -7,6 +8,7 @@ namespace Siege.Gameplay.Missions
     public class NegotiateBlackMarketeers : IMission
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const int Duration = 3;
         const int Workers = 2;
@@ -26,7 +28,11 @@ namespace Siege.Gameplay.Missions
         int _totalDuration;
         int _workersSent;
 
-        public NegotiateBlackMarketeers(IPopupService popup) => _popup = popup;
+        public NegotiateBlackMarketeers(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "negotiate_black_marketeers";
         public string Name => "Negotiate with Black Marketeers";
@@ -55,7 +61,7 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceWater)
             {
-                state.AddResource(ResourceType.Water, WaterGain);
+                _ledger.Deposit(ResourceType.Water, WaterGain);
                 state.Unrest += DealUnrest;
                 log.Record("Water", WaterGain, Name);
                 log.Record("Unrest", DealUnrest, Name);
@@ -67,7 +73,7 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceWater + ChanceFood)
             {
-                state.AddResource(ResourceType.Food, FoodGain);
+                _ledger.Deposit(ResourceType.Food, FoodGain);
                 state.Unrest += DealUnrest;
                 log.Record("Food", FoodGain, Name);
                 log.Record("Unrest", DealUnrest, Name);
@@ -94,7 +100,7 @@ namespace Siege.Gameplay.Missions
             log.Record("HealthyWorkers", _workersSent, Name + " (cancelled)");
         }
 
-        public IMission Clone() => new NegotiateBlackMarketeers(_popup);
+        public IMission Clone() => new NegotiateBlackMarketeers(_popup, _ledger);
 
         void ReturnSurvivors(GameState state, ChangeLog log, MissionOutcome outcome)
         {

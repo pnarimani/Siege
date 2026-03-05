@@ -1,4 +1,5 @@
 using System;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -7,6 +8,7 @@ namespace Siege.Gameplay.Laws
     public class GarrisonMandateLaw : ILaw
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const string Narrative = "Every third sunrise, another name is read from the conscription list.";
         const int ImmediateConscripts = 3;
@@ -17,9 +19,10 @@ namespace Siege.Gameplay.Laws
 
         int _dayCounter;
 
-        public GarrisonMandateLaw(IPopupService popup)
+        public GarrisonMandateLaw(IPopupService popup, ResourceLedger ledger)
         {
             _popup = popup;
+            _ledger = ledger;
             _dayCounter = 0;
         }
 
@@ -47,7 +50,7 @@ namespace Siege.Gameplay.Laws
 
         public void ApplyDailyEffect(GameState state, ChangeLog log)
         {
-            state.Food += DailyFoodCost;
+            _ledger.Withdraw(ResourceType.Food, 5);
             log.Record("Food", DailyFoodCost, "Garrison Mandate (upkeep)");
 
             _dayCounter++;
@@ -62,6 +65,6 @@ namespace Siege.Gameplay.Laws
             }
         }
 
-        public ILaw Clone() => new GarrisonMandateLaw(_popup);
+        public ILaw Clone() => new GarrisonMandateLaw(_popup, _ledger);
     }
 }

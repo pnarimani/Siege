@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 using UnityEngine;
@@ -7,6 +8,7 @@ namespace Siege.Gameplay.Missions
     public class ForageBeyondWalls : IMission
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const int Duration = 4;
         const int Workers = 5;
@@ -26,7 +28,11 @@ namespace Siege.Gameplay.Missions
         int _totalDuration;
         int _workersSent;
 
-        public ForageBeyondWalls(IPopupService popup) => _popup = popup;
+        public ForageBeyondWalls(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "forage_beyond_walls";
         public string Name => "Forage Beyond Walls";
@@ -55,7 +61,7 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceGreatSuccess)
             {
-                state.AddResource(ResourceType.Food, GreatFood);
+                _ledger.Deposit(ResourceType.Food, GreatFood);
                 log.Record("Food", GreatFood, Name);
                 outcome = new MissionOutcome { NarrativeText = GreatText, Success = true };
                 ReturnSurvivors(state, log, outcome);
@@ -65,7 +71,7 @@ namespace Siege.Gameplay.Missions
 
             if (roll < ChanceGreatSuccess + ChancePartialSuccess)
             {
-                state.AddResource(ResourceType.Food, PartialFood);
+                _ledger.Deposit(ResourceType.Food, PartialFood);
                 log.Record("Food", PartialFood, Name);
                 outcome = new MissionOutcome { NarrativeText = PartialText, Success = true };
                 ReturnSurvivors(state, log, outcome);
@@ -90,7 +96,7 @@ namespace Siege.Gameplay.Missions
             log.Record("HealthyWorkers", _workersSent, Name + " (cancelled)");
         }
 
-        public IMission Clone() => new ForageBeyondWalls(_popup);
+        public IMission Clone() => new ForageBeyondWalls(_popup, _ledger);
 
         void ReturnSurvivors(GameState state, ChangeLog log, MissionOutcome outcome)
         {

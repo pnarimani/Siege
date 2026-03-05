@@ -1,4 +1,5 @@
 using Siege.Gameplay.Political;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -10,11 +11,13 @@ namespace Siege.Gameplay.Laws
 
         readonly IPopupService _popup;
         readonly PoliticalState _politics;
+        readonly ResourceLedger _ledger;
 
-        public ScorchedEarthLaw(IPopupService popup, PoliticalState politics)
+        public ScorchedEarthLaw(IPopupService popup, PoliticalState politics, ResourceLedger ledger)
         {
             _popup = popup;
             _politics = politics;
+            _ledger = ledger;
         }
 
         public string Id => "scorched_earth";
@@ -27,7 +30,7 @@ namespace Siege.Gameplay.Laws
         {
             var before = log.CurrentChanges.Count;
 
-            state.Materials -= 20;
+            _ledger.Withdraw(ResourceType.Materials, 20);
             log.Record("Materials", -20, Name);
 
             state.Unrest += 5;
@@ -45,6 +48,6 @@ namespace Siege.Gameplay.Laws
             log.Record("Unrest", 5, Name);
         }
 
-        public ILaw Clone() => new ScorchedEarthLaw(_popup, _politics);
+        public ILaw Clone() => new ScorchedEarthLaw(_popup, _politics, _ledger);
     }
 }

@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 
@@ -13,7 +14,10 @@ namespace Siege.Gameplay.Events
         const double FoodReward = 30.0;
         const double HaggleUnrestPenalty = 5.0;
 
+        readonly ResourceLedger _ledger;
         int _lastTriggerDay = int.MinValue;
+
+        public BlackMarketTraderEvent(ResourceLedger ledger) => _ledger = ledger;
 
         public string Id => "black_market_trader";
         public string Name => "Black Market Trader";
@@ -40,14 +44,14 @@ namespace Siege.Gameplay.Events
             switch (responseIndex)
             {
                 case 0:
-                    state.AddResource(ResourceType.Materials, -MaterialsCostFull);
-                    state.AddResource(ResourceType.Food, FoodReward);
+                    _ledger.Withdraw(ResourceType.Materials, MaterialsCostFull);
+                    _ledger.Deposit(ResourceType.Food, FoodReward);
                     log.Record("Materials", -MaterialsCostFull, Name);
                     log.Record("Food", FoodReward, Name);
                     break;
                 case 1:
-                    state.AddResource(ResourceType.Materials, -MaterialsCostHaggle);
-                    state.AddResource(ResourceType.Food, FoodReward);
+                    _ledger.Withdraw(ResourceType.Materials, MaterialsCostHaggle);
+                    _ledger.Deposit(ResourceType.Food, FoodReward);
                     state.Unrest += HaggleUnrestPenalty;
                     log.Record("Materials", -MaterialsCostHaggle, Name);
                     log.Record("Food", FoodReward, Name);
@@ -56,6 +60,6 @@ namespace Siege.Gameplay.Events
             }
         }
 
-        public IGameEvent Clone() => new BlackMarketTraderEvent();
+        public IGameEvent Clone() => new BlackMarketTraderEvent(_ledger);
     }
 }

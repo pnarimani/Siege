@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -10,10 +11,12 @@ namespace Siege.Gameplay.Orders
         const double FuelCost = 5;
 
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
-        public DivertSuppliesOrder(IPopupService popup)
+        public DivertSuppliesOrder(IPopupService popup, ResourceLedger ledger)
         {
             _popup = popup;
+            _ledger = ledger;
         }
 
         public string Id => "divert_supplies";
@@ -22,15 +25,15 @@ namespace Siege.Gameplay.Orders
         public int CooldownDays => 3;
 
         public bool CanIssue(GameState state) =>
-            state.Materials >= MaterialsCost && state.Fuel >= FuelCost;
+            _ledger.Has(ResourceType.Materials, MaterialsCost) && _ledger.Has(ResourceType.Fuel, FuelCost);
 
         public void OnExecute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
-            state.Materials -= MaterialsCost;
+            _ledger.Withdraw(ResourceType.Materials, MaterialsCost);
             log.Record("Materials", -MaterialsCost, Id);
 
-            state.Fuel -= FuelCost;
+            _ledger.Withdraw(ResourceType.Fuel, FuelCost);
             log.Record("Fuel", -FuelCost, Id);
 
             var perimeter = state.ActivePerimeter;
@@ -39,6 +42,6 @@ namespace Siege.Gameplay.Orders
             _popup.Open(Name, Narrative, log.SliceSince(before));
         }
 
-        public IOrder Clone() => new DivertSuppliesOrder(_popup);
+        public IOrder Clone() => new DivertSuppliesOrder(_popup, _ledger);
     }
 }

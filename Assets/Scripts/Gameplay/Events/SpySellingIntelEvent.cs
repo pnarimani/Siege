@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 
@@ -11,7 +12,13 @@ namespace Siege.Gameplay.Events
         const double MaterialsCost = 10.0;
         const double FoodCost = 5.0;
 
+        readonly ResourceLedger _ledger;
         int _lastTriggerDay = int.MinValue;
+
+        public SpySellingIntelEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "spy_selling_intel";
         public string Name => "Spy Selling Intel";
@@ -39,8 +46,8 @@ namespace Siege.Gameplay.Events
         {
             if (responseIndex == 0)
             {
-                state.AddResource(ResourceType.Materials, -MaterialsCost);
-                state.AddResource(ResourceType.Food, -FoodCost);
+                _ledger.Withdraw(ResourceType.Materials, MaterialsCost);
+                _ledger.Withdraw(ResourceType.Food, FoodCost);
                 state.SiegeIntensity = System.Math.Max(1, state.SiegeIntensity - 1);
                 log.Record("Materials", -MaterialsCost, Name);
                 log.Record("Food", -FoodCost, Name);
@@ -48,6 +55,6 @@ namespace Siege.Gameplay.Events
             }
         }
 
-        public IGameEvent Clone() => new SpySellingIntelEvent();
+        public IGameEvent Clone() => new SpySellingIntelEvent(_ledger);
     }
 }

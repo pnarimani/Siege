@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
@@ -14,7 +15,13 @@ namespace Siege.Gameplay.Events
         const int IgnoreDeaths = 3;
         const int IgnoreUnrest = 10;
 
+        readonly ResourceLedger _ledger;
         bool _hasTriggered;
+
+        public PlagueRatsEvent(ResourceLedger ledger)
+        {
+            _ledger = ledger;
+        }
 
         public string Id => "plague_rats";
         public string Name => "Plague Rats";
@@ -50,7 +57,7 @@ namespace Siege.Gameplay.Events
                     break;
                 case 1:
                     state.Sickness += BurnSickness;
-                    state.AddResource(ResourceType.Materials, -BurnMaterialCost);
+                    _ledger.Withdraw(ResourceType.Materials, BurnMaterialCost);
                     log.Record("Sickness", BurnSickness, Name);
                     log.Record("Materials", -BurnMaterialCost, Name);
                     break;
@@ -66,6 +73,6 @@ namespace Siege.Gameplay.Events
             }
         }
 
-        public IGameEvent Clone() => new PlagueRatsEvent();
+        public IGameEvent Clone() => new PlagueRatsEvent(_ledger);
     }
 }

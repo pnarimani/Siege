@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 using TypeRegistry;
@@ -14,8 +15,13 @@ namespace Siege.Gameplay.Orders
         const double SicknessThreshold = 20;
 
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
-        public RationMedicineOrder(IPopupService popup) => _popup = popup;
+        public RationMedicineOrder(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "ration_medicine";
         public string Name => "Ration Medicine";
@@ -23,12 +29,12 @@ namespace Siege.Gameplay.Orders
         public int CooldownDays => 3;
 
         public bool CanIssue(GameState state) =>
-            state.Sickness > SicknessThreshold && state.Medicine >= MedicineCost;
+            state.Sickness > SicknessThreshold && _ledger.Has(ResourceType.Medicine, MedicineCost);
 
         public void OnExecute(GameState state, ChangeLog log)
         {
             int before = log.CurrentChanges.Count;
-            state.Medicine -= MedicineCost;
+            _ledger.Withdraw(ResourceType.Medicine, MedicineCost);
             log.Record("Medicine", -MedicineCost, Id);
 
             state.Sickness -= SicknessReduction;
@@ -39,6 +45,6 @@ namespace Siege.Gameplay.Orders
             _popup.Open(Name, Narrative, log.SliceSince(before));
         }
 
-        public IOrder Clone() => new RationMedicineOrder(_popup);
+        public IOrder Clone() => new RationMedicineOrder(_popup, _ledger);
     }
 }

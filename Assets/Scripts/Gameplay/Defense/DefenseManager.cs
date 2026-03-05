@@ -24,13 +24,13 @@ namespace Siege.Gameplay.Defense
 
         readonly GameState _state;
         readonly ChangeLog _changeLog;
-        readonly ResourceStorage _storage;
+        readonly ResourceLedger _ledger;
 
-        public DefenseManager(GameState state, ChangeLog changeLog, ResourceStorage storage)
+        public DefenseManager(GameState state, ChangeLog changeLog, ResourceLedger ledger)
         {
             _state = state;
             _changeLog = changeLog;
-            _storage = storage;
+            _ledger = ledger;
         }
 
         // ── Barricade ─────────────────────────────────────────────────
@@ -38,15 +38,14 @@ namespace Siege.Gameplay.Defense
         public bool CanBuildBarricade(ZoneId zone)
         {
             if (_state.Zones[zone].IsLost) return false;
-            return _state.Materials >= BarricadeMaterialCost;
+            return _ledger.Has(ResourceType.Materials, BarricadeMaterialCost);
         }
 
         public void BuildBarricade(ZoneId zone)
         {
             if (!CanBuildBarricade(zone)) return;
 
-            _storage.Withdraw(ResourceType.Materials, BarricadeMaterialCost);
-            _state.Materials -= BarricadeMaterialCost;
+            _ledger.Withdraw(ResourceType.Materials, BarricadeMaterialCost);
             _state.Zones[zone].BarricadeBuffer += BarricadeBuffer;
             _changeLog.Record("Materials", -BarricadeMaterialCost, "Build barricade");
             _changeLog.Record("Barricade", BarricadeBuffer, $"Barricade ({zone})");
@@ -59,17 +58,16 @@ namespace Siege.Gameplay.Defense
             var zoneState = _state.Zones[zone];
             if (zoneState.IsLost) return false;
             if (zoneState.HasOilCauldron) return false;
-            return _state.Fuel >= CauldronFuelCost && _state.Materials >= CauldronMaterialCost;
+            return _ledger.Has(ResourceType.Fuel, CauldronFuelCost)
+                && _ledger.Has(ResourceType.Materials, CauldronMaterialCost);
         }
 
         public void BuildOilCauldron(ZoneId zone)
         {
             if (!CanBuildOilCauldron(zone)) return;
 
-            _storage.Withdraw(ResourceType.Fuel, CauldronFuelCost);
-            _storage.Withdraw(ResourceType.Materials, CauldronMaterialCost);
-            _state.Fuel -= CauldronFuelCost;
-            _state.Materials -= CauldronMaterialCost;
+            _ledger.Withdraw(ResourceType.Fuel, CauldronFuelCost);
+            _ledger.Withdraw(ResourceType.Materials, CauldronMaterialCost);
             _state.Zones[zone].HasOilCauldron = true;
             _changeLog.Record("Fuel", -CauldronFuelCost, "Build oil cauldron");
             _changeLog.Record("Materials", -CauldronMaterialCost, "Build oil cauldron");
@@ -82,15 +80,14 @@ namespace Siege.Gameplay.Defense
             var zoneState = _state.Zones[zone];
             if (zoneState.IsLost) return false;
             if (zoneState.HasArcherPost) return false;
-            return _state.Materials >= ArcherPostMaterialCost;
+            return _ledger.Has(ResourceType.Materials, ArcherPostMaterialCost);
         }
 
         public void BuildArcherPost(ZoneId zone)
         {
             if (!CanBuildArcherPost(zone)) return;
 
-            _storage.Withdraw(ResourceType.Materials, ArcherPostMaterialCost);
-            _state.Materials -= ArcherPostMaterialCost;
+            _ledger.Withdraw(ResourceType.Materials, ArcherPostMaterialCost);
             _state.Zones[zone].HasArcherPost = true;
             _changeLog.Record("Materials", -ArcherPostMaterialCost, "Build archer post");
         }

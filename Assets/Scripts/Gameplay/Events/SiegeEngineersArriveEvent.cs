@@ -1,4 +1,5 @@
 using Siege.Gameplay.Political;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 
@@ -7,15 +8,17 @@ namespace Siege.Gameplay.Events
     public class SiegeEngineersArriveEvent : IGameEvent
     {
         readonly PoliticalState _political;
+        readonly ResourceLedger _ledger;
         bool _hasTriggered;
 
         public string Id => "siege_engineers_arrive";
         public string Name => "Siege Engineers Arrive";
         public string Description => "A small band of military engineers approaches the gate, offering their skills in exchange for shelter and rations.";
 
-        public SiegeEngineersArriveEvent(PoliticalState political)
+        public SiegeEngineersArriveEvent(PoliticalState political, ResourceLedger ledger)
         {
             _political = political;
+            _ledger = ledger;
         }
 
         public bool CanTrigger(GameState state)
@@ -48,8 +51,8 @@ namespace Siege.Gameplay.Events
             {
                 case 0:
                     state.HealthyWorkers += 3;
-                    state.Materials += 20;
-                    state.Food = System.Math.Max(0, state.Food - 10);
+                    _ledger.Deposit(ResourceType.Materials, 20);
+                    _ledger.Withdraw(ResourceType.Food, 10);
                     _political.Fortification.Add(1);
                     log.Record("HealthyWorkers", 3, Name);
                     log.Record("Materials", 20, Name);
@@ -63,6 +66,6 @@ namespace Siege.Gameplay.Events
             }
         }
 
-        public IGameEvent Clone() => new SiegeEngineersArriveEvent(_political);
+        public IGameEvent Clone() => new SiegeEngineersArriveEvent(_political, _ledger);
     }
 }

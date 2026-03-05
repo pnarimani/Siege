@@ -18,12 +18,6 @@ namespace Siege.Gameplay.Simulation
         public const int StartingWoundedGuards = 0;
         public const int StartingElderly = 10;
 
-        public const double StartingFood = 120;
-        public const double StartingWater = 100;
-        public const double StartingFuel = 60;
-        public const double StartingMedicine = 30;
-        public const double StartingMaterials = 50;
-
         public const double StartingMorale = 55;
         public const double StartingUnrest = 20;
         public const double StartingSickness = 10;
@@ -46,38 +40,11 @@ namespace Siege.Gameplay.Simulation
 
         // ── Resources ─────────────────────────────────────────────────
 
-        public double Food;
-        public double Water;
-        public double Fuel;
-        public double Medicine;
-        public double Materials;
-
-        public double GetResource(ResourceType type) => type switch
-        {
-            ResourceType.Food => Food,
-            ResourceType.Water => Water,
-            ResourceType.Fuel => Fuel,
-            ResourceType.Medicine => Medicine,
-            ResourceType.Materials => Materials,
-            _ => 0
-        };
-
-        public void SetResource(ResourceType type, double value)
-        {
-            switch (type)
-            {
-                case ResourceType.Food: Food = value; break;
-                case ResourceType.Water: Water = value; break;
-                case ResourceType.Fuel: Fuel = value; break;
-                case ResourceType.Medicine: Medicine = value; break;
-                case ResourceType.Materials: Materials = value; break;
-            }
-        }
-
-        public void AddResource(ResourceType type, double amount)
-        {
-            SetResource(type, Math.Max(0, GetResource(type) + amount));
-        }
+        /// <summary>
+        /// Ephemeral care resource — produced by Clinics and consumed immediately.
+        /// Not stored in buildings; tracked here for inter-system communication within a tick.
+        /// </summary>
+        public double Care;
 
         // ── Status ────────────────────────────────────────────────────
 
@@ -150,12 +117,6 @@ namespace Siege.Gameplay.Simulation
             WoundedGuards = StartingWoundedGuards;
             Elderly = StartingElderly;
 
-            Food = StartingFood;
-            Water = StartingWater;
-            Fuel = StartingFuel;
-            Medicine = StartingMedicine;
-            Materials = StartingMaterials;
-
             Morale = StartingMorale;
             Unrest = StartingUnrest;
             Sickness = StartingSickness;
@@ -168,6 +129,8 @@ namespace Siege.Gameplay.Simulation
             ConsecutiveLowSicknessDays = 0;
             ConsecutiveZoneHeldDays = 0;
             ConsecutiveMissionSuccessDays = 0;
+
+            Care = 0;
 
             SignalFireLit = false;
             FinalAssaultActive = false;
@@ -229,12 +192,6 @@ namespace Siege.Gameplay.Simulation
             Unrest = Math.Clamp(Unrest, 0, 100);
             Sickness = Math.Clamp(Sickness, 0, 100);
             SiegeIntensity = Math.Clamp(SiegeIntensity, 1, MaxSiegeIntensity);
-
-            Food = Math.Max(0, Food);
-            Water = Math.Max(0, Water);
-            Fuel = Math.Max(0, Fuel);
-            Medicine = Math.Max(0, Medicine);
-            Materials = Math.Max(0, Materials);
 
             HealthyWorkers = Math.Max(0, HealthyWorkers);
             SickWorkers = Math.Max(0, SickWorkers);

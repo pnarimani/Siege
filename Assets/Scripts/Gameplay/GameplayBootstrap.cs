@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AutofacUnity;
 using Siege.Gameplay.Buildings;
 using Siege.Gameplay.Political;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 using Siege.Gameplay.Zones;
@@ -157,22 +158,12 @@ namespace Siege.Gameplay
 
         void SeedStartingResources()
         {
-            var state = Resolver.Resolve<GameState>();
-            var storages = Resolver.Resolve<StorageBuildingRegistry>().All;
-            if (storages.Count == 0) return;
-
-            DistributeToStorage(storages, ResourceType.Food, state.Food);
-            DistributeToStorage(storages, ResourceType.Water, state.Water);
-            DistributeToStorage(storages, ResourceType.Fuel, state.Fuel);
-            DistributeToStorage(storages, ResourceType.Medicine, state.Medicine);
-            DistributeToStorage(storages, ResourceType.Materials, state.Materials);
-        }
-
-        static void DistributeToStorage(IReadOnlyList<StorageBuilding> storages, ResourceType type, double amount)
-        {
-            double perStorage = amount / storages.Count;
-            foreach (var s in storages)
-                s.Deposit(type, perStorage);
+            var ledger = Resolver.Resolve<ResourceLedger>();
+            ledger.Deposit(ResourceType.Food, 120);
+            ledger.Deposit(ResourceType.Water, 100);
+            ledger.Deposit(ResourceType.Fuel, 60);
+            ledger.Deposit(ResourceType.Medicine, 30);
+            ledger.Deposit(ResourceType.Materials, 50);
         }
     }
 }

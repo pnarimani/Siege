@@ -1,4 +1,5 @@
 using Siege.Gameplay.Political;
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
@@ -6,15 +7,17 @@ namespace Siege.Gameplay.Events
     public class CrisisOfFaithEvent : IGameEvent
     {
         readonly PoliticalState _political;
+        readonly ResourceLedger _ledger;
         bool _hasTriggered;
 
         public string Id => "crisis_of_faith";
         public string Name => "Crisis of Faith";
         public string Description => "The faithful gather in the square, torn between devotion and despair. They look to you for guidance.";
 
-        public CrisisOfFaithEvent(PoliticalState political)
+        public CrisisOfFaithEvent(PoliticalState political, ResourceLedger ledger)
         {
             _political = political;
+            _ledger = ledger;
         }
 
         public bool CanTrigger(GameState state)
@@ -47,7 +50,7 @@ namespace Siege.Gameplay.Events
             {
                 case 0:
                     state.Morale += 20;
-                    state.Food = System.Math.Max(0, state.Food - 10);
+                    _ledger.Withdraw(ResourceType.Food, 10);
                     state.Sickness += 5;
                     _political.Faith.Add(1);
                     log.Record("Morale", 20, Name);
@@ -65,6 +68,6 @@ namespace Siege.Gameplay.Events
             }
         }
 
-        public IGameEvent Clone() => new CrisisOfFaithEvent(_political);
+        public IGameEvent Clone() => new CrisisOfFaithEvent(_political, _ledger);
     }
 }

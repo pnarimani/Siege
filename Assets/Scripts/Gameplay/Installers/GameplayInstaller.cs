@@ -39,13 +39,12 @@ namespace Siege.Gameplay.Installers
             builder.RegisterType<ZoneManager>().SingleInstance();
             builder.RegisterType<ZoneRegistry>().SingleInstance();
             builder.RegisterType<BuildingRegistry>().SingleInstance();
-            builder.RegisterType<StorageBuildingRegistry>().SingleInstance();
             builder.RegisterType<BuildingDefinitionService>().SingleInstance();
             builder.RegisterType<BuildingService>().SingleInstance();
             builder.RegisterType<WorkerAllocation>().SingleInstance();
 
             // Resource Economy
-            builder.RegisterType<ResourceStorage>().SingleInstance();
+            builder.RegisterType<ResourceLedger>().SingleInstance();
             builder.RegisterType<ResourceProductionSystem>().As<ISimulationSystem>().SingleInstance();
             builder.RegisterType<ResourceConsumptionSystem>().As<ISimulationSystem>().SingleInstance();
             builder.RegisterType<CareSystem>().As<ISimulationSystem>().SingleInstance();

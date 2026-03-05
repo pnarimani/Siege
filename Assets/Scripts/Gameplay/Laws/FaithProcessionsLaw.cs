@@ -1,3 +1,4 @@
+using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
 
@@ -6,6 +7,7 @@ namespace Siege.Gameplay.Laws
     public class FaithProcessionsLaw : ILaw
     {
         readonly IPopupService _popup;
+        readonly ResourceLedger _ledger;
 
         const string Narrative = "They sing as they walk. For a moment, the walls do not feel so close.";
         const double MoraleThreshold = 40;
@@ -15,7 +17,11 @@ namespace Siege.Gameplay.Laws
         const double DailyMorale = 2;
         const double DailySickness = 1;
 
-        public FaithProcessionsLaw(IPopupService popup) => _popup = popup;
+        public FaithProcessionsLaw(IPopupService popup, ResourceLedger ledger)
+        {
+            _popup = popup;
+            _ledger = ledger;
+        }
 
         public string Id => "faith_processions";
         public string Name => "Faith Processions";
@@ -29,7 +35,7 @@ namespace Siege.Gameplay.Laws
             state.Morale += ImmediateMorale;
             log.Record("Morale", ImmediateMorale, "Faith Processions");
 
-            state.Materials += ImmediateMaterials;
+            _ledger.Withdraw(ResourceType.Materials, 10);
             log.Record("Materials", ImmediateMaterials, "Faith Processions");
 
             state.Unrest += ImmediateUnrest;
@@ -46,6 +52,6 @@ namespace Siege.Gameplay.Laws
             log.Record("Sickness", DailySickness, "Faith Processions");
         }
 
-        public ILaw Clone() => new FaithProcessionsLaw(_popup);
+        public ILaw Clone() => new FaithProcessionsLaw(_popup, _ledger);
     }
 }

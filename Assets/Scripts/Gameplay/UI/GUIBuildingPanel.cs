@@ -29,11 +29,9 @@ namespace Siege.Gameplay.UI
         SiegeButton _closeButton;
 
         Building _selected;
-        ResourceStorage _resourceStorage;
         GameState _gameState;
         LawDispatcher _lawDispatcher;
         BackButtonManager _backButtonManager;
-        StorageBuildingRegistry _storageBuildings;
         BuildingService _buildingService;
 
         readonly List<VisualElement> _recipeCards = new();
@@ -60,11 +58,9 @@ namespace Siege.Gameplay.UI
 
         void Start()
         {
-            _resourceStorage = Resolver.Resolve<ResourceStorage>();
             _gameState = Resolver.Resolve<GameState>();
             _lawDispatcher = Resolver.Resolve<LawDispatcher>();
             _backButtonManager = Resolver.Resolve<BackButtonManager>();
-            _storageBuildings = Resolver.Resolve<StorageBuildingRegistry>();
             _buildingService = Resolver.Resolve<BuildingService>();
         }
 

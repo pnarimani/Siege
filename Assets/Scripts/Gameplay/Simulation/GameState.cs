@@ -127,6 +127,8 @@ namespace Siege.Gameplay.Simulation
         public int EventsFiredToday;
         public int OrdersIssuedCount;
         public bool IsGameOver;
+        public bool ActionUsedToday;
+        public bool MissionLaunchedThisNight;
 
         // ── Death Tracking ────────────────────────────────────────────
 
@@ -175,6 +177,8 @@ namespace Siege.Gameplay.Simulation
             TotalDeaths = 0;
             DeathsToday = 0;
             EventsFiredToday = 0;
+            ActionUsedToday = false;
+            MissionLaunchedThisNight = false;
 
             EnactedLawIds.Clear();
             ActiveToggleOrderIds.Clear();

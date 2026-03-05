@@ -42,12 +42,14 @@ namespace Siege.Gameplay.Orders
 
         public bool TryExecute(string id)
         {
+            if (_state.ActionUsedToday) return false;
             if (_state.OrderCooldowns.ContainsKey(id)) return false;
             var template = GetOrder(id);
             if (template == null || !template.CanIssue(_state)) return false;
 
             var copy = template.Clone();
             copy.OnExecute(_state, _changeLog);
+            _state.ActionUsedToday = true;
             OrderExecuted?.Invoke(id);
 
             if (template.CooldownDays > 0)

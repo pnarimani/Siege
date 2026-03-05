@@ -69,6 +69,7 @@ namespace Siege.Gameplay.Simulation
             _changeLog.FlushDay();
             _state.DeathsToday = 0;
             _state.EventsFiredToday = 0;
+            _state.ActionUsedToday = false;
 
             for (int i = 0; i < _systems.Count; i++)
                 _systems[i].OnDayStart(_state, day);
@@ -76,6 +77,8 @@ namespace Siege.Gameplay.Simulation
 
         void OnNightStarted(int day)
         {
+            _state.MissionLaunchedThisNight = false;
+
             for (int i = 0; i < _systems.Count; i++)
                 _systems[i].OnNightStart(_state, day);
         }

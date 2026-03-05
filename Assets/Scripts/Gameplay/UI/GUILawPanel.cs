@@ -1,5 +1,6 @@
 using AutofacUnity;
 using Siege.Gameplay.Laws;
+using Siege.Gameplay.Orders;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -16,6 +17,8 @@ namespace Siege.Gameplay.UI
 
         GameState _state;
         LawDispatcher _lawDispatcher;
+        OrderDispatcher _orderDispatcher;
+        GameClock _clock;
         BackButtonManager _backButtonManager;
         bool _dirty = true;
 
@@ -33,7 +36,11 @@ namespace Siege.Gameplay.UI
         {
             _state = Resolver.Resolve<GameState>();
             _lawDispatcher = Resolver.Resolve<LawDispatcher>();
-            _lawDispatcher.LawEnacted += _ => _dirty = true;
+            _orderDispatcher = Resolver.Resolve<OrderDispatcher>();
+            _clock = Resolver.Resolve<GameClock>();
+            _lawDispatcher.LawEnacted += _ => OnBackButtonPressed();
+            _orderDispatcher.OrderExecuted += _ => _dirty = true;
+            _clock.DayStarted += _ => _dirty = true;
         }
 
         void Update()
@@ -61,10 +68,15 @@ namespace Siege.Gameplay.UI
                 }
                 else
                 {
-                    bool canEnact = _lawDispatcher.CanEnact(law.Id);
+                    bool canEnact = _lawDispatcher.CanEnact(law.Id) && !_state.ActionUsedToday;
                     var enactBtn = row.Q<SiegeButton>("EnactBtn");
                     enactBtn.SetEnabled(canEnact);
-                    if (!canEnact) enactBtn.AddToClassList("law-panel__enact-btn--disabled");
+                    if (!canEnact)
+                    {
+                        enactBtn.AddToClassList("law-panel__enact-btn--disabled");
+                        if (_state.ActionUsedToday)
+                            enactBtn.tooltip = "Action already used today";
+                    }
                     string lawId = law.Id;
                     enactBtn.Clicked += () => { _lawDispatcher.TryEnact(lawId); _dirty = true; };
                 }

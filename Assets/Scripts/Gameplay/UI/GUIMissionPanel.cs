@@ -38,9 +38,10 @@ namespace Siege.Gameplay.UI
             _state = Resolver.Resolve<GameState>();
             _clock = Resolver.Resolve<GameClock>();
             _missionDispatcher = Resolver.Resolve<MissionDispatcher>();
-            _missionDispatcher.MissionLaunched += _ => _dirty = true;
+            _missionDispatcher.MissionLaunched += _ => OnBackButtonPressed();
             _missionDispatcher.MissionCompleted += (_, _) => _dirty = true;
             _clock.DayStarted += _ => _dirty = true;
+            _clock.NightStarted += _ => _dirty = true;
         }
 
         void Update()
@@ -68,11 +69,12 @@ namespace Siege.Gameplay.UI
                 row.Q<Label>("NameLabel").text = mission.Name;
                 row.Q<Label>("DescLabel").text = mission.Description;
 
-                bool canLaunch = _missionDispatcher.CanLaunch(mission.Id, _state) && !isDay;
+                bool canLaunch = _missionDispatcher.CanLaunch(mission.Id, _state) && !isDay && !_state.MissionLaunchedThisNight;
                 var launchBtn = row.Q<SiegeButton>("LaunchBtn");
                 launchBtn.SetEnabled(canLaunch);
                 if (!canLaunch) launchBtn.AddToClassList("mission-panel__launch-btn--disabled");
                 if (isDay) launchBtn.tooltip = "Missions can only launch at night";
+                else if (_state.MissionLaunchedThisNight) launchBtn.tooltip = "Only one mission can launch per night";
 
                 string missionId = mission.Id;
                 launchBtn.Clicked += () => _missionDispatcher.Launch(missionId, _state);

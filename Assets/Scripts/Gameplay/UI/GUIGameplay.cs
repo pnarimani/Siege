@@ -123,7 +123,7 @@ namespace Siege.Gameplay.UI
         {
             if (_clock == null) return;
 
-            bool isDay = _clock.IsDay;
+            var isDay = _clock.IsDay;
 
             if (_dayLabel != null)
                 _dayLabel.text = $"Day {_clock.CurrentDay}";
@@ -141,8 +141,8 @@ namespace Siege.Gameplay.UI
                 _dayProgress.EnableInClassList("gameplay-hud__day-progress--night", !isDay);
             }
 
-            _lawsBtn?.SetEnabled(isDay);
-            _ordersBtn?.SetEnabled(isDay);
+            _lawsBtn?.SetEnabled(isDay && !_state.ActionUsedToday);
+            _ordersBtn?.SetEnabled(isDay && !_state.ActionUsedToday);
             _missionsBtn?.SetEnabled(!isDay);
         }
 
@@ -155,32 +155,62 @@ namespace Siege.Gameplay.UI
 
         void OnLawsClicked()
         {
-            bool wasShown = _lawPanel != null;
+            var wasShown = _lawPanel != null;
             CloseAllPanels();
-            if (!wasShown) { _lawPanel = UISystem.Open<GUILawPanel>(UILayer.Window); _lawPanel?.Show(); _lawsBtn?.AddToClassList("hud-btn--active"); }
+            if (!wasShown)
+            {
+                _lawPanel = UISystem.Open<GUILawPanel>(UILayer.Window);
+                _lawPanel?.Show();
+                _lawsBtn?.AddToClassList("hud-btn--active");
+            }
         }
 
         void OnOrdersClicked()
         {
-            bool wasShown = _orderPanel != null;
+            var wasShown = _orderPanel != null;
             CloseAllPanels();
-            if (!wasShown) { _orderPanel = UISystem.Open<GUIOrderPanel>(UILayer.Window); _orderPanel?.Show(); _ordersBtn?.AddToClassList("hud-btn--active"); }
+            if (!wasShown)
+            {
+                _orderPanel = UISystem.Open<GUIOrderPanel>(UILayer.Window);
+                _orderPanel?.Show();
+                _ordersBtn?.AddToClassList("hud-btn--active");
+            }
         }
 
         void OnMissionsClicked()
         {
-            bool wasShown = _missionPanel != null;
+            var wasShown = _missionPanel != null;
             CloseAllPanels();
-            if (!wasShown) { _missionPanel = UISystem.Open<GUIMissionPanel>(UILayer.Window); _missionPanel?.Show(); _missionsBtn?.AddToClassList("hud-btn--active"); }
+            if (!wasShown)
+            {
+                _missionPanel = UISystem.Open<GUIMissionPanel>(UILayer.Window);
+                _missionPanel?.Show();
+                _missionsBtn?.AddToClassList("hud-btn--active");
+            }
         }
 
         void CloseAllPanels()
         {
-            if (_lawPanel != null) { Object.Destroy(_lawPanel.gameObject); _lawPanel = null; }
+            if (_lawPanel != null)
+            {
+                Destroy(_lawPanel.gameObject);
+                _lawPanel = null;
+            }
+
             _lawsBtn?.RemoveFromClassList("hud-btn--active");
-            if (_orderPanel != null) { Object.Destroy(_orderPanel.gameObject); _orderPanel = null; }
+            if (_orderPanel != null)
+            {
+                Destroy(_orderPanel.gameObject);
+                _orderPanel = null;
+            }
+
             _ordersBtn?.RemoveFromClassList("hud-btn--active");
-            if (_missionPanel != null) { Object.Destroy(_missionPanel.gameObject); _missionPanel = null; }
+            if (_missionPanel != null)
+            {
+                Destroy(_missionPanel.gameObject);
+                _missionPanel = null;
+            }
+
             _missionsBtn?.RemoveFromClassList("hud-btn--active");
         }
 

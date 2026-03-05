@@ -44,11 +44,13 @@ namespace Siege.Gameplay.Missions
 
         public bool Launch(string id, GameState state)
         {
+            if (state.MissionLaunchedThisNight) return false;
             if (!CanLaunch(id, state)) return false;
 
             var template = GetMission(id);
             var copy = template.Clone();
             copy.OnLaunch(state, _changeLog);
+            state.MissionLaunchedThisNight = true;
             _active.Add(copy);
             MissionLaunched?.Invoke(id);
             return true;

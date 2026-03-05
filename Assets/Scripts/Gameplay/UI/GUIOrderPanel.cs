@@ -1,4 +1,5 @@
 using AutofacUnity;
+using Siege.Gameplay.Laws;
 using Siege.Gameplay.Orders;
 using Siege.Gameplay.Simulation;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Siege.Gameplay.UI
 
         GameState _state;
         OrderDispatcher _orderDispatcher;
+        LawDispatcher _lawDispatcher;
         GameClock _clock;
         BackButtonManager _backButtonManager;
         bool _dirty = true;
@@ -34,8 +36,10 @@ namespace Siege.Gameplay.UI
         {
             _state = Resolver.Resolve<GameState>();
             _orderDispatcher = Resolver.Resolve<OrderDispatcher>();
+            _lawDispatcher = Resolver.Resolve<LawDispatcher>();
             _clock = Resolver.Resolve<GameClock>();
-            _orderDispatcher.OrderExecuted += _ => _dirty = true;
+            _orderDispatcher.OrderExecuted += _ => OnBackButtonPressed();
+            _lawDispatcher.LawEnacted += _ => _dirty = true;
             _clock.DayStarted += _ => _dirty = true;
         }
 
@@ -65,7 +69,12 @@ namespace Siege.Gameplay.UI
 
                 int cooldown = _orderDispatcher.GetCooldownRemaining(order.Id);
                 var cooldownLabel = row.Q<Label>("CooldownLabel");
-                if (cooldown > 0)
+                if (_state.ActionUsedToday && cooldown == 0)
+                {
+                    cooldownLabel.text = "Action used today";
+                    cooldownLabel.style.display = DisplayStyle.Flex;
+                }
+                else if (cooldown > 0)
                 {
                     cooldownLabel.text = $"Cooldown: {cooldown} day{(cooldown > 1 ? "s" : "")}";
                     cooldownLabel.style.display = DisplayStyle.Flex;
@@ -85,7 +94,7 @@ namespace Siege.Gameplay.UI
                 else
                 {
                     executeBtn.Text = order.IsToggle ? "Activate" : "Execute";
-                    bool canIssue = _orderDispatcher.CanIssue(order.Id) && cooldown <= 0;
+                    bool canIssue = _orderDispatcher.CanIssue(order.Id) && cooldown <= 0 && !_state.ActionUsedToday;
                     executeBtn.SetEnabled(canIssue);
                     if (!canIssue) executeBtn.AddToClassList("order-panel__execute-btn--disabled");
                     string orderId = order.Id;

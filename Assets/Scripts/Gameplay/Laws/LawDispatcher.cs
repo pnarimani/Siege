@@ -41,12 +41,14 @@ namespace Siege.Gameplay.Laws
 
         public bool TryEnact(string id)
         {
+            if (_state.ActionUsedToday) return false;
             if (IsEnacted(id)) return false;
             var law = GetLaw(id);
             if (law == null || !law.CanEnact(_state)) return false;
 
             var copy = law.Clone();
             _state.EnactedLawIds.Add(id);
+            _state.ActionUsedToday = true;
             copy.OnEnact(_state, _changeLog);
             _enacted.Add(copy);
             LawEnacted?.Invoke(id);

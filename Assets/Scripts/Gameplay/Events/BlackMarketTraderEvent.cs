@@ -17,7 +17,7 @@ namespace Siege.Gameplay.Events
 
         public string Id => "black_market_trader";
         public string Name => "Black Market Trader";
-        public string Description => "A shady figure offers a deal: materials for food.";
+        public string Description => "A cloaked figure slips through the gate at dusk, offering a trade: materials for food. The price is steep, but hunger makes beggars of us all.";
 
         public EventResponse[] GetResponses(GameState state) => new[]
         {
@@ -25,10 +25,6 @@ namespace Siege.Gameplay.Events
             new EventResponse("Haggle", $"Give {MaterialsCostHaggle} Materials, receive {FoodReward} Food. Unrest +{HaggleUnrestPenalty}."),
             new EventResponse("Refuse", "Send the trader away.")
         };
-
-        public string GetNarrativeText(GameState state) =>
-            "A cloaked figure slips through the gate at dusk, offering a trade: " +
-            "materials for food. The price is steep, but hunger makes beggars of us all.";
 
         public bool CanTrigger(GameState state)
         {

@@ -11,7 +11,7 @@ namespace Siege.Gameplay.Events
 
         public string Id => "fortune_favors_bold";
         public string Name => "Fortune Favors the Bold";
-        public string Description => "Recent victories inspire volunteers.";
+        public string Description => "Inspired by recent victories, 2 volunteers join the workforce.";
 
         public bool CanTrigger(GameState state)
         {
@@ -29,9 +29,6 @@ namespace Siege.Gameplay.Events
             state.HealthyWorkers += VolunteerCount;
             log.Record("HealthyWorkers", VolunteerCount, Name);
         }
-
-        public string GetNarrativeText(GameState state) =>
-            "Inspired by recent victories, 2 volunteers join the workforce.";
 
         public IGameEvent Clone() => new FortuneFavorsBoldEvent();
     }

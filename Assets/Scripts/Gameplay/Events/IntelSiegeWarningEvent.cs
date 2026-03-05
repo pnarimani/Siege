@@ -15,7 +15,7 @@ namespace Siege.Gameplay.Events
 
         public string Id => "intel_siege_warning";
         public string Name => "Siege Escalation Warning";
-        public string Description => "Intelligence warns of an imminent siege escalation.";
+        public string Description => "A captured messenger reveals plans for a major assault. You have a narrow window to act.";
 
         public EventResponse[] GetResponses(GameState state) => new[]
         {
@@ -30,10 +30,6 @@ namespace Siege.Gameplay.Events
                 "Work crews shore up the walls through the night. " +
                 "The perimeter holds a little stronger.")
         };
-
-        public string GetNarrativeText(GameState state) =>
-            "A captured messenger reveals plans for a major assault. " +
-            "You have a narrow window to act.";
 
         public bool CanTrigger(GameState state)
         {

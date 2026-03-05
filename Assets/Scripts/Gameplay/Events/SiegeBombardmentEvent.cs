@@ -46,8 +46,6 @@ namespace Siege.Gameplay.Events
             log.Record("WoundedGuards", WoundedGuardsPerBombardment, Name);
         }
 
-        public string GetNarrativeText(GameState state) => Description;
-
         public IGameEvent Clone() => new SiegeBombardmentEvent();
     }
 }

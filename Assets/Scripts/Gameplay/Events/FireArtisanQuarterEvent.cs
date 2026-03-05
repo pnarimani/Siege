@@ -37,8 +37,6 @@ namespace Siege.Gameplay.Events
             log.Record("DeathsToday", 1, Name);
         }
 
-        public string GetNarrativeText(GameState state) => Description;
-
         public IGameEvent Clone() => new FireArtisanQuarterEvent();
     }
 }

@@ -11,7 +11,7 @@ namespace Siege.Gameplay.Events
 
         public string Id => "walls_still_stand";
         public string Name => "The Walls Still Stand";
-        public string Description => "The garrison's resolve inspires the city.";
+        public string Description => "The walls hold firm. The garrison's determination inspires the whole city.";
 
         public bool CanTrigger(GameState state)
         {
@@ -27,9 +27,6 @@ namespace Siege.Gameplay.Events
             state.Morale += MoraleBoost;
             log.Record("Morale", MoraleBoost, Name);
         }
-
-        public string GetNarrativeText(GameState state) =>
-            "The walls hold firm. The garrison's determination inspires the whole city.";
 
         public IGameEvent Clone() => new WallsStillStandEvent();
     }

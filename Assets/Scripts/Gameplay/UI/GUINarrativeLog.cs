@@ -15,7 +15,6 @@ namespace Siege.Gameplay.UI
         ScrollView _scrollView;
 
         EventDispatcher _eventDispatcher;
-        GameState _state;
         readonly List<string> _entries = new();
 
         void Awake()
@@ -29,7 +28,6 @@ namespace Siege.Gameplay.UI
 
         void Start()
         {
-            _state = Resolver.Resolve<GameState>();
             _eventDispatcher = Resolver.Resolve<EventDispatcher>();
             _eventDispatcher.EventTriggered += OnEventTriggered;
         }
@@ -41,7 +39,7 @@ namespace Siege.Gameplay.UI
 
         void OnEventTriggered(IGameEvent evt)
         {
-            string narrative = evt.GetNarrativeText(_state);
+            string narrative = evt.Description;
             if (!string.IsNullOrEmpty(narrative))
                 AddEntry(narrative);
         }

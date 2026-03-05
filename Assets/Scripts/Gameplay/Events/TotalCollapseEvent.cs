@@ -10,7 +10,7 @@ namespace Siege.Gameplay.Events
 
         public string Id => "total_collapse";
         public string Name => "Total Collapse";
-        public string Description => "All supplies are exhausted. The city collapses.";
+        public string Description => "The last rations are gone. The last barrels are dry. People collapse in the streets.";
 
         public bool CanTrigger(GameState state)
         {
@@ -20,10 +20,6 @@ namespace Siege.Gameplay.Events
             _hasTriggered = true;
             return true;
         }
-
-        public string GetNarrativeText(GameState state) =>
-            "The last rations are gone. The last barrels are dry. " +
-            "People collapse in the streets.";
 
         public IGameEvent Clone() => new TotalCollapseEvent();
     }

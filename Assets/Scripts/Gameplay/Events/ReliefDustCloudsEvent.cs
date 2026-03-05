@@ -12,7 +12,7 @@ namespace Siege.Gameplay.Events
 
         public string Id => "relief_dust_clouds";
         public string Name => "Dust Clouds on the Horizon";
-        public string Description => "Scouts report dust clouds to the east.";
+        public string Description => "Scouts on the watchtower report dust clouds to the east. Could be a caravan. Could be an army. Could be hope.";
 
         public ReliefDustCloudsEvent(ReliefArmy reliefArmy)
         {
@@ -28,10 +28,6 @@ namespace Siege.Gameplay.Events
             _hasTriggered = true;
             return true;
         }
-
-        public string GetNarrativeText(GameState state) =>
-            "Scouts on the watchtower report dust clouds to the east. " +
-            "Could be a caravan. Could be an army. Could be hope.";
 
         public IGameEvent Clone() => new ReliefDustCloudsEvent(_reliefArmy);
     }

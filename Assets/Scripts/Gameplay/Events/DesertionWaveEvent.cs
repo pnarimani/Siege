@@ -28,8 +28,6 @@ namespace Siege.Gameplay.Events
             log.Record("HealthyWorkers", -lost, Name);
         }
 
-        public string GetNarrativeText(GameState state) => Description;
-
         public IGameEvent Clone() => new DesertionWaveEvent();
     }
 }

@@ -81,10 +81,6 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.IEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.IGameEvent",
             "AssemblyName": "Siege.Gameplay"
         },

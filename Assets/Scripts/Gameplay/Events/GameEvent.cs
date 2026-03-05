@@ -13,7 +13,6 @@ namespace Siege.Gameplay.Events
         void Execute(GameState state, ChangeLog log) { }
         void ExecuteResponse(GameState state, ChangeLog log, int responseIndex) { }
         EventResponse[] GetResponses(GameState state) => System.Array.Empty<EventResponse>();
-        string GetNarrativeText(GameState state) => Description;
         IGameEvent Clone();
     }
 }

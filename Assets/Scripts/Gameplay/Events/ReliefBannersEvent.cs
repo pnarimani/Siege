@@ -12,7 +12,7 @@ namespace Siege.Gameplay.Events
 
         public string Id => "relief_banners";
         public string Name => "Banners on the Ridge";
-        public string Description => "Your kingdom's banners appear on the eastern ridge.";
+        public string Description => "Banners appear on the eastern ridge \u2014 your kingdom's colors. The relief army is here. Hold one more day.";
 
         public ReliefBannersEvent(ReliefArmy reliefArmy)
         {
@@ -28,10 +28,6 @@ namespace Siege.Gameplay.Events
             _hasTriggered = true;
             return true;
         }
-
-        public string GetNarrativeText(GameState state) =>
-            "Banners appear on the eastern ridge \u2014 your kingdom's colors. " +
-            "The relief army is here. Hold one more day.";
 
         public IGameEvent Clone() => new ReliefBannersEvent(_reliefArmy);
     }

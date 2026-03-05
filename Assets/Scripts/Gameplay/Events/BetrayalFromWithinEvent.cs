@@ -34,8 +34,6 @@ namespace Siege.Gameplay.Events
             };
         }
 
-        public string GetNarrativeText(GameState state) => Description;
-
         public bool CanTrigger(GameState state)
         {
             if (_hasTriggered) return false;

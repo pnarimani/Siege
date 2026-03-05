@@ -40,8 +40,6 @@ namespace Siege.Gameplay.Events
             log.Record("Morale", -5, Name);
         }
 
-        public string GetNarrativeText(GameState state) => Description;
-
         public IGameEvent Clone() => new WorkerTakesLifeEvent(_political);
     }
 }

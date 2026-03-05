@@ -11,7 +11,7 @@ namespace Siege.Gameplay.Events
 
         public string Id => "steady_supplies";
         public string Name => "Steady Supplies";
-        public string Description => "Consistent supply flow boosts morale.";
+        public string Description => "The steady flow of food and water lifts spirits across the city.";
 
         public bool CanTrigger(GameState state)
         {
@@ -30,9 +30,6 @@ namespace Siege.Gameplay.Events
             state.Morale += boost;
             log.Record("Morale", boost, Name);
         }
-
-        public string GetNarrativeText(GameState state) =>
-            "The steady flow of food and water lifts spirits across the city.";
 
         public IGameEvent Clone() => new SteadySuppliesEvent();
     }

@@ -8,7 +8,7 @@ namespace Siege.Gameplay.Events
 
         public string Id => "smuggler_at_gate";
         public string Name => "Smuggler at the Gate";
-        public string Description => "A smuggler offers goods at the gate. His prices are steep, but the city is hungry.";
+        public string Description => "A cloaked figure at the postern gate. He has food\u2014but wants materials in return. Do you deal?";
 
         public bool CanTrigger(GameState state)
         {
@@ -46,9 +46,6 @@ namespace Siege.Gameplay.Events
             new EventResponse("Demand a better deal", "Food +30, Materials -15, Unrest +5"),
             new EventResponse("Turn him away", "No trade")
         };
-
-        public string GetNarrativeText(GameState state) =>
-            "A cloaked figure at the postern gate. He has food—but wants materials in return. Do you deal?";
 
         public IGameEvent Clone() => new SmugglerAtGateEvent();
     }

@@ -8,7 +8,7 @@ namespace Siege.Gameplay.Events
 
         public string Id => "enemy_messenger";
         public string Name => "Enemy Messenger";
-        public string Description => "A messenger arrives under white flag. 'Surrender the city, and your people will be spared.' You send him back.";
+        public string Description => "A messenger arrives under white flag.\n'Surrender the city, and your people will be spared.'\nYou send him back.";
 
         public bool CanTrigger(GameState state)
         {

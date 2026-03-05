@@ -36,8 +36,6 @@ namespace Siege.Gameplay.Events
             log.Record("Unrest", UnrestIncrease, Name);
         }
 
-        public string GetNarrativeText(GameState state) => Description;
-
         public IGameEvent Clone() => new FeverOutbreakEvent();
     }
 }

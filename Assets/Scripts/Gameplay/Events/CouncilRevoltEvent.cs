@@ -10,7 +10,7 @@ namespace Siege.Gameplay.Events
 
         public string Id => "council_revolt";
         public string Name => "Council Revolt";
-        public string Description => "The council has seized control.";
+        public string Description => "Your reign ends in bloodshed. The council has taken over.";
 
         public bool CanTrigger(GameState state)
         {
@@ -19,9 +19,6 @@ namespace Siege.Gameplay.Events
             _hasTriggered = true;
             return true;
         }
-
-        public string GetNarrativeText(GameState state) =>
-            "Your reign ends in bloodshed. The council has taken over.";
 
         public IGameEvent Clone() => new CouncilRevoltEvent();
     }

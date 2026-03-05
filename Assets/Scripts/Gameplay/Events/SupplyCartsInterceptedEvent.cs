@@ -9,7 +9,9 @@ namespace Siege.Gameplay.Events
 
         public string Id => "supply_carts_intercepted";
         public string Name => "Supply Carts Intercepted";
-        public string Description => "Enemy raiders have intercepted supply carts bound for the city.";
+        public string Description => _lostFood
+            ? "Enemy raiders intercepted a food convoy. Precious grain lost to the siege lines."
+            : "Enemy raiders seized water barrels en route to the city. Our reserves shrink.";
 
         public bool CanTrigger(GameState state) =>
             state.CurrentDay >= 3 && state.CurrentDay <= 5 && Random.value < 0.20f;
@@ -29,11 +31,6 @@ namespace Siege.Gameplay.Events
                 log.Record("Water", -15, Name);
             }
         }
-
-        public string GetNarrativeText(GameState state) =>
-            _lostFood
-                ? "Enemy raiders intercepted a food convoy. Precious grain lost to the siege lines."
-                : "Enemy raiders seized water barrels en route to the city. Our reserves shrink.";
 
         public IGameEvent Clone() => new SupplyCartsInterceptedEvent();
     }

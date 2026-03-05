@@ -68,8 +68,6 @@ namespace Siege.Gameplay.Events
             }
         }
 
-        public string GetNarrativeText(GameState state) => Description;
-
         public IGameEvent Clone() => new WallBreachEvent();
     }
 }

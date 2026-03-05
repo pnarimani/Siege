@@ -10,6 +10,7 @@
 - Create folders by feature (Laws, Missions, Simulation, Events, etc.). Avoid folder names like "Models".
 - Use UI Toolkit best practices. Read `ui-toolkit` skill whenever working with UI.
 - This game is localized. Read `unity-localization` skill whenever working with text.
+- Do not use decoration comments.
 
 
 ## Project Overview

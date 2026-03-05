@@ -4,12 +4,49 @@ namespace Siege.Gameplay.Events
 {
     public class RefugeesAtGatesEvent : IGameEvent
     {
-        public bool HasTriggered { get; set; }
+        bool _hasTriggered;
+
         public string Id => "refugees_at_gates";
         public string Name => "Refugees at the Gates";
         public string Description => "A crowd of refugees from the countryside begs entry. Some look sick.";
-        public int Priority => 60;
-        public bool IsRespondable => true;
+
+        public bool CanTrigger(GameState state)
+        {
+            if (_hasTriggered) return false;
+            if (state.CurrentDay != 12) return false;
+
+            _hasTriggered = true;
+            return true;
+        }
+
+        public void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
+        {
+            switch (responseIndex)
+            {
+                case 0:
+                    state.HealthyWorkers += 5;
+                    state.SickWorkers += 3;
+                    state.Unrest += 5;
+                    state.Morale += 3;
+                    log.Record("HealthyWorkers", 5, Name);
+                    log.Record("SickWorkers", 3, Name);
+                    log.Record("Unrest", 5, Name);
+                    log.Record("Morale", 3, Name);
+                    break;
+                case 1:
+                    state.HealthyWorkers += 5;
+                    state.Unrest += 3;
+                    log.Record("HealthyWorkers", 5, Name);
+                    log.Record("Unrest", 3, Name);
+                    break;
+                case 2:
+                    state.Morale -= 10;
+                    state.Unrest += 5;
+                    log.Record("Morale", -10, Name);
+                    log.Record("Unrest", 5, Name);
+                    break;
+            }
+        }
 
         public EventResponse[] GetResponses(GameState state) => new[]
         {
@@ -18,5 +55,6 @@ namespace Siege.Gameplay.Events
             new EventResponse("Turn them away", "Morale -10, Unrest +5")
         };
 
+        public IGameEvent Clone() => new RefugeesAtGatesEvent();
     }
 }

@@ -97,7 +97,7 @@ namespace Siege.Gameplay.UI
 
             _responseContainer.Clear();
 
-            if (evt.IsRespondable)
+            if (evt.GetResponses(_state).Length > 0)
             {
                 var responses = evt.GetResponses(_state);
                 _singleResponseIndex = responses.Length == 1 ? 0 : (int?)null;

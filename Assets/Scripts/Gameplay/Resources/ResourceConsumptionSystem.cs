@@ -1,4 +1,3 @@
-using Siege.Gameplay.Laws;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Resources
@@ -17,14 +16,12 @@ namespace Siege.Gameplay.Resources
         readonly ChangeLog _changeLog;
         readonly ResourceStorage _storage;
         readonly GameClock _clock;
-        readonly LawDispatcher _lawDispatcher;
 
-        public ResourceConsumptionSystem(ChangeLog changeLog, ResourceStorage storage, GameClock clock, LawDispatcher lawDispatcher)
+        public ResourceConsumptionSystem(ChangeLog changeLog, ResourceStorage storage, GameClock clock)
         {
             _changeLog = changeLog;
             _storage = storage;
             _clock = clock;
-            _lawDispatcher = lawDispatcher;
         }
 
         public void Tick(GameState state, float deltaTime)
@@ -34,14 +31,14 @@ namespace Siege.Gameplay.Resources
             if (consumers <= 0) return;
 
             // Food consumption
-            double foodNeeded = FoodPerPerson * consumers * dayFraction * _lawDispatcher.CombinedFoodConsumptionMultiplier;
+            double foodNeeded = FoodPerPerson * consumers * dayFraction * state.FoodConsumptionMultiplier;
             double foodConsumed = _storage.Withdraw(ResourceType.Food, foodNeeded);
             state.AddResource(ResourceType.Food, -foodConsumed);
             if (foodConsumed > 0)
                 _changeLog.Record("Food", -foodConsumed, "Population consumption");
 
             // Water consumption
-            double waterNeeded = WaterPerPerson * consumers * dayFraction * _lawDispatcher.CombinedWaterConsumptionMultiplier;
+            double waterNeeded = WaterPerPerson * consumers * dayFraction * state.WaterConsumptionMultiplier;
             double waterConsumed = _storage.Withdraw(ResourceType.Water, waterNeeded);
             state.AddResource(ResourceType.Water, -waterConsumed);
             if (waterConsumed > 0)

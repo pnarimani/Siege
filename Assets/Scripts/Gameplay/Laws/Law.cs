@@ -1,20 +1,17 @@
-using JetBrains.Annotations;
+using Siege.Gameplay.Simulation;
 using TypeRegistry;
 
 namespace Siege.Gameplay.Laws
 {
-    [UsedImplicitly]
     [RegisterTypeLookup]
     public interface ILaw
     {
         string Id { get; }
         string Name { get; }
         string Description { get; }
-        string NarrativeText => null;
-        bool IsEnacted { get; set; }
-        double ProductionMultiplier => 1.0;
-        double FoodConsumptionMultiplier => 1.0;
-        double WaterConsumptionMultiplier => 1.0;
-        double SiegeDamageMultiplier => 1.0;
+        bool CanEnact(GameState state);
+        void OnEnact(GameState state, ChangeLog log);
+        void ApplyDailyEffect(GameState state, ChangeLog log) { }
+        ILaw Clone();
     }
 }

@@ -47,13 +47,14 @@ namespace Siege.Gameplay.UI
 
             foreach (var law in _lawDispatcher.AllLaws)
             {
-                if (!law.IsEnacted && !_lawDispatcher.CanEnact(law.Id)) continue;
+                bool enacted = _lawDispatcher.IsEnacted(law.Id);
+                if (!enacted && !_lawDispatcher.CanEnact(law.Id)) continue;
 
                 var row = _rowTemplate.Instantiate();
                 row.Q<Label>("NameLabel").text = law.Name;
                 row.Q<Label>("DescLabel").text = law.Description;
 
-                if (law.IsEnacted)
+                if (enacted)
                 {
                     row.Q("EnactedBadge").style.display = DisplayStyle.Flex;
                     row.Q<SiegeButton>("EnactBtn").style.display = DisplayStyle.None;

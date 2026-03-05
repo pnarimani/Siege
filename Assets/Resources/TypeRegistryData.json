@@ -5,15 +5,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.BetrayalFromWithinEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.BlackMarketTraderEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.BlackMarketTraderEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -21,15 +13,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.BurningFarmsEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.ChildrensPleaEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.ChildrensPleaEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -37,15 +21,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.CouncilRevoltEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.CrisisOfFaithEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.CrisisOfFaithEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -53,15 +29,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.DesertionWaveEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.DespairEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.DespairEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -69,15 +37,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.DissidentsDiscoveredEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.DistantHornsEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.DistantHornsEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -85,15 +45,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.EnemyCommanderLetterEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.EnemyMessengerEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.EnemyMessengerEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -101,15 +53,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.EnemySappersEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.EnemyUltimatumEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.EnemyUltimatumEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -117,15 +61,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.FeverOutbreakEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.FinalAssaultEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.FinalAssaultEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -133,15 +69,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.FireArtisanQuarterEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.FortuneFavorsBoldEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.FortuneFavorsBoldEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -149,15 +77,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.HealthImprovingEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.HungerRiotEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.HungerRiotEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -173,15 +93,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.IntelSiegeWarningEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.MilitiaVolunteersEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.MilitiaVolunteersEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -189,15 +101,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.OpeningBombardmentEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.PlagueRatsEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.PlagueRatsEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -205,15 +109,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.RefugeesAtGatesEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.ReliefBannersEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.ReliefBannersEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -221,15 +117,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.ReliefDustCloudsEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.ReliefHornsEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.ReliefHornsEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -237,15 +125,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.SiegeBombardmentEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.SiegeEngineersArriveEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.SiegeEngineersArriveEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -253,15 +133,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.SiegeTowersSpottedEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.SignalFireEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.SignalFireEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -269,15 +141,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.SmugglerAtGateEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.SpySellingIntelEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.SpySellingIntelEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -285,15 +149,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.SteadySuppliesEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.SupplyCartsInterceptedEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.SupplyCartsInterceptedEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -301,15 +157,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.TaintedWellEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.TotalCollapseEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.TotalCollapseEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -317,15 +165,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.TyrantsReckoningEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.WallBreachEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.WallBreachEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -333,15 +173,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.WallsStillStandEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Events.WellContaminationScareEvent",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Events.WellContaminationScareEventHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -349,15 +181,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Events.WorkerTakesLifeEventHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Laws.AbandonOuterRingLaw",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Laws.AbandonOuterRingLawHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -365,15 +189,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Laws.BurnTheDeadLawHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Laws.CannibalismLaw",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Laws.CannibalismLawHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -381,15 +197,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Laws.CollectiveFarmsLawHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Laws.ConscriptElderlyLaw",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Laws.ConscriptElderlyLawHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -397,15 +205,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Laws.CurfewLawHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Laws.EmergencySheltersLaw",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Laws.EmergencySheltersLawHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -413,15 +213,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Laws.ExtendedShiftsLawHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Laws.FaithProcessionsLaw",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Laws.FaithProcessionsLawHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -429,15 +221,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Laws.FoodConfiscationLawHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Laws.GarrisonMandateLaw",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Laws.GarrisonMandateLawHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -445,15 +229,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Laws.ILawHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Laws.MandatoryGuardServiceLaw",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Laws.MandatoryGuardServiceLawHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -461,15 +237,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Laws.MartialLawLawHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Laws.MedicalTriageLaw",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Laws.MedicalTriageLawHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -477,15 +245,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Laws.OathOfMercyLawHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Laws.PublicExecutionsLaw",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Laws.PublicExecutionsLawHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -493,15 +253,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Laws.PurgeTheDisloyalLawHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Laws.ScorchedEarthLaw",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Laws.ScorchedEarthLawHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -509,15 +261,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Laws.ShadowCouncilLawHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Laws.StrictRationsLaw",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Laws.StrictRationsLawHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -525,15 +269,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Laws.WaterRationingLawHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Missions.DiplomaticEnvoy",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Missions.DiplomaticEnvoyHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -541,15 +277,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Missions.EngineerTunnelsHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Missions.ForageBeyondWalls",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Missions.ForageBeyondWallsHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -557,15 +285,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Missions.IMissionHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Missions.NegotiateBlackMarketeers",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Missions.NegotiateBlackMarketeersHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -573,15 +293,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Missions.NightRaidHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Missions.RaidCivilianFarms",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Missions.RaidCivilianFarmsHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -589,15 +301,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Missions.SabotageEnemySuppliesHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Missions.ScoutingMission",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Missions.ScoutingMissionHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -605,15 +309,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Missions.SearchAbandonedHomesHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Missions.Sortie",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Missions.SortieHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -621,15 +317,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.BetrayAlliesOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.BribeEnemyOfficerOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.BribeEnemyOfficerOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -637,15 +325,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.BurnSurplusOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.CrackdownPatrolsOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.CrackdownPatrolsOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -653,15 +333,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.DayOfRemembranceOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.DistributeLuxuriesOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.DistributeLuxuriesOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -669,15 +341,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.DivertSuppliesOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.ForcedLaborOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.ForcedLaborOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -685,15 +349,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.FortifyGateOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.HoldFeastOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.HoldFeastOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -701,15 +357,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.HostageExchangeOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.IOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.IOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -717,15 +365,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.InspirePeopleOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.OfferTributeOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.OfferTributeOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -733,15 +373,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.PublicConfessionOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.PublicTrialOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.PublicTrialOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -749,15 +381,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.QuarantineDistrictOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.RallyGuardsOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.RallyGuardsOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -765,15 +389,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.RationMedicineOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.ReinforceWallsOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.ReinforceWallsOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -781,15 +397,7 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.SacrificeSickOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.ScavengeMedicineOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.ScavengeMedicineOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         },
         {
@@ -797,23 +405,11 @@
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.SecretCorrespondenceOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.StorytellingNightOrder",
             "AssemblyName": "Siege.Gameplay"
         },
         {
-            "TypeName": "Siege.Gameplay.Orders.StorytellingNightOrderHandler",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
             "TypeName": "Siege.Gameplay.Orders.VoluntaryEvacuationOrder",
-            "AssemblyName": "Siege.Gameplay"
-        },
-        {
-            "TypeName": "Siege.Gameplay.Orders.VoluntaryEvacuationOrderHandler",
             "AssemblyName": "Siege.Gameplay"
         }
     ],
@@ -821,54 +417,6 @@
     "AttributeToFields": [],
     "AttributeToMethods": [],
     "BaseToDerived": [
-        {
-            "BaseTypeName": "Siege.Gameplay.Events.IEventHandler",
-            "DerivedTypeNames": [
-                "Siege.Gameplay.Events.BetrayalFromWithinEventHandler",
-                "Siege.Gameplay.Events.BlackMarketTraderEventHandler",
-                "Siege.Gameplay.Events.BurningFarmsEventHandler",
-                "Siege.Gameplay.Events.ChildrensPleaEventHandler",
-                "Siege.Gameplay.Events.CouncilRevoltEventHandler",
-                "Siege.Gameplay.Events.CrisisOfFaithEventHandler",
-                "Siege.Gameplay.Events.DesertionWaveEventHandler",
-                "Siege.Gameplay.Events.DespairEventHandler",
-                "Siege.Gameplay.Events.DissidentsDiscoveredEventHandler",
-                "Siege.Gameplay.Events.DistantHornsEventHandler",
-                "Siege.Gameplay.Events.EnemyCommanderLetterEventHandler",
-                "Siege.Gameplay.Events.EnemyMessengerEventHandler",
-                "Siege.Gameplay.Events.EnemySappersEventHandler",
-                "Siege.Gameplay.Events.EnemyUltimatumEventHandler",
-                "Siege.Gameplay.Events.FeverOutbreakEventHandler",
-                "Siege.Gameplay.Events.FinalAssaultEventHandler",
-                "Siege.Gameplay.Events.FireArtisanQuarterEventHandler",
-                "Siege.Gameplay.Events.FortuneFavorsBoldEventHandler",
-                "Siege.Gameplay.Events.HealthImprovingEventHandler",
-                "Siege.Gameplay.Events.HungerRiotEventHandler",
-                "Siege.Gameplay.Events.IntelSiegeWarningEventHandler",
-                "Siege.Gameplay.Events.MilitiaVolunteersEventHandler",
-                "Siege.Gameplay.Events.OpeningBombardmentEventHandler",
-                "Siege.Gameplay.Events.PlagueRatsEventHandler",
-                "Siege.Gameplay.Events.RefugeesAtGatesEventHandler",
-                "Siege.Gameplay.Events.ReliefBannersEventHandler",
-                "Siege.Gameplay.Events.ReliefDustCloudsEventHandler",
-                "Siege.Gameplay.Events.ReliefHornsEventHandler",
-                "Siege.Gameplay.Events.SiegeBombardmentEventHandler",
-                "Siege.Gameplay.Events.SiegeEngineersArriveEventHandler",
-                "Siege.Gameplay.Events.SiegeTowersSpottedEventHandler",
-                "Siege.Gameplay.Events.SignalFireEventHandler",
-                "Siege.Gameplay.Events.SmugglerAtGateEventHandler",
-                "Siege.Gameplay.Events.SpySellingIntelEventHandler",
-                "Siege.Gameplay.Events.SteadySuppliesEventHandler",
-                "Siege.Gameplay.Events.SupplyCartsInterceptedEventHandler",
-                "Siege.Gameplay.Events.TaintedWellEventHandler",
-                "Siege.Gameplay.Events.TotalCollapseEventHandler",
-                "Siege.Gameplay.Events.TyrantsReckoningEventHandler",
-                "Siege.Gameplay.Events.WallBreachEventHandler",
-                "Siege.Gameplay.Events.WallsStillStandEventHandler",
-                "Siege.Gameplay.Events.WellContaminationScareEventHandler",
-                "Siege.Gameplay.Events.WorkerTakesLifeEventHandler"
-            ]
-        },
         {
             "BaseTypeName": "Siege.Gameplay.Events.IGameEvent",
             "DerivedTypeNames": [
@@ -944,32 +492,6 @@
             ]
         },
         {
-            "BaseTypeName": "Siege.Gameplay.Laws.ILawHandler",
-            "DerivedTypeNames": [
-                "Siege.Gameplay.Laws.AbandonOuterRingLawHandler",
-                "Siege.Gameplay.Laws.BurnTheDeadLawHandler",
-                "Siege.Gameplay.Laws.CannibalismLawHandler",
-                "Siege.Gameplay.Laws.CollectiveFarmsLawHandler",
-                "Siege.Gameplay.Laws.ConscriptElderlyLawHandler",
-                "Siege.Gameplay.Laws.CurfewLawHandler",
-                "Siege.Gameplay.Laws.EmergencySheltersLawHandler",
-                "Siege.Gameplay.Laws.ExtendedShiftsLawHandler",
-                "Siege.Gameplay.Laws.FaithProcessionsLawHandler",
-                "Siege.Gameplay.Laws.FoodConfiscationLawHandler",
-                "Siege.Gameplay.Laws.GarrisonMandateLawHandler",
-                "Siege.Gameplay.Laws.MandatoryGuardServiceLawHandler",
-                "Siege.Gameplay.Laws.MartialLawLawHandler",
-                "Siege.Gameplay.Laws.MedicalTriageLawHandler",
-                "Siege.Gameplay.Laws.OathOfMercyLawHandler",
-                "Siege.Gameplay.Laws.PublicExecutionsLawHandler",
-                "Siege.Gameplay.Laws.PurgeTheDisloyalLawHandler",
-                "Siege.Gameplay.Laws.ScorchedEarthLawHandler",
-                "Siege.Gameplay.Laws.ShadowCouncilLawHandler",
-                "Siege.Gameplay.Laws.StrictRationsLawHandler",
-                "Siege.Gameplay.Laws.WaterRationingLawHandler"
-            ]
-        },
-        {
             "BaseTypeName": "Siege.Gameplay.Missions.IMission",
             "DerivedTypeNames": [
                 "Siege.Gameplay.Missions.DiplomaticEnvoy",
@@ -982,21 +504,6 @@
                 "Siege.Gameplay.Missions.ScoutingMission",
                 "Siege.Gameplay.Missions.SearchAbandonedHomes",
                 "Siege.Gameplay.Missions.Sortie"
-            ]
-        },
-        {
-            "BaseTypeName": "Siege.Gameplay.Missions.IMissionHandler",
-            "DerivedTypeNames": [
-                "Siege.Gameplay.Missions.DiplomaticEnvoyHandler",
-                "Siege.Gameplay.Missions.EngineerTunnelsHandler",
-                "Siege.Gameplay.Missions.ForageBeyondWallsHandler",
-                "Siege.Gameplay.Missions.NegotiateBlackMarketeersHandler",
-                "Siege.Gameplay.Missions.NightRaidHandler",
-                "Siege.Gameplay.Missions.RaidCivilianFarmsHandler",
-                "Siege.Gameplay.Missions.SabotageEnemySuppliesHandler",
-                "Siege.Gameplay.Missions.ScoutingMissionHandler",
-                "Siege.Gameplay.Missions.SearchAbandonedHomesHandler",
-                "Siege.Gameplay.Missions.SortieHandler"
             ]
         },
         {
@@ -1026,35 +533,6 @@
                 "Siege.Gameplay.Orders.SecretCorrespondenceOrder",
                 "Siege.Gameplay.Orders.StorytellingNightOrder",
                 "Siege.Gameplay.Orders.VoluntaryEvacuationOrder"
-            ]
-        },
-        {
-            "BaseTypeName": "Siege.Gameplay.Orders.IOrderHandler",
-            "DerivedTypeNames": [
-                "Siege.Gameplay.Orders.BetrayAlliesOrderHandler",
-                "Siege.Gameplay.Orders.BribeEnemyOfficerOrderHandler",
-                "Siege.Gameplay.Orders.BurnSurplusOrderHandler",
-                "Siege.Gameplay.Orders.CrackdownPatrolsOrderHandler",
-                "Siege.Gameplay.Orders.DayOfRemembranceOrderHandler",
-                "Siege.Gameplay.Orders.DistributeLuxuriesOrderHandler",
-                "Siege.Gameplay.Orders.DivertSuppliesOrderHandler",
-                "Siege.Gameplay.Orders.ForcedLaborOrderHandler",
-                "Siege.Gameplay.Orders.FortifyGateOrderHandler",
-                "Siege.Gameplay.Orders.HoldFeastOrderHandler",
-                "Siege.Gameplay.Orders.HostageExchangeOrderHandler",
-                "Siege.Gameplay.Orders.InspirePeopleOrderHandler",
-                "Siege.Gameplay.Orders.OfferTributeOrderHandler",
-                "Siege.Gameplay.Orders.PublicConfessionOrderHandler",
-                "Siege.Gameplay.Orders.PublicTrialOrderHandler",
-                "Siege.Gameplay.Orders.QuarantineDistrictOrderHandler",
-                "Siege.Gameplay.Orders.RallyGuardsOrderHandler",
-                "Siege.Gameplay.Orders.RationMedicineOrderHandler",
-                "Siege.Gameplay.Orders.ReinforceWallsOrderHandler",
-                "Siege.Gameplay.Orders.SacrificeSickOrderHandler",
-                "Siege.Gameplay.Orders.ScavengeMedicineOrderHandler",
-                "Siege.Gameplay.Orders.SecretCorrespondenceOrderHandler",
-                "Siege.Gameplay.Orders.StorytellingNightOrderHandler",
-                "Siege.Gameplay.Orders.VoluntaryEvacuationOrderHandler"
             ]
         }
     ]

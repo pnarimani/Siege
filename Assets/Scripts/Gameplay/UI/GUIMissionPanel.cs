@@ -59,19 +59,14 @@ namespace Siege.Gameplay.UI
             _availableScroll.Clear();
             bool isDay = _clock != null && _clock.IsDay;
 
-            foreach (var kvp in _missionDispatcher.AllMissions)
+            foreach (var mission in _missionDispatcher.AllMissions)
             {
-                var mission = kvp.Value;
-                if (mission.IsActive) continue;
+                if (_missionDispatcher.IsActive(mission.Id)) continue;
                 if (!_missionDispatcher.CanLaunch(mission.Id, _state)) continue;
 
                 var row = _availableRowTemplate.Instantiate();
                 row.Q<Label>("NameLabel").text = mission.Name;
                 row.Q<Label>("DescLabel").text = mission.Description;
-
-                string costText = $"Duration: {mission.DurationDays}d | Workers: {mission.WorkerCost}";
-                if (mission.GuardCost > 0) costText += $" | Guards: {mission.GuardCost}";
-                row.Q<Label>("CostLabel").text = costText;
 
                 bool canLaunch = _missionDispatcher.CanLaunch(mission.Id, _state) && !isDay;
                 var launchBtn = row.Q<SiegeButton>("LaunchBtn");
@@ -91,13 +86,10 @@ namespace Siege.Gameplay.UI
 
             foreach (var mission in _missionDispatcher.ActiveMissions)
             {
-                float progress = mission.DurationDays > 0
-                    ? 1f - (float)mission.DaysRemaining / mission.DurationDays
-                    : 1f;
+                float progress = mission.Progress;
 
                 var row = _activeRowTemplate.Instantiate();
                 row.Q<Label>("NameLabel").text = mission.Name;
-                row.Q<Label>("DaysLabel").text = $"{mission.DaysRemaining}d left";
                 row.Q("ProgressFill").style.width = new Length(progress * 100, LengthUnit.Percent);
                 _activeScroll.Add(row);
             }

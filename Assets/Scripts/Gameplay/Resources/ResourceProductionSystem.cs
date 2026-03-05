@@ -1,5 +1,4 @@
 using Siege.Gameplay.Buildings;
-using Siege.Gameplay.Laws;
 using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Resources
@@ -12,14 +11,12 @@ namespace Siege.Gameplay.Resources
     {
         readonly ChangeLog _changeLog;
         readonly ResourceStorage _storage;
-        readonly LawDispatcher _lawDispatcher;
         readonly BuildingRegistry _buildings;
 
-        public ResourceProductionSystem(ChangeLog changeLog, ResourceStorage storage, LawDispatcher lawDispatcher, BuildingRegistry buildings)
+        public ResourceProductionSystem(ChangeLog changeLog, ResourceStorage storage, BuildingRegistry buildings)
         {
             _changeLog = changeLog;
             _storage = storage;
-            _lawDispatcher = lawDispatcher;
             _buildings = buildings;
         }
 
@@ -71,7 +68,7 @@ namespace Siege.Gameplay.Resources
                 // Produce outputs
                 foreach (var output in outputs)
                 {
-                    double amount = output.Quantity * workers * dayFraction * _lawDispatcher.CombinedProductionMultiplier;
+                    double amount = output.Quantity * workers * dayFraction * state.ProductionMultiplier;
 
                     if (output.Resource == ResourceType.Integrity)
                     {

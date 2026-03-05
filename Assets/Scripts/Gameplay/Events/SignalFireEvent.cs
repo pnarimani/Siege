@@ -4,13 +4,32 @@ namespace Siege.Gameplay.Events
 {
     public class SignalFireEvent : IGameEvent
     {
-        public bool HasTriggered { get; set; }
+        const int StartDay = 25;
+        const double MinKeepIntegrity = 30;
+        const int FuelCost = 5;
+        const int MaterialCost = 15;
+        const int LightingUnrest = 5;
+
+        bool _hasTriggered;
+
         public string Id => "signal_fire";
         public string Name => "Light the Signal Fire";
         public string Description => "The beacon tower still stands. If we light the fires, someone beyond the hills may see — but so will the enemy.";
-        public bool IsOneTime => true;
-        public int Priority => 70;
-        public bool IsRespondable => true;
+
+        public bool CanTrigger(GameState state)
+        {
+            if (_hasTriggered) return false;
+            if (state.CurrentDay >= StartDay
+                && state.Zones[ZoneId.Keep].Integrity >= MinKeepIntegrity
+                && !state.SignalFireLit
+                && state.Fuel >= FuelCost
+                && state.Materials >= MaterialCost)
+            {
+                _hasTriggered = true;
+                return true;
+            }
+            return false;
+        }
 
         public EventResponse[] GetResponses(GameState state)
         {
@@ -25,6 +44,24 @@ namespace Siege.Gameplay.Events
             };
         }
 
+        public void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
+        {
+            switch (responseIndex)
+            {
+                case 0:
+                    state.Fuel = System.Math.Max(0, state.Fuel - FuelCost);
+                    state.Materials = System.Math.Max(0, state.Materials - MaterialCost);
+                    state.Unrest += LightingUnrest;
+                    state.SignalFireLit = true;
+                    log.Record("Fuel", -FuelCost, Name);
+                    log.Record("Materials", -MaterialCost, Name);
+                    log.Record("Unrest", LightingUnrest, Name);
+                    break;
+            }
+        }
+
         public string GetNarrativeText(GameState state) => Description;
+
+        public IGameEvent Clone() => new SignalFireEvent();
     }
 }

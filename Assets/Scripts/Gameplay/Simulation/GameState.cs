@@ -114,6 +114,12 @@ namespace Siege.Gameplay.Simulation
         public int SiegeDamageReductionDays;
         public double SiegeDamageReductionMultiplier = 1.0;
 
+        // ── Law Multipliers (written by enacted laws) ─────────────────
+        public double ProductionMultiplier = 1.0;
+        public double FoodConsumptionMultiplier = 1.0;
+        public double WaterConsumptionMultiplier = 1.0;
+        public double SiegeDamageMultiplier = 1.0;
+
         public readonly HashSet<string> EnactedLawIds = new();
         public readonly HashSet<string> ActiveToggleOrderIds = new();
         public readonly Dictionary<string, int> OrderCooldowns = new(); // orderId → days remaining

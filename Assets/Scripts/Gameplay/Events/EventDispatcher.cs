@@ -4,70 +4,59 @@ using Siege.Gameplay.Simulation;
 
 namespace Siege.Gameplay.Events
 {
-    /// <summary>
-    /// Wrapper class for all event operations. External systems interact with this, not individual handlers.
-    /// Replaces EventManager.
-    /// </summary>
     public class EventDispatcher
     {
-        readonly List<IGameEvent> _events;
-        readonly Dictionary<string, IEventHandler> _handlers;
+        readonly List<IGameEvent> _templates;
         readonly ChangeLog _changeLog;
 
-        public IGameEvent PendingEvent { get; private set; }
+        IGameEvent _pendingClone;
+
+        public IGameEvent PendingEvent => _pendingClone;
         public event Action<IGameEvent> EventTriggered;
 
-        public IReadOnlyList<IGameEvent> AllEvents => _events;
+        public IReadOnlyList<IGameEvent> AllEvents => _templates;
 
-        public EventDispatcher(IEnumerable<IGameEvent> events, IEnumerable<IEventHandler> handlers, ChangeLog changeLog)
+        public EventDispatcher(IEnumerable<IGameEvent> events, ChangeLog changeLog)
         {
-            _events = new List<IGameEvent>(events);
-            _handlers = new Dictionary<string, IEventHandler>();
-            foreach (var h in handlers) _handlers[h.EventId] = h;
+            _templates = new List<IGameEvent>(events);
             _changeLog = changeLog;
         }
 
         public void EvaluateEvents(GameState state)
         {
-            if (PendingEvent != null) return;
+            if (_pendingClone != null) return;
 
-            IGameEvent best = null;
-            foreach (var e in _events)
+            foreach (var template in _templates)
             {
-                if (e.IsOneTime && e.HasTriggered) continue;
-                if (!_handlers.TryGetValue(e.Id, out var handler)) continue;
-                if (!handler.CanTrigger(state)) continue;
-                if (best == null || e.Priority > best.Priority) best = e;
-            }
+                if (!template.CanTrigger(state)) continue;
 
-            if (best == null) return;
+                var clone = template.Clone();
 
-            best.HasTriggered = true;
+                if (clone.GetResponses(state).Length > 0)
+                {
+                    _pendingClone = clone;
+                    EventTriggered?.Invoke(clone);
+                }
+                else
+                {
+                    clone.Execute(state, _changeLog);
+                    EventTriggered?.Invoke(clone);
+                }
 
-            if (best.IsRespondable)
-            {
-                PendingEvent = best;
-                EventTriggered?.Invoke(best);
-            }
-            else
-            {
-                if (_handlers.TryGetValue(best.Id, out var handler))
-                    handler.Execute(state, _changeLog);
-                EventTriggered?.Invoke(best);
+                return;
             }
         }
 
         public void RespondToEvent(GameState state, int responseIndex)
         {
-            if (PendingEvent == null) return;
-            if (_handlers.TryGetValue(PendingEvent.Id, out var handler))
-                handler.ExecuteResponse(state, _changeLog, responseIndex);
-            PendingEvent = null;
+            if (_pendingClone == null) return;
+            _pendingClone.ExecuteResponse(state, _changeLog, responseIndex);
+            _pendingClone = null;
         }
 
         public void DismissEvent()
         {
-            PendingEvent = null;
+            _pendingClone = null;
         }
     }
 }

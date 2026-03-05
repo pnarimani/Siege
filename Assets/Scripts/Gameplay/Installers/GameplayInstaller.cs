@@ -66,26 +66,22 @@ namespace Siege.Gameplay.Installers
 
             // Laws (TypeRegistry scan)
             RegisterDerivedTypes<ILaw>(builder, asBase: true);
-            RegisterDerivedTypes<ILawHandler>(builder, asBase: true);
             builder.RegisterType<LawDispatcher>().SingleInstance();
             builder.RegisterType<LawEffectSystem>().As<ISimulationSystem>().SingleInstance();
 
             // Orders (TypeRegistry scan)
             RegisterDerivedTypes<IOrder>(builder, asBase: true);
-            RegisterDerivedTypes<IOrderHandler>(builder, asBase: true);
             builder.RegisterType<OrderDispatcher>().SingleInstance();
             builder.RegisterType<OrderEffectSystem>().As<ISimulationSystem>().SingleInstance();
 
             // Missions (TypeRegistry scan)
             RegisterDerivedTypes<IMission>(builder, asBase: true);
-            RegisterDerivedTypes<IMissionHandler>(builder, asBase: true);
             builder.RegisterType<MissionDispatcher>().SingleInstance();
             builder.RegisterType<MissionProgressSystem>().As<ISimulationSystem>().SingleInstance();
             builder.RegisterType<ScavengingSystem>().AsSelf().As<ISimulationSystem>().SingleInstance();
 
             // Events (TypeRegistry scan)
             RegisterDerivedTypes<IGameEvent>(builder, asBase: true);
-            RegisterDerivedTypes<IEventHandler>(builder, asBase: true);
             builder.RegisterType<EventDispatcher>().SingleInstance();
             builder.RegisterType<EventTriggerSystem>().As<ISimulationSystem>().SingleInstance();
 

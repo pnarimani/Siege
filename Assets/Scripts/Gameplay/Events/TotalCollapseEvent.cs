@@ -4,15 +4,27 @@ namespace Siege.Gameplay.Events
 {
     public class TotalCollapseEvent : IGameEvent
     {
+        bool _hasTriggered;
 
-        public bool HasTriggered { get; set; }
+        const int DeficitDaysThreshold = 3;
+
         public string Id => "total_collapse";
         public string Name => "Total Collapse";
         public string Description => "All supplies are exhausted. The city collapses.";
-        public int Priority => 200;
+
+        public bool CanTrigger(GameState state)
+        {
+            if (_hasTriggered) return false;
+            if (state.ConsecutiveFoodDeficitDays < DeficitDaysThreshold ||
+                state.ConsecutiveWaterDeficitDays < DeficitDaysThreshold) return false;
+            _hasTriggered = true;
+            return true;
+        }
 
         public string GetNarrativeText(GameState state) =>
             "The last rations are gone. The last barrels are dry. " +
             "People collapse in the streets.";
+
+        public IGameEvent Clone() => new TotalCollapseEvent();
     }
 }

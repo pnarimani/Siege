@@ -4,13 +4,19 @@ namespace Siege.Gameplay.Events
 {
     public class WallBreachEvent : IGameEvent
     {
-        public bool HasTriggered { get; set; }
+        const double IntegrityBreachThreshold = 30;
+        const int GuardsToHold = 15;
+        const int FailedDefenseDamage = 8;
+        const int BarricadeMaterialCost = 10;
+        const int BarricadeDamage = 5;
+        const int AbandonDamage = 15;
+
         public string Id => "wall_breach";
         public string Name => "Wall Breach";
         public string Description => "The perimeter wall groans and splits. The enemy will not wait long to exploit the gap.";
-        public bool IsOneTime => false;
-        public int Priority => 85;
-        public bool IsRespondable => true;
+
+        public bool CanTrigger(GameState state) =>
+            state.Zones[state.ActivePerimeter].Integrity < IntegrityBreachThreshold;
 
         public EventResponse[] GetResponses(GameState state)
         {
@@ -18,7 +24,7 @@ namespace Siege.Gameplay.Events
             {
                 new EventResponse(
                     "Reinforce the breach",
-                    state.Guards >= 15
+                    state.Guards >= GuardsToHold
                         ? "Guards hold the line — breach contained."
                         : "Not enough guards — the wall buckles further."),
                 new EventResponse(
@@ -30,6 +36,40 @@ namespace Siege.Gameplay.Events
             };
         }
 
+        public void ExecuteResponse(GameState state, ChangeLog log, int responseIndex)
+        {
+            var zone = state.ActivePerimeter;
+
+            switch (responseIndex)
+            {
+                case 0:
+                    if (state.Guards >= GuardsToHold)
+                    {
+                        log.Record("ZoneIntegrity:" + zone, 0, Name + " (held)");
+                    }
+                    else
+                    {
+                        state.Zones[zone].Integrity = System.Math.Max(0, state.Zones[zone].Integrity - FailedDefenseDamage);
+                        log.Record("ZoneIntegrity:" + zone, -FailedDefenseDamage, Name);
+                    }
+                    break;
+
+                case 1:
+                    state.Materials = System.Math.Max(0, state.Materials - BarricadeMaterialCost);
+                    state.Zones[zone].Integrity = System.Math.Max(0, state.Zones[zone].Integrity - BarricadeDamage);
+                    log.Record("Materials", -BarricadeMaterialCost, Name);
+                    log.Record("ZoneIntegrity:" + zone, -BarricadeDamage, Name);
+                    break;
+
+                case 2:
+                    state.Zones[zone].Integrity = System.Math.Max(0, state.Zones[zone].Integrity - AbandonDamage);
+                    log.Record("ZoneIntegrity:" + zone, -AbandonDamage, Name);
+                    break;
+            }
+        }
+
         public string GetNarrativeText(GameState state) => Description;
+
+        public IGameEvent Clone() => new WallBreachEvent();
     }
 }

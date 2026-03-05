@@ -50,7 +50,8 @@ namespace Siege.Gameplay.UI
 
             foreach (var order in _orderDispatcher.AllOrders)
             {
-                bool unavailable = !order.IsActive
+                bool isActive = _orderDispatcher.IsActive(order.Id);
+                bool unavailable = !isActive
                     && _orderDispatcher.GetCooldownRemaining(order.Id) == 0
                     && !_orderDispatcher.CanIssue(order.Id);
                 if (unavailable) continue;
@@ -60,7 +61,7 @@ namespace Siege.Gameplay.UI
                 row.Q<Label>("DescLabel").text = order.Description;
 
                 var activeBadge = row.Q("ActiveBadge");
-                activeBadge.style.display = (order.IsToggle && order.IsActive) ? DisplayStyle.Flex : DisplayStyle.None;
+                activeBadge.style.display = (order.IsToggle && isActive) ? DisplayStyle.Flex : DisplayStyle.None;
 
                 int cooldown = _orderDispatcher.GetCooldownRemaining(order.Id);
                 var cooldownLabel = row.Q<Label>("CooldownLabel");
@@ -73,7 +74,7 @@ namespace Siege.Gameplay.UI
                 var executeBtn = row.Q<SiegeButton>("ExecuteBtn");
                 var deactivateBtn = row.Q<SiegeButton>("DeactivateBtn");
 
-                if (order.IsToggle && order.IsActive)
+                if (order.IsToggle && isActive)
                 {
                     executeBtn.style.display = DisplayStyle.None;
                     deactivateBtn.style.display = DisplayStyle.Flex;

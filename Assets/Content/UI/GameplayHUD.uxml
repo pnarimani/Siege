@@ -64,9 +64,15 @@
             </ui:VisualElement>
             <Siege.Gameplay.UI.ProgressBar name="DayProgress" label="" class="gameplay-hud__day-progress"/>
             <ui:VisualElement class="gameplay-hud__action-buttons">
-                <Siege.Gameplay.UI.SiegeButton name="LawsBtn" text="Laws"/>
-                <Siege.Gameplay.UI.SiegeButton name="OrdersBtn" text="Orders"/>
-                <Siege.Gameplay.UI.SiegeButton name="MissionsBtn" text="Missions"/>
+                <ui:VisualElement name="LawsBtnWrap">
+                    <Siege.Gameplay.UI.SiegeButton name="LawsBtn" text="Laws"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="OrdersBtnWrap">
+                    <Siege.Gameplay.UI.SiegeButton name="OrdersBtn" text="Orders"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="MissionsBtnWrap">
+                    <Siege.Gameplay.UI.SiegeButton name="MissionsBtn" text="Missions"/>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

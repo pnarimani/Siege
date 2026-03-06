@@ -1,3 +1,4 @@
+using System;
 using AutofacUnity;
 using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
@@ -61,6 +62,13 @@ namespace Siege.Gameplay.UI
             if (_lawsBtn != null) _lawsBtn.Clicked += OnLawsClicked;
             if (_ordersBtn != null) _ordersBtn.Clicked += OnOrdersClicked;
             if (_missionsBtn != null) _missionsBtn.Clicked += OnMissionsClicked;
+
+            SetupActionButtonTooltip(_lawsBtn, "Laws",
+                () => GetActionButtonDescription(true, "Enact a new law for the city"));
+            SetupActionButtonTooltip(_ordersBtn, "Orders",
+                () => GetActionButtonDescription(true, "Issue an order to your people"));
+            SetupActionButtonTooltip(_missionsBtn, "Missions",
+                () => GetMissionsButtonDescription());
 
             SetupTooltip(_food, _foodTitle, _foodDesc);
             SetupTooltip(_water, _waterTitle, _waterDesc);
@@ -225,6 +233,35 @@ namespace Siege.Gameplay.UI
                 title is { IsEmpty: false } ? title.GetLocalizedString() : "",
                 desc is { IsEmpty: false } ? desc.GetLocalizedString() : null
             ));
+        }
+
+        static void SetupActionButtonTooltip(SiegeButton btn, string title, Func<string> descProvider)
+        {
+            if (btn == null) return;
+            var wrapper = btn.parent;
+            wrapper.pickingMode = PickingMode.Position;
+            wrapper.AddManipulator(new TooltipManipulator(title, descProvider));
+        }
+
+        string GetActionButtonDescription(bool isDayAction, string enabledDesc)
+        {
+            if (_clock == null) return enabledDesc;
+            bool isDay = _clock.IsDay;
+
+            if (isDayAction)
+            {
+                if (!isDay) return "Only available during the day";
+                if (_state is { ActionUsedToday: true }) return "Action already used today";
+            }
+
+            return enabledDesc;
+        }
+
+        string GetMissionsButtonDescription()
+        {
+            if (_clock == null) return "Launch a covert mission under cover of night";
+            if (_clock.IsDay) return "Only available at night";
+            return "Launch a covert mission under cover of night";
         }
     }
 }

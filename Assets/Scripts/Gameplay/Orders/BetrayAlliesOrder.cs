@@ -2,7 +2,6 @@ using Siege.Gameplay.Political;
 using Siege.Gameplay.Resources;
 using Siege.Gameplay.Simulation;
 using Siege.Gameplay.UI;
-using UnityEngine;
 
 namespace Siege.Gameplay.Orders
 {
@@ -14,9 +13,6 @@ namespace Siege.Gameplay.Orders
         const double MaterialsGain = 20;
         const double UnrestIncrease = 18;
         const double MoraleLoss = 18;
-        const float RetaliationChance = 0.15f;
-        const double RetaliationUnrest = 8;
-        const double RetaliationMoraleLoss = 5;
 
         readonly IPopupService _popup;
         readonly PoliticalState _political;
@@ -33,8 +29,6 @@ namespace Siege.Gameplay.Orders
         public string Name => "Betray Allies";
         public string Description => "Sell out allied contacts for a windfall of supplies. Permanent consequences and daily retaliation risk.";
         public int CooldownDays => 0;
-        public bool IsToggle => true;
-        public bool CanDeactivate => false;
 
         public bool CanIssue(GameState state) =>
             _political.Tyranny.Value >= 4;
@@ -57,18 +51,6 @@ namespace Siege.Gameplay.Orders
             state.Morale -= MoraleLoss;
             log.Record("Morale", -MoraleLoss, Id);
             _popup.Open(Name, Narrative, log.SliceSince(before));
-        }
-
-        public void ApplyDailyEffect(GameState state, ChangeLog log)
-        {
-            if (Random.value < RetaliationChance)
-            {
-                state.Unrest += RetaliationUnrest;
-                log.Record("Unrest", RetaliationUnrest, Id + "_retaliation");
-
-                state.Morale -= RetaliationMoraleLoss;
-                log.Record("Morale", -RetaliationMoraleLoss, Id + "_retaliation");
-            }
         }
 
         public IOrder Clone() => new BetrayAlliesOrder(_popup, _political, _ledger);

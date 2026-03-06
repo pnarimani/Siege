@@ -54,18 +54,13 @@ namespace Siege.Gameplay.UI
 
             foreach (var order in _orderDispatcher.AllOrders)
             {
-                bool isActive = _orderDispatcher.IsActive(order.Id);
-                bool unavailable = !isActive
-                    && _orderDispatcher.GetCooldownRemaining(order.Id) == 0
-                    && !_orderDispatcher.CanIssue(order.Id);
-                if (unavailable) continue;
+                if (_orderDispatcher.GetCooldownRemaining(order.Id) == 0
+                    && !_orderDispatcher.CanIssue(order.Id))
+                    continue;
 
                 var row = _rowTemplate.Instantiate();
                 row.Q<Label>("NameLabel").text = order.Name;
                 row.Q<Label>("DescLabel").text = order.Description;
-
-                var activeBadge = row.Q("ActiveBadge");
-                activeBadge.style.display = (order.IsToggle && isActive) ? DisplayStyle.Flex : DisplayStyle.None;
 
                 int cooldown = _orderDispatcher.GetCooldownRemaining(order.Id);
                 var cooldownLabel = row.Q<Label>("CooldownLabel");
@@ -81,25 +76,12 @@ namespace Siege.Gameplay.UI
                 }
 
                 var executeBtn = row.Q<SiegeButton>("ExecuteBtn");
-                var deactivateBtn = row.Q<SiegeButton>("DeactivateBtn");
-
-                if (order.IsToggle && isActive)
-                {
-                    executeBtn.style.display = DisplayStyle.None;
-                    deactivateBtn.style.display = DisplayStyle.Flex;
-                    deactivateBtn.SetEnabled(order.CanDeactivate);
-                    string orderId = order.Id;
-                    deactivateBtn.Clicked += () => { _orderDispatcher.TryDeactivate(orderId); _dirty = true; };
-                }
-                else
-                {
-                    executeBtn.Text = order.IsToggle ? "Activate" : "Execute";
-                    bool canIssue = _orderDispatcher.CanIssue(order.Id) && cooldown <= 0 && !_state.ActionUsedToday;
-                    executeBtn.SetEnabled(canIssue);
-                    if (!canIssue) executeBtn.AddToClassList("order-panel__execute-btn--disabled");
-                    string orderId = order.Id;
-                    executeBtn.Clicked += () => { _orderDispatcher.TryExecute(orderId); _dirty = true; };
-                }
+                executeBtn.Text = "Execute";
+                bool canIssue = _orderDispatcher.CanIssue(order.Id) && cooldown <= 0 && !_state.ActionUsedToday;
+                executeBtn.SetEnabled(canIssue);
+                if (!canIssue) executeBtn.AddToClassList("order-panel__execute-btn--disabled");
+                string orderId = order.Id;
+                executeBtn.Clicked += () => { _orderDispatcher.TryExecute(orderId); _dirty = true; };
 
                 _scrollView.Add(row);
             }

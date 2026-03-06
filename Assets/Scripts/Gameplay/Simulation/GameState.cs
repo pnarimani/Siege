@@ -88,7 +88,6 @@ namespace Siege.Gameplay.Simulation
         public double SiegeDamageMultiplier = 1.0;
 
         public readonly HashSet<string> EnactedLawIds = new();
-        public readonly HashSet<string> ActiveToggleOrderIds = new();
         public readonly Dictionary<string, int> OrderCooldowns = new(); // orderId → days remaining
         public readonly HashSet<string> TriggeredEventIds = new();
         public int EventsFiredToday;
@@ -144,7 +143,6 @@ namespace Siege.Gameplay.Simulation
             MissionLaunchedThisNight = false;
 
             EnactedLawIds.Clear();
-            ActiveToggleOrderIds.Clear();
             OrderCooldowns.Clear();
             TriggeredEventIds.Clear();
 

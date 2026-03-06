@@ -10,11 +10,8 @@ namespace Siege.Gameplay.Orders
         string Name { get; }
         string Description { get; }
         int CooldownDays { get; }
-        bool IsToggle => false;
-        bool CanDeactivate => true;
         bool CanIssue(GameState state);
         void OnExecute(GameState state, ChangeLog log);
-        void ApplyDailyEffect(GameState state, ChangeLog log) { }
         IOrder Clone();
     }
 }

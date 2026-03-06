@@ -36,7 +36,7 @@ namespace Siege.Gameplay.UI
             target.UnregisterCallback<MouseLeaveEvent>(OnMouseLeave);
         }
 
-        void OnMouseEnter(MouseEnterEvent evt) => SiegeTooltipSystem.Show(_title, _description, _buildContent);
+        void OnMouseEnter(MouseEnterEvent evt) => SiegeTooltipSystem.Show(target, _title, _description, _buildContent);
         void OnMouseLeave(MouseLeaveEvent evt) => SiegeTooltipSystem.Hide();
     }
 }

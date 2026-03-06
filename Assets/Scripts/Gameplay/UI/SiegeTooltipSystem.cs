@@ -8,6 +8,7 @@ namespace Siege.Gameplay.UI
     {
         static SiegeTooltip _tooltip;
         static VisualElement _root;
+        static VisualElement _target;
         static bool _visible;
 
         void Awake()
@@ -32,11 +33,12 @@ namespace Siege.Gameplay.UI
             root.RegisterCallback<PointerMoveEvent>(OnPointerMove, TrickleDown.TrickleDown);
         }
 
-        public static void Show(string title, string description = null, Action<VisualElement> buildContent = null)
+        public static void Show(VisualElement target, string title, string description = null, Action<VisualElement> buildContent = null)
         {
             if (_tooltip == null)
                 UISystem.Open<SiegeTooltipSystem>(UILayer.Tooltip);
 
+            _target = target;
             _visible = true;
             _tooltip!.Show(title, description, buildContent);
         }
@@ -45,6 +47,7 @@ namespace Siege.Gameplay.UI
         {
             if (_tooltip == null) return;
             _visible = false;
+            _target = null;
             _tooltip.Hide();
         }
 
@@ -52,7 +55,8 @@ namespace Siege.Gameplay.UI
         {
             if (!_visible || _tooltip == null) return;
             var panelSize = new Vector2(_root.resolvedStyle.width, _root.resolvedStyle.height);
-            _tooltip.UpdatePosition(evt.position, panelSize);
+            var targetRect = _target != null ? _target.worldBound : new Rect(evt.position.x, evt.position.y, 0, 0);
+            _tooltip.UpdatePosition(evt.position, panelSize, targetRect);
         }
     }
 }

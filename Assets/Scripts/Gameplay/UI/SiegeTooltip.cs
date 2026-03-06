@@ -69,18 +69,39 @@ namespace Siege.Gameplay.UI
             _customContent.Clear();
         }
 
-        internal void UpdatePosition(Vector2 mousePosition, Vector2 panelSize)
+        internal void UpdatePosition(Vector2 mousePosition, Vector2 panelSize, Rect targetRect)
         {
-            const float offsetX = 16f;
-            const float offsetY = 16f;
+            const float offset = 16f;
+            const float margin = 4f;
 
-            float x = mousePosition.x + offsetX;
-            float y = mousePosition.y + offsetY;
+            float tw = resolvedStyle.width;
+            float th = resolvedStyle.height;
+            if (tw <= 1f || th <= 1f)
+            {
+                style.left = mousePosition.x + offset;
+                style.top = mousePosition.y + offset;
+                return;
+            }
 
-            if (resolvedStyle.width > 1f)
-                x = Mathf.Min(x, panelSize.x - resolvedStyle.width - 4f);
-            if (resolvedStyle.height > 1f)
-                y = Mathf.Min(y, panelSize.y - resolvedStyle.height - 4f);
+            // Try below-right of cursor first
+            float x = mousePosition.x + offset;
+            float y = mousePosition.y + offset;
+
+            // Clamp right edge
+            if (x + tw > panelSize.x - margin)
+                x = mousePosition.x - offset - tw;
+
+            // Clamp left edge
+            if (x < margin)
+                x = margin;
+
+            // Clamp bottom edge — also avoid covering the target element
+            if (y + th > panelSize.y - margin)
+                y = targetRect.y - th - margin;
+
+            // If placing above the target still overflows the top, just clamp to top
+            if (y < margin)
+                y = margin;
 
             style.left = x;
             style.top = y;

@@ -155,6 +155,16 @@ namespace Siege.Gameplay.UI
             _lawsBtn?.SetEnabled(isDay && !_state.ActionUsedToday);
             _ordersBtn?.SetEnabled(isDay && !_state.ActionUsedToday);
             _missionsBtn?.SetEnabled(!isDay);
+
+            SetPickingForTooltip(_lawsBtn);
+            SetPickingForTooltip(_ordersBtn);
+            SetPickingForTooltip(_missionsBtn);
+        }
+
+        static void SetPickingForTooltip(SiegeButton btn)
+        {
+            if (btn == null) return;
+            btn.pickingMode = btn.enabledSelf ? PickingMode.Position : PickingMode.Ignore;
         }
 
         void CleanupDestroyedPanels()

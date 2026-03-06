@@ -1,3 +1,4 @@
+using System;
 using AutofacUnity;
 using Siege.Gameplay.Laws;
 using Siege.Gameplay.Orders;
@@ -22,6 +23,10 @@ namespace Siege.Gameplay.UI
         BackButtonManager _backButtonManager;
         bool _dirty = true;
 
+        Action<string> _onLawEnacted;
+        Action<string> _onOrderExecuted;
+        Action<int> _onDayStarted;
+
         void Awake()
         {
             _document = GetComponent<UIDocument>();
@@ -38,9 +43,9 @@ namespace Siege.Gameplay.UI
             _lawDispatcher = Resolver.Resolve<LawDispatcher>();
             _orderDispatcher = Resolver.Resolve<OrderDispatcher>();
             _clock = Resolver.Resolve<GameClock>();
-            _lawDispatcher.LawEnacted += _ => OnBackButtonPressed();
-            _orderDispatcher.OrderExecuted += _ => _dirty = true;
-            _clock.DayStarted += _ => _dirty = true;
+            _lawDispatcher.LawEnacted += _onLawEnacted = _ => OnBackButtonPressed();
+            _orderDispatcher.OrderExecuted += _onOrderExecuted = _ => _dirty = true;
+            _clock.DayStarted += _onDayStarted = _ => _dirty = true;
         }
 
         void Update()
@@ -87,7 +92,14 @@ namespace Siege.Gameplay.UI
 
         // ── IBackButtonHandler ────────────────────────────────────────
 
-        public void OnBackButtonPressed() { Hide(); Object.Destroy(gameObject); }
+        public void OnBackButtonPressed() { Hide(); UnityEngine.Object.Destroy(gameObject); }
+
+        void OnDestroy()
+        {
+            if (_lawDispatcher != null) _lawDispatcher.LawEnacted -= _onLawEnacted;
+            if (_orderDispatcher != null) _orderDispatcher.OrderExecuted -= _onOrderExecuted;
+            if (_clock != null) _clock.DayStarted -= _onDayStarted;
+        }
 
         // ─────────────────────────────────────────────────────────────
 

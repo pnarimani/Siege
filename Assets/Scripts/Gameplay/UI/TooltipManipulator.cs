@@ -18,19 +18,22 @@ namespace Siege.Gameplay.UI
         readonly string _description;
         readonly Func<string> _descriptionProvider;
         readonly Action<VisualElement> _buildContent;
+        readonly Func<bool> _canShow;
 
-        public TooltipManipulator(string title, string description = null, Action<VisualElement> buildContent = null)
+        public TooltipManipulator(string title, string description = null, Action<VisualElement> buildContent = null, Func<bool> canShow = null)
         {
             _title = title;
             _description = description;
             _buildContent = buildContent;
+            _canShow = canShow;
         }
 
-        public TooltipManipulator(string title, Func<string> descriptionProvider, Action<VisualElement> buildContent = null)
+        public TooltipManipulator(string title, Func<string> descriptionProvider, Action<VisualElement> buildContent = null, Func<bool> canShow = null)
         {
             _title = title;
             _descriptionProvider = descriptionProvider;
             _buildContent = buildContent;
+            _canShow = canShow;
         }
 
         protected override void RegisterCallbacksOnTarget()
@@ -47,6 +50,7 @@ namespace Siege.Gameplay.UI
 
         void OnPointerEnter(PointerEnterEvent evt)
         {
+            if (_canShow != null && !_canShow()) return;
             var desc = _descriptionProvider != null ? _descriptionProvider() : _description;
             SiegeTooltipSystem.Show(target, _title, desc, _buildContent);
         }

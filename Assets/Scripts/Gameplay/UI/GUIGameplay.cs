@@ -19,6 +19,11 @@ namespace Siege.Gameplay.UI
         [SerializeField] LocalizedString _unrestTitle, _unrestDesc;
         [SerializeField] LocalizedString _sicknessTitle, _sicknessDesc;
 
+        [SerializeField] LocalizedString _lawsDisabledNight;
+        [SerializeField] LocalizedString _ordersDisabledNight;
+        [SerializeField] LocalizedString _missionsDisabledDay;
+        [SerializeField] LocalizedString _actionUsedToday;
+
         ResourceWidget _food, _water, _fuel, _materials, _meds;
         ProgressBar _morale, _unrest, _sickness;
 
@@ -64,11 +69,14 @@ namespace Siege.Gameplay.UI
             if (_missionsBtn != null) _missionsBtn.Clicked += OnMissionsClicked;
 
             SetupActionButtonTooltip(_lawsBtn, "Laws",
-                () => GetActionButtonDescription(true, "Enact a new law for the city"));
+                GetLawsOrdersDisabledReason,
+                () => !_lawsBtn.enabledSelf);
             SetupActionButtonTooltip(_ordersBtn, "Orders",
-                () => GetActionButtonDescription(true, "Issue an order to your people"));
+                GetLawsOrdersDisabledReason,
+                () => !_ordersBtn.enabledSelf);
             SetupActionButtonTooltip(_missionsBtn, "Missions",
-                () => GetMissionsButtonDescription());
+                GetMissionsDisabledReason,
+                () => !_missionsBtn.enabledSelf);
 
             SetupTooltip(_food, _foodTitle, _foodDesc);
             SetupTooltip(_water, _waterTitle, _waterDesc);
@@ -245,33 +253,30 @@ namespace Siege.Gameplay.UI
             ));
         }
 
-        static void SetupActionButtonTooltip(SiegeButton btn, string title, Func<string> descProvider)
+        static void SetupActionButtonTooltip(SiegeButton btn, string title, Func<string> descProvider, Func<bool> canShow)
         {
             if (btn == null) return;
             var wrapper = btn.parent;
             wrapper.pickingMode = PickingMode.Position;
-            wrapper.AddManipulator(new TooltipManipulator(title, descProvider));
+            wrapper.AddManipulator(new TooltipManipulator(title, descProvider, canShow: canShow));
         }
 
-        string GetActionButtonDescription(bool isDayAction, string enabledDesc)
+        string GetLawsOrdersDisabledReason()
         {
-            if (_clock == null) return enabledDesc;
-            bool isDay = _clock.IsDay;
-
-            if (isDayAction)
-            {
-                if (!isDay) return "Only available during the day";
-                if (_state is { ActionUsedToday: true }) return "Action already used today";
-            }
-
-            return enabledDesc;
+            if (_clock == null) return null;
+            if (!_clock.IsDay)
+                return _lawsDisabledNight is { IsEmpty: false } ? _lawsDisabledNight.GetLocalizedString() : "Only available during the day";
+            if (_state is { ActionUsedToday: true })
+                return _actionUsedToday is { IsEmpty: false } ? _actionUsedToday.GetLocalizedString() : "Action already used today";
+            return null;
         }
 
-        string GetMissionsButtonDescription()
+        string GetMissionsDisabledReason()
         {
-            if (_clock == null) return "Launch a covert mission under cover of night";
-            if (_clock.IsDay) return "Only available at night";
-            return "Launch a covert mission under cover of night";
+            if (_clock == null) return null;
+            if (_clock.IsDay)
+                return _missionsDisabledDay is { IsEmpty: false } ? _missionsDisabledDay.GetLocalizedString() : "Only available at night";
+            return null;
         }
     }
 }

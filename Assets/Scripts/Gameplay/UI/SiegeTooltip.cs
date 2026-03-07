@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 namespace Siege.Gameplay.UI
@@ -15,6 +16,9 @@ namespace Siege.Gameplay.UI
         readonly TextElement _description;
         readonly VisualElement _divider;
         readonly VisualElement _customContent;
+
+        VisualElement _target;
+        IVisualElementScheduledItem _updateSchedule;
 
         public SiegeTooltip()
         {
@@ -41,10 +45,36 @@ namespace Siege.Gameplay.UI
             _customContent = new VisualElement { pickingMode = PickingMode.Ignore };
             _customContent.AddToClassList("tooltip__content");
             Add(_customContent);
+
+            RegisterCallback<DetachFromPanelEvent>(OnDetach);
         }
 
-        internal void Show(string title, string description, Action<VisualElement> buildContent)
+        void OnDetach(DetachFromPanelEvent _)
         {
+            _updateSchedule?.Pause();
+        }
+
+        void UpdatePositionFromMouse()
+        {
+            var currentPanel = this.panel;
+            if (currentPanel == null) return;
+
+            var pointer = Pointer.current;
+            if (pointer == null) return;
+
+            var screenPos = pointer.position.ReadValue();
+            float scale = currentPanel.scaledPixelsPerPoint;
+            var panelPos = new Vector2(screenPos.x / scale, (Screen.height - screenPos.y) / scale);
+
+            var panelSize = new Vector2(parent?.resolvedStyle.width ?? 0, parent?.resolvedStyle.height ?? 0);
+            var targetRect = _target?.worldBound ?? new Rect(panelPos.x, panelPos.y, 0, 0);
+            UpdatePosition(panelPos, panelSize, targetRect);
+        }
+
+        internal void Show(VisualElement target, string title, string description, Action<VisualElement> buildContent)
+        {
+            _target = target;
+
             _title.text = title ?? "";
             _title.style.display = string.IsNullOrEmpty(title) ? DisplayStyle.None : DisplayStyle.Flex;
 
@@ -61,10 +91,17 @@ namespace Siege.Gameplay.UI
             _customContent.style.display = hasCustomContent ? DisplayStyle.Flex : DisplayStyle.None;
 
             style.display = DisplayStyle.Flex;
+
+            if (_updateSchedule == null)
+                _updateSchedule = schedule.Execute(UpdatePositionFromMouse).Every(0);
+            else
+                _updateSchedule.Resume();
         }
 
         internal void Hide()
         {
+            _updateSchedule?.Pause();
+            _target = null;
             style.display = DisplayStyle.None;
             _customContent.Clear();
         }
@@ -83,28 +120,43 @@ namespace Siege.Gameplay.UI
                 return;
             }
 
-            // Try below-right of cursor first
             float x = mousePosition.x + offset;
-            float y = mousePosition.y + offset;
 
-            // Clamp right edge
             if (x + tw > panelSize.x - margin)
                 x = mousePosition.x - offset - tw;
-
-            // Clamp left edge
             if (x < margin)
                 x = margin;
 
-            // Clamp bottom edge — also avoid covering the target element
-            if (y + th > panelSize.y - margin)
-                y = targetRect.y - th - margin;
-
-            // If placing above the target still overflows the top, just clamp to top
-            if (y < margin)
-                y = margin;
+            float y = PlaceVertically(mousePosition.y, offset, margin, th, panelSize.y, targetRect);
 
             style.left = x;
             style.top = y;
+        }
+
+        static float PlaceVertically(float mouseY, float offset, float margin, float th, float panelH, Rect target)
+        {
+            float y = mouseY + offset;
+            var tooltipRect = new Rect(0, y, 0, th);
+
+            if (!Overlaps(tooltipRect, target))
+                return Mathf.Clamp(y, margin, panelH - th - margin);
+
+            // Below the target
+            y = target.yMax + margin;
+            if (y + th <= panelH - margin)
+                return y;
+
+            // Above the target
+            y = target.y - th - margin;
+            if (y >= margin)
+                return y;
+
+            return margin;
+        }
+
+        static bool Overlaps(Rect a, Rect b)
+        {
+            return a.yMin < b.yMax && a.yMax > b.yMin;
         }
     }
 }

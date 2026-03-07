@@ -1,6 +1,5 @@
 :root {
     --font-body: url("project://database/Assets/Content/Fonts/Spectral-Regular.ttf?fileID=12800000&guid=011a45456a372469f9d328fbb2c7d22a&type=3#Spectral-Regular");
-    /*--font-title: url("project://database/Assets/Content/Fonts/Cinzel.ttf?fileID=12800000&guid=c3e63b3b4357a4c31840a15271f3b1df&type=3#Cinzel");*/
     --font-title: url("project://database/Assets/FlatKit/Demos/[Demo]%20Mugs/Fonts/Oswald-Regular.ttf?fileID=12800000&guid=b88ed8160d94d47ec8631c273a6df62f&type=3#Oswald-Regular");
 }
 
@@ -96,6 +95,8 @@
     margin-right: 4px;
     color: white;
     justify-content: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
 }
 
 .progress-bar__track {
@@ -138,6 +139,7 @@
     font-size: 9px;
     -unity-font-definition: var(--font-title);
     -unity-text-align: middle-left;
+    white-space: nowrap;
 }
 
 .tooltip {

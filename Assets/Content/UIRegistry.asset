@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: UIRegistry
   m_EditorClassIdentifier: Siege.Gameplay::Siege.Gameplay.UI.AddressableUIRegistry
   _entries:
-  - Type: FastSpring.TransformSpring
-    Address: Content/Prefabs/UI/Button.prefab
   - Type: Siege.Gameplay.UI.GUIEventDialog
     Address: Content/Prefabs/UI/EventDialog.prefab
   - Type: Siege.Gameplay.UI.GUIGameOverScreen

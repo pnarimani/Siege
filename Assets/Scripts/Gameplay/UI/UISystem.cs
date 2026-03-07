@@ -1,6 +1,7 @@
 ﻿using System;
 using AutofacUnity;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
 namespace Siege.Gameplay.UI
@@ -34,6 +35,8 @@ namespace Siege.Gameplay.UI
             var parent = GetLayer(layer);
             Debug.Assert(parent != null, "UISystem: Invalid UILayer " + layer);
             var go = Object.Instantiate(prefab, parent);
+            if (go.TryGetComponent<UIDocument>(out var doc))
+                doc.sortingOrder = (int)layer + go.transform.GetSiblingIndex();
             return go.GetComponent<T>();
         }
 

@@ -1,0 +1,3 @@
+[mcp_servers.unity]
+command = "node"
+args = ["./Packages/com.unity.mcp/mcp-server~/dist/index.js"]

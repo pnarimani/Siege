@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "unity": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["./Packages/com.unity.mcp/mcp-server~/dist/index.js"]
+    }
+  }
+}

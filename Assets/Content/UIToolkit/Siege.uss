@@ -22,3 +22,14 @@
     left: 0;
     right: 0;
 }
+
+.building-button { 
+    width: 50px;
+    height: 80px;
+    background-color: aquamarine;
+}
+
+.gameplay-footer .unity-tab-view__content-viewport { 
+    align-content: center;
+    align-self: center;
+}

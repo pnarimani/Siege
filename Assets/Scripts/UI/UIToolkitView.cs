@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 namespace Siege.UI
 {
-    public class GUIScreen : MonoBehaviour
+    public class UIToolkitView : MonoBehaviour
     {
         UIDocument _document;
         

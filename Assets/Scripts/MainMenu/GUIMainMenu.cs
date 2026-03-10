@@ -4,9 +4,9 @@ using UnityEngine.UIElements;
 
 namespace Siege.MainMenu
 {
-    public class GUIMainMenu : GUIScreen
+    public class GUIMainMenu : UIToolkitView
     {
-        const string PlayButtonName = "PlayButton";
+        const string PlayButtonName = "play";
 
         void Awake()
         {

@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.pnarimani.autofac-unity": {
+      "version": "git@github.com:pnarimani/AutofacUnity.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "c8fc9d7139e9a4ffe5bd4d3d294fa1131debb88a"
+    },
     "com.pnarimani.fast-spring": {
       "version": "git@github.com:pnarimani/FastSpring.git",
       "depth": 0,

@@ -1,6 +1,7 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Content/UIToolkit/Siege.uss?fileID=7433441132597879392&amp;guid=f7f42e030164b44baa716f8c0d8fdcf9&amp;type=3#Siege"/>
-    <ui:VisualElement class="gameplay-footer" style="height: 200px;">
+    <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url(&quot;project://database/Assets/Content/reference.jpg?fileID=2800000&amp;guid=1075064f147774695bc03ed3fade01dd&amp;type=3#reference&quot;);"/>
+    <ui:VisualElement class="building-panel">
         <ui:TabView/>
     </ui:VisualElement>
 </ui:UXML>

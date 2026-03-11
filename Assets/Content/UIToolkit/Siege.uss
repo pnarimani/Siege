@@ -18,18 +18,52 @@
     flex-grow: 1;
     position: absolute;
     bottom: 0;
-    height: 100px;
     left: 0;
     right: 0;
+    height: 100px;
 }
 
-.building-button { 
-    width: 50px;
-    height: 80px;
-    background-color: aquamarine;
+.building-button {
+    margin: 10px;
 }
 
-.gameplay-footer .unity-tab-view__content-viewport { 
+.building-button__icon {
+    flex-grow: 1;
+}
+
+.building-button__icon-background {
+    width: 120px;
+    height: 120px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.building-button__label {
+    -unity-text-align: middle-center;
+    width: 100%;
+    margin-top: 5px;
+    color: white;
+}
+
+.building-panel {
+    height: 330px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.building-panel .unity-tab-view__content-viewport {
     align-content: center;
     align-self: center;
+}
+
+.building-panel .unity-tab__header {
+    margin: 0 10px 0 10px;
+    width: 100px;
+}
+
+.building-panel__scroll-view {
+    padding: 5px 90px 5px 90px;
 }

@@ -66,12 +66,12 @@
     border-color: white;
 }
 
-.building-panel .unity-tab-view__content-viewport {
+.building-panel__content-viewport {
     align-content: center;
     align-self: center;
 }
 
-.building-panel .unity-tab__header {
+.building-panel__tab-header {
     margin: 0 10px 0 10px;
     width: 100px;
 }

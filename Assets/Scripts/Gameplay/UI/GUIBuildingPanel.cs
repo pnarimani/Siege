@@ -9,6 +9,8 @@ namespace Siege.Gameplay.UI
     public class GUIBuildingPanel : UIToolkitView
     {
         const string ScrollViewClass = "building-panel__scroll-view";
+        const string TabHeaderClass = "building-panel__tab-header";
+        const string TabHeaderViewportClass = "building-panel__content-viewport";
 
         void Start()
         {
@@ -16,10 +18,12 @@ namespace Siege.Gameplay.UI
             var assets = Resolver.Resolve<BuildingAssets>();
 
             var tabView = Root.Q<TabView>();
+            tabView.contentViewport.AddToClassList(TabHeaderViewportClass);
 
             foreach (var group in buildings.GroupBy(b => b.Category))
             {
                 var tab = new Tab { label = group.Key.ToString() };
+                tab.tabHeader.AddToClassList(TabHeaderClass);
                 tabView.Add(tab);
 
                 var scrollView = new ScrollView(ScrollViewMode.Horizontal)

@@ -35,7 +35,13 @@
     width: 120px;
     height: 120px;
     background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    border-radius: 20px;
+    border-width: 5px;
+    border-color: white;
+}
+
+.building-button__icon-background:hover {
+    background-color: #2f85ca;
 }
 
 .building-button__label {
@@ -52,6 +58,12 @@
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.7);
+}
+
+.building-panel__tab_view {
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+    border-color: white;
 }
 
 .building-panel .unity-tab-view__content-viewport {

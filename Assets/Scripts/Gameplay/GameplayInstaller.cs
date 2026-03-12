@@ -1,6 +1,7 @@
 using Autofac;
 using AutofacUnity;
 using JetBrains.Annotations;
+using Siege.Gameplay.Buildings;
 
 namespace Siege.Gameplay
 {
@@ -10,6 +11,8 @@ namespace Siege.Gameplay
         public void Configure(ContainerBuilder builder)
         {
             builder.RegisterType<GameplayBootstrapper>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<GameData>().SingleInstance();
+            builder.RegisterType<BuildingAssets>().SingleInstance();
         }
     }
 }

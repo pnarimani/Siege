@@ -1,3 +1,4 @@
+using System;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -18,10 +19,10 @@ namespace Siege.Gameplay.UI
 
         [CreateProperty]
         [UxmlAttribute("icon")]
-        public Sprite Icon
+        public Texture Icon
         {
-            get => _icon.sprite;
-            set => _icon.sprite = value;
+            get => _icon.image;
+            set => _icon.image = value;
         }
 
         [CreateProperty]

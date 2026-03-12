@@ -1,3 +1,6 @@
+using System.Linq;
+using AutofacUnity;
+using Siege.Gameplay.Buildings;
 using Siege.UI;
 using UnityEngine.UIElements;
 
@@ -7,17 +10,16 @@ namespace Siege.Gameplay.UI
     {
         const string ScrollViewClass = "building-panel__scroll-view";
 
-        void Awake()
+        void Start()
         {
+            var buildings = Resolver.Resolve<GameData>().Buildings;
+            var assets = Resolver.Resolve<BuildingAssets>();
+
             var tabView = Root.Q<TabView>();
 
-            for (var j = 0; j < 6; j++)
+            foreach (var group in buildings.GroupBy(b => b.Category))
             {
-                var tab = new Tab
-                {
-                    label = $"Tab {j + 1}",
-                };
-
+                var tab = new Tab { label = group.Key.ToString() };
                 tabView.Add(tab);
 
                 var scrollView = new ScrollView(ScrollViewMode.Horizontal)
@@ -27,9 +29,19 @@ namespace Siege.Gameplay.UI
                 scrollView.AddToClassList(ScrollViewClass);
                 tab.Add(scrollView);
 
-                for (var i = 0; i < 5; i++)
+                foreach (var building in group)
                 {
-                    scrollView.Add(new BuildingButton { Label = "Building " + (i + 1) });
+                    var localizedName = assets.GetName(building.Id);
+                    var button = new BuildingButton
+                    {
+                        Label = localizedName,
+                        Icon = assets.GetIcon(building.Id),
+                    };
+
+                    var buildingId = building.Id;
+                    button.RegisterCallback<ClickEvent>(_ => assets.Spawn(buildingId));
+
+                    scrollView.Add(button);
                 }
             }
         }

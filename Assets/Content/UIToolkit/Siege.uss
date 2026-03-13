@@ -24,6 +24,15 @@
     justify-content: center;
 }
 
+.gameplay-footer__status-section {
+    width: 400px;
+    flex-grow: 0;
+}
+
+.gameplay-footer__buttons-section {
+    flex-grow: 0;
+}
+
 .building-button {
     margin: 10px;
 }

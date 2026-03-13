@@ -20,17 +20,36 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100px;
+    height: 200px;
     justify-content: center;
+    flex-direction: row;
+    padding: 10px;
+    align-items: flex-end;
 }
 
 .gameplay-footer__status-section {
     width: 400px;
     flex-grow: 0;
+    justify-content: flex-end;
+}
+
+.status-section__section-bar {
+    height: 40px;
+    width: 100%;
+    justify-content: center;
 }
 
 .gameplay-footer__buttons-section {
     flex-grow: 0;
+    justify-content: center;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.gameplay-footer_button {
+    height: 100px;
+    width: 100px;
+    border-radius: 80px;
 }
 
 .building-button {

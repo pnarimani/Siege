@@ -1,15 +1,21 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
-         editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Content/UIToolkit/Siege.uss?fileID=7433441132597879392&amp;guid=f7f42e030164b44baa716f8c0d8fdcf9&amp;type=3#Siege"/>
     <ui:VisualElement class="gameplay-header"/>
     <ui:VisualElement class="gameplay-footer">
         <ui:VisualElement class="gameplay-footer__buttons-section">
-            <Siege.UI.SiegeButton name="build"/>
+            <Siege.UI.SiegeButton name="build" class="gameplay-footer_button"/>
+            <Siege.UI.SiegeButton name="economy" class="gameplay-footer_button"/>
         </ui:VisualElement>
         <ui:VisualElement class="gameplay-footer__status-section">
+            <ui:VisualElement name="" class="status-section__section-bar"/>
+            <ui:ProgressBar value="22" title="my-progress"/>
+            <ui:ProgressBar value="22" title="my-progress"/>
+            <ui:VisualElement class="status-section__section-bar"/>
         </ui:VisualElement>
         <ui:VisualElement class="gameplay-footer__buttons-section">
-           
+            <Siege.UI.SiegeButton name="laws" class="gameplay-footer_button"/>
+            <Siege.UI.SiegeButton name="orders" class="gameplay-footer_button"/>
+            <Siege.UI.SiegeButton name="missions" class="gameplay-footer_button"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -21,6 +21,7 @@
     left: 0;
     right: 0;
     height: 100px;
+    justify-content: center;
 }
 
 .building-button {
@@ -41,7 +42,7 @@
 }
 
 .building-button__icon-background:hover {
-    background-color: #2f85ca;
+    background-color: rgb(47, 133, 202);
 }
 
 .building-button__label {
@@ -58,6 +59,10 @@
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.7);
+}
+
+.building-panel--out {
+    translate: 0 100%;
 }
 
 .building-panel__tab_view {

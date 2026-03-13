@@ -16,7 +16,6 @@ namespace Siege.Gameplay
         public void Start()
         {
             _uiSystem.Open<GUIGameplay>();
-            _uiSystem.Open<GUIBuildingPanel>();
         }
     }
 }

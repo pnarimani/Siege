@@ -8,9 +8,20 @@ namespace Siege.Gameplay.UI
 {
     public class GUIBuildingPanel : UIToolkitView
     {
+        const string BuildingPanelClass = "building-panel";
         const string ScrollViewClass = "building-panel__scroll-view";
         const string TabHeaderClass = "building-panel__tab-header";
         const string TabHeaderViewportClass = "building-panel__content-viewport";
+        const string BuildingPanelTransitionClass = "building-panel--out";
+
+        VisualElement _buildingPanel;
+        bool _isOpen;
+
+        void Awake()
+        {
+            _buildingPanel = Root.Q(className: BuildingPanelClass);
+            _buildingPanel.AddToClassList(BuildingPanelTransitionClass);
+        }
 
         void Start()
         {
@@ -48,6 +59,14 @@ namespace Siege.Gameplay.UI
                     scrollView.Add(button);
                 }
             }
+            
+            _buildingPanel.RegisterCallback<GeometryChangedEvent>(AnimateIn);
+        }
+
+        void AnimateIn(GeometryChangedEvent _)
+        {
+            _buildingPanel.UnregisterCallback<GeometryChangedEvent>(AnimateIn);
+            _buildingPanel.RemoveFromClassList(BuildingPanelTransitionClass);
         }
     }
 }
